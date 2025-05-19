@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart' hide Visibility;
 
+import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
-import 'package:go_router/go_router.dart';
 import 'package:matrix/matrix.dart';
 
-import 'package:fluffychat/pages/chat_access_settings/chat_access_settings_page.dart';
-import 'package:fluffychat/utils/localized_exception_extension.dart';
-import 'package:fluffychat/widgets/adaptive_dialogs/show_modal_action_popup.dart';
-import 'package:fluffychat/widgets/adaptive_dialogs/show_ok_cancel_alert_dialog.dart';
-import 'package:fluffychat/widgets/adaptive_dialogs/show_text_input_dialog.dart';
-import 'package:fluffychat/widgets/future_loading_dialog.dart';
-import 'package:fluffychat/widgets/matrix.dart';
+import 'package:pingmechat/pages/chat_access_settings/chat_access_settings_page.dart';
+import 'package:pingmechat/utils/localized_exception_extension.dart';
+import 'package:pingmechat/widgets/future_loading_dialog.dart';
+import 'package:pingmechat/widgets/matrix.dart';
 
 class ChatAccessSettings extends StatefulWidget {
   final String roomId;
@@ -46,7 +43,7 @@ class ChatAccessSettingsController extends State<ChatAccessSettings> {
       joinRules.remove(JoinRules.knock);
     }
 
-    // Not yet supported in FluffyChat:
+    // Not yet supported in PingmeChat:
     joinRules.remove(JoinRules.restricted);
     joinRules.remove(JoinRules.knockRestricted);
 
@@ -152,15 +149,14 @@ class ChatAccessSettingsController extends State<ChatAccessSettings> {
     );
     final capabilities = capabilitiesResult.result;
     if (capabilities == null) return;
-    final newVersion = await showModalActionPopup<String>(
+    final newVersion = await showConfirmationDialog<String>(
       context: context,
       title: L10n.of(context).replaceRoomWithNewerVersion,
-      cancelLabel: L10n.of(context).cancel,
       actions: capabilities.mRoomVersions!.available.entries
           .where((r) => r.key != roomVersion)
           .map(
-            (version) => AdaptiveModalAction(
-              value: version.key,
+            (version) => AlertDialogAction(
+              key: version.key,
               label:
                   '${version.key} (${version.value.toString().split('.').last})',
             ),
@@ -176,17 +172,14 @@ class ChatAccessSettingsController extends State<ChatAccessSettings> {
               cancelLabel: L10n.of(context).cancel,
               title: L10n.of(context).areYouSure,
               message: L10n.of(context).roomUpgradeDescription,
-              isDestructive: true,
+              isDestructiveAction: true,
             )) {
       return;
     }
-    final result = await showFutureLoadingDialog(
+    await showFutureLoadingDialog(
       context: context,
       future: () => room.client.upgradeRoom(room.id, newVersion),
     );
-    if (result.error != null) return;
-    if (!mounted) return;
-    context.go('/rooms/${room.id}');
   }
 
   Future<void> addAlias() async {
@@ -198,11 +191,15 @@ class ChatAccessSettingsController extends State<ChatAccessSettings> {
     final input = await showTextInputDialog(
       context: context,
       title: L10n.of(context).editRoomAliases,
-      prefixText: '#',
-      suffixText: domain,
-      hintText: L10n.of(context).alias,
+      textFields: [
+        DialogTextField(
+          prefixText: '#',
+          suffixText: domain,
+          hintText: L10n.of(context).alias,
+        ),
+      ],
     );
-    final aliasLocalpart = input?.trim();
+    final aliasLocalpart = input?.singleOrNull?.trim();
     if (aliasLocalpart == null || aliasLocalpart.isEmpty) return;
     final alias = '#$aliasLocalpart:$domain';
 

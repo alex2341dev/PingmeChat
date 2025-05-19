@@ -1,19 +1,18 @@
 import 'dart:async';
 
+import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
 import 'package:matrix/matrix.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
-import 'package:fluffychat/widgets/adaptive_dialogs/show_ok_cancel_alert_dialog.dart';
-import 'package:fluffychat/widgets/adaptive_dialogs/show_text_input_dialog.dart';
-import 'package:fluffychat/widgets/fluffy_chat_app.dart';
-import 'package:fluffychat/widgets/matrix.dart';
+import 'package:pingmechat/widgets/pingme_chat_app.dart';
+import 'package:pingmechat/widgets/matrix.dart';
 
 extension UiaRequestManager on MatrixState {
   Future uiaRequestHandler(UiaRequest uiaRequest) async {
     final l10n = L10n.of(context);
     final navigatorContext =
-        FluffyChatApp.router.routerDelegate.navigatorKey.currentContext ??
+        PingmeChatApp.router.routerDelegate.navigatorKey.currentContext ??
             context;
     try {
       if (uiaRequest.state != UiaRequestState.waitForUser ||
@@ -31,11 +30,16 @@ extension UiaRequestManager on MatrixState {
                 title: l10n.pleaseEnterYourPassword,
                 okLabel: l10n.ok,
                 cancelLabel: l10n.cancel,
-                minLines: 1,
-                maxLines: 1,
-                obscureText: true,
-                hintText: '******',
-              ));
+                textFields: [
+                  const DialogTextField(
+                    minLines: 1,
+                    maxLines: 1,
+                    obscureText: true,
+                    hintText: '******',
+                  ),
+                ],
+              ))
+                  ?.single;
           if (input == null || input.isEmpty) {
             return uiaRequest.cancel();
           }
@@ -87,7 +91,7 @@ extension UiaRequestManager on MatrixState {
           if (OkCancelResult.ok ==
               await showOkCancelAlertDialog(
                 useRootNavigator: false,
-                title: l10n.pleaseFollowInstructionsOnWeb,
+                message: l10n.pleaseFollowInstructionsOnWeb,
                 context: navigatorContext,
                 okLabel: l10n.next,
                 cancelLabel: l10n.cancel,

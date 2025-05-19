@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 
 import 'package:matrix/matrix.dart';
@@ -9,7 +7,6 @@ import 'chat_members_view.dart';
 
 class ChatMembersPage extends StatefulWidget {
   final String roomId;
-
   const ChatMembersPage({required this.roomId, super.key});
 
   @override
@@ -20,22 +17,11 @@ class ChatMembersController extends State<ChatMembersPage> {
   List<User>? members;
   List<User>? filteredMembers;
   Object? error;
-  Membership membershipFilter = Membership.join;
 
   final TextEditingController filterController = TextEditingController();
 
-  void setMembershipFilter(Membership membership) {
-    membershipFilter = membership;
-    setFilter();
-  }
-
   void setFilter([_]) async {
     final filter = filterController.text.toLowerCase().trim();
-
-    final members = this
-        .members
-        ?.where((member) => member.membership == membershipFilter)
-        .toList();
 
     if (filter.isEmpty) {
       setState(() {
@@ -56,8 +42,7 @@ class ChatMembersController extends State<ChatMembersPage> {
     });
   }
 
-  void refreshMembers([_]) async {
-    Logs().d('Load room members from', widget.roomId);
+  void refreshMembers() async {
     try {
       setState(() {
         error = null;
@@ -65,9 +50,7 @@ class ChatMembersController extends State<ChatMembersPage> {
       final participants = await Matrix.of(context)
           .client
           .getRoomById(widget.roomId)
-          ?.requestParticipants(
-            [...Membership.values]..remove(Membership.leave),
-          );
+          ?.requestParticipants();
 
       if (!mounted) return;
 
@@ -84,30 +67,10 @@ class ChatMembersController extends State<ChatMembersPage> {
     }
   }
 
-  StreamSubscription? _updateSub;
-
   @override
   void initState() {
     super.initState();
     refreshMembers();
-
-    _updateSub = Matrix.of(context)
-        .client
-        .onSync
-        .stream
-        .where(
-          (syncUpdate) =>
-              syncUpdate.rooms?.join?[widget.roomId]?.timeline?.events
-                  ?.any((state) => state.type == EventTypes.RoomMember) ??
-              false,
-        )
-        .listen(refreshMembers);
-  }
-
-  @override
-  void dispose() {
-    _updateSub?.cancel();
-    super.dispose();
   }
 
   @override

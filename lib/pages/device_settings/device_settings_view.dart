@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_gen/gen_l10n/l10n.dart';
 
-import 'package:fluffychat/config/themes.dart';
-import 'package:fluffychat/pages/device_settings/device_settings.dart';
-import 'package:fluffychat/widgets/layouts/max_width_body.dart';
+import 'package:pingmechat/pages/device_settings/device_settings.dart';
+import 'package:pingmechat/widgets/layouts/max_width_body.dart';
 import 'user_device_list_item.dart';
 
 class DevicesSettingsView extends StatelessWidget {
@@ -16,8 +15,7 @@ class DevicesSettingsView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: !FluffyThemes.isColumnMode(context),
-        centerTitle: FluffyThemes.isColumnMode(context),
+        leading: const Center(child: BackButton()),
         title: Text(L10n.of(context).devices),
       ),
       body: MaxWidthBody(
@@ -101,7 +99,6 @@ class DevicesSettingsView extends StatelessWidget {
                                 L10n.of(context).removeAllOtherDevices,
                               ),
                               style: TextButton.styleFrom(
-                                iconColor: theme.colorScheme.onErrorContainer,
                                 foregroundColor:
                                     theme.colorScheme.onErrorContainer,
                                 backgroundColor:

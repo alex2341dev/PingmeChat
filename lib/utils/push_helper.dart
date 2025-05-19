@@ -5,19 +5,19 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:collection/collection.dart';
+import 'package:flutter_foreground_task/flutter_foreground_task.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_shortcuts_new/flutter_shortcuts_new.dart';
 import 'package:matrix/matrix.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:fluffychat/config/app_config.dart';
-import 'package:fluffychat/utils/client_download_content_extension.dart';
-import 'package:fluffychat/utils/client_manager.dart';
-import 'package:fluffychat/utils/matrix_sdk_extensions/matrix_locals.dart';
-import 'package:fluffychat/utils/platform_infos.dart';
-
-const notificationAvatarDimension = 128;
+import 'package:pingmechat/config/app_config.dart';
+import 'package:pingmechat/utils/client_download_content_extension.dart';
+import 'package:pingmechat/utils/client_manager.dart';
+import 'package:pingmechat/utils/matrix_sdk_extensions/matrix_locals.dart';
+import 'package:pingmechat/utils/platform_infos.dart';
+import 'package:vibration/vibration.dart';
 
 Future<void> pushHelper(
   PushNotification notification, {
@@ -40,7 +40,7 @@ Future<void> pushHelper(
     l10n ??= await lookupL10n(const Locale('en'));
     flutterLocalNotificationsPlugin.show(
       notification.roomId?.hashCode ?? 0,
-      l10n.newMessageInFluffyChat,
+      l10n.newMessageInPingmeChat,
       l10n.openAppToReadMessages,
       NotificationDetails(
         iOS: const DarwinNotificationDetails(),
@@ -89,7 +89,7 @@ Future<void> _tryPushHelper(
       .first;
   final event = await client.getEventByPushNotification(
     notification,
-    storeInDatabase: false,
+    storeInDatabase: isBackgroundMessage,
   );
 
   if (event == null) {
@@ -122,7 +122,30 @@ Future<void> _tryPushHelper(
     client.backgroundSync = true;
   }
 
-  if (event.type == EventTypes.CallHangup) {
+  if (event.type == EventTypes.CallInvite) {
+    final store = await SharedPreferences.getInstance();
+    await store.setString('CallInvite', jsonEncode(event.toJson()));
+
+    Vibration.vibrate(
+      pattern: [
+        500,
+        1000,
+        500,
+        1000,
+      ],
+      repeat: 0,
+    );
+
+    FlutterForegroundTask.setOnLockScreenVisibility(true);
+    FlutterForegroundTask.wakeUpScreen();
+    FlutterForegroundTask.launchApp();
+  }
+
+  if (event.type == EventTypes.CallHangup ||
+      event.type == EventTypes.CallReject) {
+    final store = await SharedPreferences.getInstance();
+    store.remove('CallInvite');
+    Vibration.cancel();
     client.backgroundSync = false;
   }
 
@@ -143,7 +166,7 @@ Future<void> _tryPushHelper(
 
   // Calculate the body
   final body = event.type == EventTypes.Encrypted
-      ? l10n.newMessageInFluffyChat
+      ? l10n.newMessageInPingmeChat
       : await event.calcLocalizedBody(
           matrixLocals,
           plaintextBody: true,
@@ -166,12 +189,11 @@ Future<void> _tryPushHelper(
         : await client
             .downloadMxcCached(
               avatar,
-              thumbnailMethod: ThumbnailMethod.crop,
-              width: notificationAvatarDimension,
-              height: notificationAvatarDimension,
+              thumbnailMethod: ThumbnailMethod.scale,
+              width: 256,
+              height: 256,
               animated: false,
               isThumbnail: true,
-              rounded: true,
             )
             .timeout(const Duration(seconds: 3));
   } catch (e, s) {
@@ -185,12 +207,11 @@ Future<void> _tryPushHelper(
             : await client
                 .downloadMxcCached(
                   senderAvatar,
-                  thumbnailMethod: ThumbnailMethod.crop,
-                  width: notificationAvatarDimension,
-                  height: notificationAvatarDimension,
+                  thumbnailMethod: ThumbnailMethod.scale,
+                  width: 256,
+                  height: 256,
                   animated: false,
                   isThumbnail: true,
-                  rounded: true,
                 )
                 .timeout(const Duration(seconds: 3));
   } catch (e, s) {
@@ -199,7 +220,6 @@ Future<void> _tryPushHelper(
 
   final id = notification.roomId.hashCode;
 
-  final senderName = event.senderFromMemoryOrFallback.calcDisplayname();
   // Show notification
 
   final newMessage = Message(
@@ -208,7 +228,7 @@ Future<void> _tryPushHelper(
     Person(
       bot: event.messageType == MessageTypes.Notice,
       key: event.senderId,
-      name: senderName,
+      name: event.senderFromMemoryOrFallback.calcDisplayname(),
       icon: senderAvatarFile == null
           ? null
           : ByteArrayAndroidIcon(senderAvatarFile),
@@ -255,14 +275,14 @@ Future<void> _tryPushHelper(
     styleInformation: messagingStyleInformation ??
         MessagingStyleInformation(
           Person(
-            name: senderName,
+            name: event.senderFromMemoryOrFallback.calcDisplayname(),
             icon: roomAvatarFile == null
                 ? null
                 : ByteArrayAndroidIcon(roomAvatarFile),
             key: event.roomId,
             important: event.room.isFavourite,
           ),
-          conversationTitle: event.room.isDirectChat ? null : roomName,
+          conversationTitle: roomName,
           groupConversation: !event.room.isDirectChat,
           messages: [newMessage],
         ),
@@ -295,7 +315,10 @@ Future<void> _tryPushHelper(
     title,
     body,
     platformChannelSpecifics,
-    payload: event.roomId,
+    payload: jsonEncode(
+      NotificationPayload(roomId: event.roomId!, eventId: event.eventId)
+          .toJson(),
+    ),
   );
   Logs().v('Push helper has been completed!');
 }
@@ -317,11 +340,34 @@ Future<void> _setShortcut(
       action: AppConfig.inviteLinkPrefix + event.room.id,
       shortLabel: title,
       conversationShortcut: true,
-      icon: avatarFile == null ? null : base64Encode(avatarFile),
+      icon: avatarFile == null
+          ? null
+          : ShortcutMemoryIcon(jpegImage: avatarFile).toString(),
       shortcutIconAsset: avatarFile == null
           ? ShortcutIconAsset.androidAsset
           : ShortcutIconAsset.memoryAsset,
       isImportant: event.room.isFavourite,
     ),
   );
+}
+
+class NotificationPayload {
+  String roomId;
+  String eventId;
+
+  NotificationPayload({required this.roomId, required this.eventId});
+
+  factory NotificationPayload.fromJson(Map<String, dynamic> json) {
+    return NotificationPayload(
+      roomId: json['roomId'] as String,
+      eventId: json['eventId'] as String,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'roomId': roomId,
+      'eventId': eventId,
+    };
+  }
 }

@@ -8,7 +8,7 @@ import 'package:http/http.dart';
 import 'package:matrix/encryption.dart';
 import 'package:matrix/matrix.dart';
 
-import 'package:fluffychat/utils/other_party_can_receive.dart';
+import 'other_party_can_receive.dart';
 import 'uia_request_manager.dart';
 
 extension LocalizedExceptionExtension on Object {
@@ -36,7 +36,7 @@ extension LocalizedExceptionExtension on Object {
       );
     }
     if (this is OtherPartyCanNotReceiveMessages) {
-      return L10n.of(context).otherPartyNotLoggedIn;
+      return "Error";
     }
     if (this is MatrixException) {
       switch ((this as MatrixException).error) {

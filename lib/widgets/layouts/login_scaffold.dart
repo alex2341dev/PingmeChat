@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
-import 'package:fluffychat/config/app_config.dart';
-import 'package:fluffychat/config/themes.dart';
-import 'package:fluffychat/utils/platform_infos.dart';
+import 'package:pingmechat/config/app_config.dart';
+import 'package:pingmechat/config/themes.dart';
+import 'package:pingmechat/utils/platform_infos.dart';
 
 class LoginScaffold extends StatelessWidget {
   final Widget body;
@@ -24,7 +24,7 @@ class LoginScaffold extends StatelessWidget {
     final theme = Theme.of(context);
 
     final isMobileMode =
-        enforceMobileMode || !FluffyThemes.isColumnMode(context);
+        enforceMobileMode || !PingmeThemes.isColumnMode(context);
     if (isMobileMode) {
       return Scaffold(
         key: const Key('LoginScaffold'),
@@ -53,7 +53,7 @@ class LoginScaffold extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Material(
                   borderRadius: BorderRadius.circular(AppConfig.borderRadius),
-                  clipBehavior: Clip.hardEdge,
+                  clipBehavior: Clip.antiAliasWithSaveLayer,
                   elevation: theme.appBarTheme.scrolledUnderElevation ?? 4,
                   shadowColor: theme.appBarTheme.shadowColor,
                   child: ConstrainedBox(

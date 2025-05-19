@@ -29,11 +29,9 @@ abstract class PlatformInfos {
 
   static bool get usesTouchscreen => !isMobile;
 
-  static bool get supportsVideoPlayer =>
-      !PlatformInfos.isWindows && !PlatformInfos.isLinux;
-
   /// Web could also record in theory but currently only wav which is too large
-  static bool get platformCanRecord => (isMobile || isMacOS);
+  static bool get platformCanRecord =>
+      (isMobile || isMacOS || isWeb || isWindows);
 
   static String get clientName =>
       '${AppConfig.applicationName} ${isWeb ? 'web' : Platform.operatingSystem}${kReleaseMode ? '' : 'Debug'}';
@@ -57,6 +55,11 @@ abstract class PlatformInfos {
           icon: const Icon(Icons.source_outlined),
           label: Text(L10n.of(context).sourceCode),
         ),
+        TextButton.icon(
+          onPressed: () => launchUrlString(AppConfig.emojiFontUrl),
+          icon: const Icon(Icons.emoji_emotions_outlined),
+          label: const Text(AppConfig.emojiFontName),
+        ),
         Builder(
           builder: (innerContext) {
             return TextButton.icon(
@@ -66,18 +69,6 @@ abstract class PlatformInfos {
               },
               icon: const Icon(Icons.list_outlined),
               label: const Text('Logs'),
-            );
-          },
-        ),
-        Builder(
-          builder: (innerContext) {
-            return TextButton.icon(
-              onPressed: () {
-                context.go('/configs');
-                Navigator.of(innerContext).pop();
-              },
-              icon: const Icon(Icons.settings_applications_outlined),
-              label: const Text('Advanced Configs'),
             );
           },
         ),

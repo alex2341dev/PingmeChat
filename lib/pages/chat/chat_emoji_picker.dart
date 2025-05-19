@@ -4,8 +4,8 @@ import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
 import 'package:matrix/matrix.dart';
 
-import 'package:fluffychat/config/themes.dart';
-import 'package:fluffychat/pages/chat/sticker_picker_dialog.dart';
+import 'package:pingmechat/config/themes.dart';
+import 'package:pingmechat/pages/chat/sticker_picker_dialog.dart';
 import 'chat.dart';
 
 class ChatEmojiPicker extends StatelessWidget {
@@ -16,12 +16,12 @@ class ChatEmojiPicker extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return AnimatedContainer(
-      duration: FluffyThemes.animationDuration,
-      curve: FluffyThemes.animationCurve,
-      clipBehavior: Clip.hardEdge,
+      duration: PingmeThemes.animationDuration,
+      curve: PingmeThemes.animationCurve,
+      clipBehavior: Clip.antiAliasWithSaveLayer,
       decoration: const BoxDecoration(),
       height: controller.showEmojiPicker
-          ? MediaQuery.of(context).size.height / 2
+          ? MediaQuery.of(context).size.height / 4
           : 0,
       child: controller.showEmojiPicker
           ? DefaultTabController(
@@ -45,6 +45,7 @@ class ChatEmojiPicker extends StatelessWidget {
                               noRecents: const NoRecent(),
                               backgroundColor:
                                   theme.colorScheme.onInverseSurface,
+                              columns: 12,
                             ),
                             bottomActionBarConfig: const BottomActionBarConfig(
                               enabled: false,
@@ -52,10 +53,9 @@ class ChatEmojiPicker extends StatelessWidget {
                             categoryViewConfig: CategoryViewConfig(
                               backspaceColor: theme.colorScheme.primary,
                               iconColor:
-                                  theme.colorScheme.primary.withAlpha(128),
+                                  theme.colorScheme.primary.withOpacity(0.5),
                               iconColorSelected: theme.colorScheme.primary,
                               indicatorColor: theme.colorScheme.primary,
-                              backgroundColor: theme.colorScheme.surface,
                             ),
                             skinToneConfig: SkinToneConfig(
                               dialogBackgroundColor: Color.lerp(
@@ -64,6 +64,10 @@ class ChatEmojiPicker extends StatelessWidget {
                                 0.75,
                               )!,
                               indicatorColor: theme.colorScheme.onSurface,
+                            ),
+                            emojiTextStyle: const TextStyle(
+                              fontFamily: 'SegoeUIEmoji',
+                              fontSize: 24,
                             ),
                           ),
                         ),
@@ -97,15 +101,9 @@ class NoRecent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Text(
-          L10n.of(context).emoteKeyboardNoRecents,
-          style: Theme.of(context).textTheme.bodyLarge,
-          textAlign: TextAlign.center,
-        ),
-      ),
+    return Text(
+      L10n.of(context).emoteKeyboardNoRecents,
+      style: Theme.of(context).textTheme.bodyLarge,
     );
   }
 }

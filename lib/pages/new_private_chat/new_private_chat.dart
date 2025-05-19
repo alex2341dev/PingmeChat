@@ -7,14 +7,14 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
 import 'package:matrix/matrix.dart';
 
-import 'package:fluffychat/pages/new_private_chat/new_private_chat_view.dart';
-import 'package:fluffychat/pages/new_private_chat/qr_scanner_modal.dart';
-import 'package:fluffychat/utils/adaptive_bottom_sheet.dart';
-import 'package:fluffychat/utils/fluffy_share.dart';
-import 'package:fluffychat/utils/platform_infos.dart';
-import 'package:fluffychat/utils/url_launcher.dart';
-import 'package:fluffychat/widgets/matrix.dart';
-import '../../widgets/adaptive_dialogs/user_dialog.dart';
+import 'package:pingmechat/pages/new_private_chat/new_private_chat_view.dart';
+import 'package:pingmechat/pages/new_private_chat/qr_scanner_modal.dart';
+import 'package:pingmechat/pages/user_bottom_sheet/user_bottom_sheet.dart';
+import 'package:pingmechat/utils/adaptive_bottom_sheet.dart';
+import 'package:pingmechat/utils/pingme_share.dart';
+import 'package:pingmechat/utils/platform_infos.dart';
+import 'package:pingmechat/utils/url_launcher.dart';
+import 'package:pingmechat/widgets/matrix.dart';
 
 class NewPrivateChat extends StatefulWidget {
   const NewPrivateChat({super.key});
@@ -56,16 +56,16 @@ class NewPrivateChatController extends State<NewPrivateChat> {
         await Matrix.of(context).client.searchUserDirectory(searchTerm);
     final profiles = result.results;
 
-    if (searchTerm.isValidMatrixId &&
+    /*if (searchTerm.isValidMatrixId &&
         searchTerm.sigil == '@' &&
         !profiles.any((profile) => profile.userId == searchTerm)) {
       profiles.add(Profile(userId: searchTerm));
-    }
+    }*/
 
     return profiles;
   }
 
-  void inviteAction() => FluffyShare.shareInviteLink(context);
+  void inviteAction() => PingmeShare.shareInviteLink(context);
 
   void openScannerAction() async {
     if (PlatformInfos.isAndroid) {
@@ -98,9 +98,12 @@ class NewPrivateChatController extends State<NewPrivateChat> {
     );
   }
 
-  void openUserModal(Profile profile) => UserDialog.show(
+  void openUserModal(Profile profile) => showAdaptiveBottomSheet(
         context: context,
-        profile: profile,
+        builder: (c) => UserBottomSheet(
+          profile: profile,
+          outerContext: context,
+        ),
       );
 
   @override

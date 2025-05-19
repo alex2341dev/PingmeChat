@@ -5,11 +5,11 @@ import 'package:flutter_gen/gen_l10n/l10n.dart';
 import 'package:go_router/go_router.dart';
 import 'package:matrix/matrix.dart';
 
-import 'package:fluffychat/config/app_config.dart';
-import 'package:fluffychat/config/themes.dart';
-import 'package:fluffychat/utils/matrix_sdk_extensions/matrix_locals.dart';
-import 'package:fluffychat/widgets/avatar.dart';
-import 'package:fluffychat/widgets/matrix.dart';
+import 'package:pingmechat/config/app_config.dart';
+import 'package:pingmechat/config/themes.dart';
+import 'package:pingmechat/utils/matrix_sdk_extensions/matrix_locals.dart';
+import 'package:pingmechat/widgets/avatar.dart';
+import 'package:pingmechat/widgets/matrix.dart';
 
 abstract class ShareItem {}
 
@@ -55,9 +55,7 @@ class _ShareScaffoldDialogState extends State<ShareScaffoldDialog> {
         'Started forward action before room was selected. This should never happen.',
       );
     }
-    while (context.canPop()) {
-      context.pop();
-    }
+    context.pop();
     context.go('/rooms/$roomId', extra: widget.items);
   }
 
@@ -132,10 +130,7 @@ class _ShareScaffoldDialogState extends State<ShareScaffoldDialog> {
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Opacity(
                   opacity: filterOut ? 0.5 : 1,
-                  child: CheckboxListTile.adaptive(
-                    checkboxShape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(90),
-                    ),
+                  child: RadioListTile.adaptive(
                     controlAffinity: ListTileControlAffinity.trailing,
                     shape: RoundedRectangleBorder(
                       borderRadius:
@@ -147,7 +142,8 @@ class _ShareScaffoldDialogState extends State<ShareScaffoldDialog> {
                       size: Avatar.defaultSize * 0.75,
                     ),
                     title: Text(displayname),
-                    value: selectedRoomId == room.id,
+                    groupValue: selectedRoomId,
+                    value: room.id,
                     onChanged: (_) => _toggleRoom(room.id),
                   ),
                 ),
@@ -157,8 +153,8 @@ class _ShareScaffoldDialogState extends State<ShareScaffoldDialog> {
         ],
       ),
       bottomNavigationBar: AnimatedSize(
-        duration: FluffyThemes.animationDuration,
-        curve: FluffyThemes.animationCurve,
+        duration: PingmeThemes.animationDuration,
+        curve: PingmeThemes.animationCurve,
         child: selectedRoomId == null
             ? const SizedBox.shrink()
             : Material(

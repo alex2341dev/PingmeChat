@@ -6,15 +6,14 @@ import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
 import 'package:matrix/matrix.dart';
 
-import 'package:fluffychat/config/setting_keys.dart';
-import 'package:fluffychat/config/themes.dart';
-import 'package:fluffychat/pages/chat/events/state_message.dart';
-import 'package:fluffychat/utils/account_config.dart';
-import 'package:fluffychat/utils/color_value.dart';
-import 'package:fluffychat/widgets/avatar.dart';
-import 'package:fluffychat/widgets/layouts/max_width_body.dart';
-import 'package:fluffychat/widgets/matrix.dart';
-import 'package:fluffychat/widgets/mxc_image.dart';
+import 'package:pingmechat/config/setting_keys.dart';
+import 'package:pingmechat/config/themes.dart';
+import 'package:pingmechat/pages/chat/events/state_message.dart';
+import 'package:pingmechat/utils/account_config.dart';
+import 'package:pingmechat/widgets/avatar.dart';
+import 'package:pingmechat/widgets/layouts/max_width_body.dart';
+import 'package:pingmechat/widgets/matrix.dart';
+import 'package:pingmechat/widgets/mxc_image.dart';
 import '../../config/app_config.dart';
 import '../../widgets/settings_switch_list_tile.dart';
 import 'settings_style.dart';
@@ -32,8 +31,7 @@ class SettingsStyleView extends StatelessWidget {
     final client = Matrix.of(context).client;
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: !FluffyThemes.isColumnMode(context),
-        centerTitle: FluffyThemes.isColumnMode(context),
+        leading: const Center(child: BackButton()),
         title: Text(L10n.of(context).changeTheme),
       ),
       backgroundColor: theme.colorScheme.surface,
@@ -102,7 +100,7 @@ class SettingsStyleView extends StatelessWidget {
                       child: Tooltip(
                         message: color == null
                             ? L10n.of(context).systemTheme
-                            : '#${color.hexValue.toRadixString(16).toUpperCase()}',
+                            : '#${color.value.toRadixString(16).toUpperCase()}',
                         child: InkWell(
                           borderRadius: BorderRadius.circular(colorPickerSize),
                           onTap: () => controller.setChatColor(color),
@@ -163,10 +161,10 @@ class SettingsStyleView extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     AnimatedContainer(
-                      duration: FluffyThemes.animationDuration,
-                      curve: FluffyThemes.animationCurve,
+                      duration: PingmeThemes.animationDuration,
+                      curve: PingmeThemes.animationCurve,
                       decoration: const BoxDecoration(),
-                      clipBehavior: Clip.hardEdge,
+                      clipBehavior: Clip.antiAliasWithSaveLayer,
                       child: Stack(
                         alignment: Alignment.center,
                         children: [
@@ -183,7 +181,7 @@ class SettingsStyleView extends StatelessWidget {
                                   uri: accountConfig.wallpaperUrl,
                                   fit: BoxFit.cover,
                                   isThumbnail: true,
-                                  width: FluffyThemes.columnWidth * 2,
+                                  width: PingmeThemes.columnWidth * 2,
                                   height: 212,
                                 ),
                               ),
@@ -215,7 +213,7 @@ class SettingsStyleView extends StatelessWidget {
                                 ),
                                 child: DecoratedBox(
                                   decoration: BoxDecoration(
-                                    color: theme.bubbleColor,
+                                    color: theme.colorScheme.primary,
                                     borderRadius: BorderRadius.circular(
                                       AppConfig.borderRadius,
                                     ),
@@ -228,7 +226,7 @@ class SettingsStyleView extends StatelessWidget {
                                     child: Text(
                                       'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor',
                                       style: TextStyle(
-                                        color: theme.onBubbleColor,
+                                        color: theme.colorScheme.onPrimary,
                                         fontSize: AppConfig.messageFontSize *
                                             AppConfig.fontSizeFactor,
                                       ),

@@ -1,8 +1,8 @@
-repo_url = "https://fluffychat.im/repo/nightly/repo"
-repo_name = "FluffyChat nightly repo"
+repo_url = "https://pingmechat.im/repo/nightly/repo"
+repo_name = "PingmeChat nightly repo"
 repo_icon = "fdroid-icon.png"
 repo_description = """
-FluffyChat nightly repo
+PingmeChat nightly repo
 """
 
 archive_older = 0

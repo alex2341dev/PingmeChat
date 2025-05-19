@@ -1,5 +1,4 @@
-import 'dart:ui' as ui;
-
+import 'package:pingmechat/utils/thread_unread_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -7,19 +6,19 @@ import 'package:flutter_gen/gen_l10n/l10n.dart';
 import 'package:matrix/matrix.dart';
 import 'package:swipe_to_action/swipe_to_action.dart';
 
-import 'package:fluffychat/config/themes.dart';
-import 'package:fluffychat/pages/chat/events/room_creation_state_event.dart';
-import 'package:fluffychat/utils/date_time_extension.dart';
-import 'package:fluffychat/utils/file_description.dart';
-import 'package:fluffychat/utils/string_color.dart';
-import 'package:fluffychat/widgets/avatar.dart';
-import 'package:fluffychat/widgets/matrix.dart';
-import 'package:fluffychat/widgets/member_actions_popup_menu_button.dart';
+import 'package:pingmechat/config/themes.dart';
+import 'package:pingmechat/pages/chat/events/room_creation_state_event.dart';
+import 'package:pingmechat/utils/date_time_extension.dart';
+import 'package:pingmechat/utils/string_color.dart';
+import 'package:pingmechat/widgets/avatar.dart';
+import 'package:pingmechat/widgets/matrix.dart';
 import '../../../config/app_config.dart';
 import 'message_content.dart';
 import 'message_reactions.dart';
 import 'reply_content.dart';
 import 'state_message.dart';
+import 'verification_request_content.dart';
+import 'message_actions.dart';
 
 class Message extends StatelessWidget {
   final Event event;
@@ -27,10 +26,11 @@ class Message extends StatelessWidget {
   final Event? previousEvent;
   final bool displayReadMarker;
   final void Function(Event) onSelect;
+  final void Function(Event, bool) onHover;
+  final void Function(Event) onAvatarTab;
   final void Function(Event) onInfoTab;
   final void Function(String) scrollToEventId;
   final void Function() onSwipe;
-  final void Function() onMention;
   final bool longPressSelect;
   final bool selected;
   final Timeline timeline;
@@ -38,8 +38,29 @@ class Message extends StatelessWidget {
   final bool animateIn;
   final void Function()? resetAnimateIn;
   final bool wallpaperMode;
-  final ScrollController scrollController;
-  final List<Color> colors;
+  final bool isHovered;
+  final int selectedCount;
+  final bool canStartThread;
+  final bool canEditEvent;
+  final bool canPinEvent;
+  final bool canRedactEvent;
+  final bool canForward;
+  final bool canReply;
+  final bool canCreateLink;
+  final void Function(Event) onStartThread;
+  final void Function(Event) onEdit;
+  final void Function(Event) onCopy;
+  final void Function(Event) onPin;
+  final void Function(Event) onRedact;
+  final void Function(Event) onForward;
+  final void Function(Event) onReply;
+  final void Function(Event) onCreateLink;
+  final int threadEventCount;
+  final bool Function(Event) detectReplyFromThread;
+  final String Function(Event) getReplyEventIdFromThread;
+  final Event? Function(String) getReplyEventFromThread;
+  final ThreadUnreadData? threadUnreadData;
+  final bool Function(Event) isMentionEvent;
 
   const Message(
     this.event, {
@@ -48,7 +69,9 @@ class Message extends StatelessWidget {
     this.displayReadMarker = false,
     this.longPressSelect = false,
     required this.onSelect,
+    required this.onHover,
     required this.onInfoTab,
+    required this.onAvatarTab,
     required this.scrollToEventId,
     required this.onSwipe,
     this.selected = false,
@@ -57,9 +80,29 @@ class Message extends StatelessWidget {
     this.animateIn = false,
     this.resetAnimateIn,
     this.wallpaperMode = false,
-    required this.onMention,
-    required this.scrollController,
-    required this.colors,
+    this.isHovered = false,
+    this.selectedCount = 0,
+    this.canStartThread = false,
+    this.canEditEvent = false,
+    this.canPinEvent = false,
+    this.canRedactEvent = false,
+    required this.onStartThread,
+    required this.onEdit,
+    required this.onCopy,
+    required this.onPin,
+    required this.onRedact,
+    this.threadEventCount = 0,
+    required this.detectReplyFromThread,
+    required this.getReplyEventIdFromThread,
+    required this.getReplyEventFromThread,
+    required this.isMentionEvent,
+    this.threadUnreadData,
+    this.canForward = false,
+    this.canReply = false,
+    this.canCreateLink = false,
+    required this.onForward,
+    required this.onReply,
+    required this.onCreateLink,
     super.key,
   });
 
@@ -67,11 +110,22 @@ class Message extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
+    final isJitsi = event.body.contains(
+      event.room.client.baseUri!.origin
+          .replaceFirst(RegExp(r'(?<=//).*?(?=\.)'), 'meet'),
+    );
+
+    if ({EventTypes.Reaction, EventTypes.Redaction}.contains(event.type)) {
+      return SizedBox.shrink();
+    }
+
     if (!{
       EventTypes.Message,
       EventTypes.Sticker,
       EventTypes.Encrypted,
       EventTypes.CallInvite,
+      EventTypes.CallHangup,
+      EventTypes.CallReject,
     }.contains(event.type)) {
       if (event.type.startsWith('m.call.')) {
         return const SizedBox.shrink();
@@ -84,14 +138,16 @@ class Message extends StatelessWidget {
 
     if (event.type == EventTypes.Message &&
         event.messageType == EventTypes.KeyVerificationRequest) {
-      return StateMessage(event);
+      return VerificationRequestContent(event: event, timeline: timeline);
     }
 
     final client = Matrix.of(context).client;
     final ownMessage = event.senderId == client.userID;
     final alignment = ownMessage ? Alignment.topRight : Alignment.topLeft;
 
-    var color = theme.colorScheme.surfaceContainerHigh;
+    var color = isMentionEvent(event)
+        ? Colors.red
+        : theme.colorScheme.surfaceContainerHigh;
     final displayTime = event.type == EventTypes.RoomCreate ||
         nextEvent == null ||
         !event.originServerTs.sameEnvironment(nextEvent!.originServerTs);
@@ -113,15 +169,11 @@ class Message extends StatelessWidget {
         previousEvent!.senderId == event.senderId &&
         previousEvent!.originServerTs.sameEnvironment(event.originServerTs);
 
-    final textColor =
-        ownMessage ? theme.onBubbleColor : theme.colorScheme.onSurface;
-
-    final linkColor = ownMessage
-        ? theme.brightness == Brightness.light
-            ? theme.colorScheme.primaryFixed
-            : theme.colorScheme.onTertiaryContainer
-        : theme.colorScheme.primary;
-
+    final textColor = isMentionEvent(event)
+        ? Colors.white
+        : ownMessage
+            ? theme.colorScheme.onPrimary
+            : theme.colorScheme.onSurface;
     final rowMainAxisAlignment =
         ownMessage ? MainAxisAlignment.end : MainAxisAlignment.start;
 
@@ -141,17 +193,21 @@ class Message extends StatelessWidget {
               MessageTypes.Image,
               MessageTypes.Sticker,
             }.contains(event.messageType) &&
-            event.fileDescription == null &&
             !event.redacted) ||
         (event.messageType == MessageTypes.Text &&
             event.relationshipType == null &&
             event.onlyEmotes &&
             event.numberEmotes > 0 &&
             event.numberEmotes <= 3);
+    final noPadding = {
+      MessageTypes.File,
+      MessageTypes.Audio,
+    }.contains(event.messageType);
 
-    if (ownMessage) {
-      color =
-          displayEvent.status.isError ? Colors.redAccent : theme.bubbleColor;
+    if (ownMessage && !isMentionEvent(event)) {
+      color = displayEvent.status.isError
+          ? Colors.redAccent
+          : theme.colorScheme.primary;
     }
 
     final resetAnimateIn = this.resetAnimateIn;
@@ -166,8 +222,8 @@ class Message extends StatelessWidget {
           });
         }
         return AnimatedSize(
-          duration: FluffyThemes.animationDuration,
-          curve: FluffyThemes.animationCurve,
+          duration: PingmeThemes.animationDuration,
+          curve: PingmeThemes.animationCurve,
           clipBehavior: Clip.none,
           alignment: ownMessage ? Alignment.bottomRight : Alignment.bottomLeft,
           child: animateIn
@@ -182,15 +238,25 @@ class Message extends StatelessWidget {
                       child: InkWell(
                         onTap: () => onSelect(event),
                         onLongPress: () => onSelect(event),
+                        onHover: (isHovered) => onHover(event, isHovered),
                         borderRadius:
                             BorderRadius.circular(AppConfig.borderRadius / 2),
-                        child: Material(
-                          borderRadius:
-                              BorderRadius.circular(AppConfig.borderRadius / 2),
-                          color: selected || highlightMarker
-                              ? theme.colorScheme.secondaryContainer
-                                  .withAlpha(128)
-                              : Colors.transparent,
+                        child: Stack(
+                          clipBehavior: Clip.none,
+                          children: [
+                            Material(
+                              borderRadius: BorderRadius.circular(
+                                AppConfig.borderRadius / 2,
+                              ),
+                              color: selected
+                                  ? theme.colorScheme.secondaryContainer
+                                      .withAlpha(100)
+                                  : highlightMarker
+                                      ? theme.colorScheme.tertiaryContainer
+                                          .withAlpha(100)
+                                      : Colors.transparent,
+                            ),
+                          ],
                         ),
                       ),
                     ),
@@ -235,14 +301,10 @@ class Message extends StatelessWidget {
                               return Avatar(
                                 mxContent: user.avatarUrl,
                                 name: user.calcDisplayname(),
-                                onTap: () => showMemberActionsPopupMenu(
-                                  context: context,
-                                  user: user,
-                                  onMention: onMention,
-                                ),
                                 presenceUserId: user.stateKey,
                                 presenceBackgroundColor:
                                     wallpaperMode ? Colors.transparent : null,
+                                onTap: () => onAvatarTab(event),
                               );
                             },
                           ),
@@ -295,100 +357,110 @@ class Message extends StatelessWidget {
                                           },
                                         ),
                                 ),
-                              Container(
-                                alignment: alignment,
-                                padding: const EdgeInsets.only(left: 8),
-                                child: GestureDetector(
-                                  onLongPress: longPressSelect
-                                      ? null
-                                      : () {
-                                          HapticFeedback.heavyImpact();
-                                          onSelect(event);
-                                        },
-                                  child: AnimatedOpacity(
-                                    opacity: animateIn
-                                        ? 0
-                                        : event.messageType ==
-                                                    MessageTypes.BadEncrypted ||
-                                                event.status.isSending
-                                            ? 0.5
-                                            : 1,
-                                    duration: FluffyThemes.animationDuration,
-                                    curve: FluffyThemes.animationCurve,
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        color: noBubble
-                                            ? Colors.transparent
-                                            : color,
-                                        borderRadius: borderRadius,
-                                      ),
-                                      clipBehavior: Clip.antiAlias,
-                                      child: BubbleBackground(
-                                        colors: colors,
-                                        ignore: noBubble || !ownMessage,
-                                        scrollController: scrollController,
+                              Column(
+                                children: [
+                                  Container(
+                                    alignment: alignment,
+                                    padding: const EdgeInsets.only(left: 8),
+                                    child: GestureDetector(
+                                      onLongPress: longPressSelect
+                                          ? null
+                                          : () {
+                                              HapticFeedback.heavyImpact();
+                                              onSelect(event);
+                                            },
+                                      child: AnimatedOpacity(
+                                        opacity: animateIn
+                                            ? 0
+                                            : event.messageType ==
+                                                        MessageTypes
+                                                            .BadEncrypted ||
+                                                    event.status.isSending
+                                                ? 0.5
+                                                : 1,
+                                        duration:
+                                            PingmeThemes.animationDuration,
+                                        curve: PingmeThemes.animationCurve,
                                         child: Container(
                                           decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(
-                                              AppConfig.borderRadius,
+                                            color: noBubble
+                                                ? Colors.transparent
+                                                : color,
+                                            borderRadius: borderRadius,
+                                          ),
+                                          clipBehavior: Clip.antiAlias,
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(
+                                                AppConfig.borderRadius,
+                                              ),
                                             ),
-                                          ),
-                                          constraints: const BoxConstraints(
-                                            maxWidth:
-                                                FluffyThemes.columnWidth * 1.5,
-                                          ),
-                                          child: Column(
-                                            mainAxisSize: MainAxisSize.min,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: <Widget>[
-                                              if ({
-                                                RelationshipTypes.reply,
-                                                RelationshipTypes.thread,
-                                              }.contains(
-                                                event.relationshipType,
-                                              ))
-                                                FutureBuilder<Event?>(
-                                                  future: event
-                                                      .getReplyEvent(timeline),
-                                                  builder: (
-                                                    BuildContext context,
-                                                    snapshot,
-                                                  ) {
-                                                    final replyEvent = snapshot
-                                                            .hasData
-                                                        ? snapshot.data!
-                                                        : Event(
-                                                            eventId: event
-                                                                .relationshipEventId!,
-                                                            content: {
-                                                              'msgtype':
-                                                                  'm.text',
-                                                              'body': '...',
-                                                            },
-                                                            senderId:
-                                                                event.senderId,
-                                                            type:
-                                                                'm.room.message',
-                                                            room: event.room,
-                                                            status: EventStatus
-                                                                .sent,
-                                                            originServerTs:
-                                                                DateTime.now(),
-                                                          );
-                                                    return Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                        left: 16,
-                                                        right: 16,
-                                                        top: 8,
-                                                      ),
-                                                      child: Material(
-                                                        color:
-                                                            Colors.transparent,
-                                                        borderRadius:
-                                                            ReplyContent
-                                                                .borderRadius,
+                                            padding: noBubble || noPadding
+                                                ? EdgeInsets.zero
+                                                : const EdgeInsets.symmetric(
+                                                    horizontal: 16,
+                                                    vertical: 8,
+                                                  ),
+                                            constraints: const BoxConstraints(
+                                              maxWidth:
+                                                  PingmeThemes.columnWidth *
+                                                      1.5,
+                                            ),
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                if (event.relationshipType ==
+                                                        RelationshipTypes
+                                                            .reply ||
+                                                    detectReplyFromThread(
+                                                      event,
+                                                    ))
+                                                  FutureBuilder<Event?>(
+                                                    future: event.getReplyEvent(
+                                                      timeline,
+                                                    ),
+                                                    builder: (
+                                                      BuildContext context,
+                                                      snapshot,
+                                                    ) {
+                                                      final empty = Event(
+                                                        eventId: event
+                                                            .relationshipEventId!,
+                                                        content: {
+                                                          'msgtype': 'm.text',
+                                                          'body': '...',
+                                                        },
+                                                        senderId:
+                                                            event.senderId,
+                                                        type: 'm.room.message',
+                                                        room: event.room,
+                                                        status:
+                                                            EventStatus.sent,
+                                                        originServerTs:
+                                                            DateTime.now(),
+                                                      );
+
+                                                      final replyEvent = snapshot
+                                                              .hasData
+                                                          ? snapshot.data!
+                                                          : detectReplyFromThread(
+                                                              event,
+                                                            )
+                                                              ? getReplyEventFromThread(
+                                                                    getReplyEventIdFromThread(
+                                                                      event,
+                                                                    ),
+                                                                  ) ??
+                                                                  empty
+                                                              : empty;
+                                                      return Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .only(
+                                                          bottom: 4.0,
+                                                        ),
                                                         child: InkWell(
                                                           borderRadius:
                                                               ReplyContent
@@ -407,68 +479,251 @@ class Message extends StatelessWidget {
                                                             ),
                                                           ),
                                                         ),
-                                                      ),
-                                                    );
-                                                  },
-                                                ),
-                                              MessageContent(
-                                                displayEvent,
-                                                textColor: textColor,
-                                                linkColor: linkColor,
-                                                onInfoTab: onInfoTab,
-                                                borderRadius: borderRadius,
-                                                timeline: timeline,
-                                              ),
-                                              if (event.hasAggregatedEvents(
-                                                timeline,
-                                                RelationshipTypes.edit,
-                                              ))
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                    bottom: 8.0,
-                                                    left: 16.0,
-                                                    right: 16.0,
+                                                      );
+                                                    },
                                                   ),
-                                                  child: Row(
-                                                    mainAxisSize:
-                                                        MainAxisSize.min,
-                                                    spacing: 4.0,
-                                                    children: [
-                                                      Icon(
-                                                        Icons.edit_outlined,
-                                                        color: textColor
-                                                            .withAlpha(164),
-                                                        size: 14,
-                                                      ),
-                                                      Text(
-                                                        displayEvent
-                                                            .originServerTs
-                                                            .localizedTimeShort(
-                                                          context,
+                                                Row(
+                                                  mainAxisSize:
+                                                      MainAxisSize.min,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.end,
+                                                  children: [
+                                                    Flexible(
+                                                      child: Container(
+                                                        constraints:
+                                                            const BoxConstraints(
+                                                          maxWidth: (PingmeThemes
+                                                                      .columnWidth *
+                                                                  1.5) -
+                                                              100,
+                                                          minWidth: 50,
                                                         ),
-                                                        style: TextStyle(
-                                                          color: textColor
-                                                              .withAlpha(164),
-                                                          fontSize: 11,
+                                                        child: Stack(
+                                                          children: [
+                                                            Column(
+                                                              mainAxisSize:
+                                                                  MainAxisSize
+                                                                      .min,
+                                                              crossAxisAlignment:
+                                                                  CrossAxisAlignment
+                                                                      .start,
+                                                              children: <Widget>[
+                                                                MessageContent(
+                                                                  displayEvent,
+                                                                  textColor:
+                                                                      textColor,
+                                                                  onInfoTab:
+                                                                      onInfoTab,
+                                                                  borderRadius:
+                                                                      borderRadius,
+                                                                  isJitsi:
+                                                                      isJitsi,
+                                                                ),
+                                                                if (event
+                                                                    .hasAggregatedEvents(
+                                                                  timeline,
+                                                                  RelationshipTypes
+                                                                      .edit,
+                                                                ))
+                                                                  Padding(
+                                                                    padding:
+                                                                        const EdgeInsets
+                                                                            .only(
+                                                                      top: 4.0,
+                                                                    ),
+                                                                    child: Row(
+                                                                      mainAxisSize:
+                                                                          MainAxisSize
+                                                                              .min,
+                                                                      children: [
+                                                                        Icon(
+                                                                          Icons
+                                                                              .edit_outlined,
+                                                                          color:
+                                                                              textColor.withAlpha(164),
+                                                                          size:
+                                                                              14,
+                                                                        ),
+                                                                        Text(
+                                                                          ' - ${displayEvent.originServerTs.localizedTimeShort(context)}',
+                                                                          style:
+                                                                              TextStyle(
+                                                                            color:
+                                                                                textColor.withAlpha(164),
+                                                                            fontSize:
+                                                                                12,
+                                                                          ),
+                                                                        ),
+                                                                      ],
+                                                                    ),
+                                                                  ),
+                                                              ],
+                                                            ),
+                                                            if (noBubble)
+                                                              Positioned(
+                                                                bottom: 8,
+                                                                right: 16,
+                                                                child: Padding(
+                                                                  padding:
+                                                                      const EdgeInsets
+                                                                          .only(
+                                                                    left: 8,
+                                                                  ),
+                                                                  child: Text(
+                                                                    event
+                                                                        .originServerTs
+                                                                        .localizedTimeOfDay(
+                                                                      context,
+                                                                    ),
+                                                                    style:
+                                                                        TextStyle(
+                                                                      color: color
+                                                                          .withAlpha(
+                                                                        164,
+                                                                      ),
+                                                                      fontSize:
+                                                                          12,
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                          ],
                                                         ),
                                                       ),
-                                                    ],
-                                                  ),
+                                                    ),
+                                                    if (!noBubble && !isJitsi)
+                                                      Padding(
+                                                        padding: noPadding
+                                                            ? const EdgeInsets
+                                                                .only(
+                                                                left: 8,
+                                                                right: 16,
+                                                                bottom: 8,
+                                                              )
+                                                            : const EdgeInsets
+                                                                .only(left: 8),
+                                                        child: Text(
+                                                          event.originServerTs
+                                                              .localizedTimeOfDay(
+                                                            context,
+                                                          ),
+                                                          style: TextStyle(
+                                                            color: textColor
+                                                                .withAlpha(164),
+                                                            fontSize: 12,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                  ],
                                                 ),
-                                            ],
+                                              ],
+                                            ),
                                           ),
                                         ),
                                       ),
                                     ),
                                   ),
-                                ),
+                                  if (canStartThread && threadEventCount > 0)
+                                    Container(
+                                      alignment: alignment,
+                                      padding: const EdgeInsets.only(
+                                        left: 8,
+                                        top: 8,
+                                        bottom: 8,
+                                      ),
+                                      child: IntrinsicWidth(
+                                        child: SizedBox(
+                                          height: 40,
+                                          child: Row(
+                                            children: [
+                                              Container(
+                                                padding: const EdgeInsets.only(
+                                                  right: 8,
+                                                ),
+                                                child: Text(
+                                                  L10n.of(context).countAnswers(
+                                                    threadEventCount,
+                                                  ),
+                                                ),
+                                              ),
+                                              Stack(
+                                                children: [
+                                                  IconButton(
+                                                    icon: const Icon(
+                                                      Icons.fork_right_outlined,
+                                                    ),
+                                                    tooltip: L10n.of(context)
+                                                        .toThread,
+                                                    onPressed: () =>
+                                                        onStartThread(event),
+                                                  ),
+                                                  Positioned(
+                                                    right: 2,
+                                                    top: 2,
+                                                    child: Container(
+                                                      height: 10,
+                                                      width: 10,
+                                                      decoration: BoxDecoration(
+                                                        color: threadUnreadData!
+                                                                .isUnreadThread(
+                                                          event.roomId!,
+                                                          event.eventId,
+                                                          Matrix.of(context)
+                                                              .client
+                                                              .userID!,
+                                                        )
+                                                            ? Colors.red
+                                                            : Colors
+                                                                .transparent,
+                                                        shape: BoxShape.circle,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                ],
                               ),
                             ],
                           ),
                         ),
                       ],
                     ),
+                    if (isHovered)
+                      Positioned(
+                        left: ownMessage
+                            ? selected || selectedCount > 0
+                                ? 46
+                                : 0
+                            : null,
+                        right: ownMessage ? null : 0,
+                        child: MouseRegion(
+                          onEnter: (_) => onHover(event, true),
+                          onExit: (_) => onHover(event, false),
+                          child: MessageActions(
+                            canStartThread: canStartThread,
+                            canEditEvent: canEditEvent,
+                            canPinEvent: canPinEvent,
+                            canRedactEvent: canRedactEvent,
+                            canForward: canForward,
+                            canReply: canReply,
+                            canCreateLink: canCreateLink,
+                            onStartThread: () => onStartThread(event),
+                            onEdit: () => onEdit(event),
+                            onCopy: () => onCopy(event),
+                            onPin: () => onPin(event),
+                            onRedact: () => onRedact(event),
+                            onForward: () => onForward(event),
+                            onReply: () => onReply(event),
+                            onCreateLink: () => onCreateLink(event),
+                            key: ValueKey(event.eventId),
+                          ),
+                        ),
+                      ),
                   ],
                 ),
         );
@@ -515,8 +770,8 @@ class Message extends StatelessWidget {
             ),
           row,
           AnimatedSize(
-            duration: FluffyThemes.animationDuration,
-            curve: FluffyThemes.animationCurve,
+            duration: PingmeThemes.animationDuration,
+            curve: PingmeThemes.animationCurve,
             child: !showReceiptsRow
                 ? const SizedBox.shrink()
                 : Padding(
@@ -583,7 +838,7 @@ class Message extends StatelessWidget {
         onSwipe: (_) => onSwipe(),
         child: Container(
           constraints: const BoxConstraints(
-            maxWidth: FluffyThemes.columnWidth * 2.5,
+            maxWidth: PingmeThemes.columnWidth * 2.5,
           ),
           padding: EdgeInsets.only(
             left: 8.0,
@@ -595,74 +850,5 @@ class Message extends StatelessWidget {
         ),
       ),
     );
-  }
-}
-
-class BubbleBackground extends StatelessWidget {
-  const BubbleBackground({
-    super.key,
-    required this.scrollController,
-    required this.colors,
-    required this.ignore,
-    required this.child,
-  });
-
-  final ScrollController scrollController;
-  final List<Color> colors;
-  final bool ignore;
-  final Widget child;
-
-  @override
-  Widget build(BuildContext context) {
-    if (ignore) return child;
-    return CustomPaint(
-      painter: BubblePainter(
-        repaint: scrollController,
-        colors: colors,
-        context: context,
-      ),
-      child: child,
-    );
-  }
-}
-
-class BubblePainter extends CustomPainter {
-  BubblePainter({
-    required this.context,
-    required this.colors,
-    required super.repaint,
-  });
-
-  final BuildContext context;
-  final List<Color> colors;
-  ScrollableState? _scrollable;
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final scrollable = _scrollable ??= Scrollable.of(context);
-    final scrollableBox = scrollable.context.findRenderObject() as RenderBox;
-    final scrollableRect = Offset.zero & scrollableBox.size;
-    final bubbleBox = context.findRenderObject() as RenderBox;
-
-    final origin =
-        bubbleBox.localToGlobal(Offset.zero, ancestor: scrollableBox);
-    final paint = Paint()
-      ..shader = ui.Gradient.linear(
-        scrollableRect.topCenter,
-        scrollableRect.bottomCenter,
-        colors,
-        [0.0, 1.0],
-        TileMode.clamp,
-        Matrix4.translationValues(-origin.dx, -origin.dy, 0.0).storage,
-      );
-    canvas.drawRect(Offset.zero & size, paint);
-  }
-
-  @override
-  bool shouldRepaint(BubblePainter oldDelegate) {
-    final scrollable = Scrollable.of(context);
-    final oldScrollable = _scrollable;
-    _scrollable = scrollable;
-    return scrollable.position != oldScrollable?.position;
   }
 }

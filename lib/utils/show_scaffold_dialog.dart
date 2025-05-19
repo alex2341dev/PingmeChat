@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'package:fluffychat/config/app_config.dart';
-import 'package:fluffychat/config/themes.dart';
+import 'package:pingmechat/config/app_config.dart';
+import 'package:pingmechat/config/themes.dart';
 
 Future<void> showScaffoldDialog({
   required BuildContext context,
@@ -14,7 +14,7 @@ Future<void> showScaffoldDialog({
     showDialog(
       context: context,
       useSafeArea: false,
-      builder: FluffyThemes.isColumnMode(context)
+      builder: PingmeThemes.isColumnMode(context)
           ? (context) => Center(
                 child: Container(
                   decoration: BoxDecoration(
@@ -24,7 +24,7 @@ Future<void> showScaffoldDialog({
                     color: containerColor ??
                         Theme.of(context).scaffoldBackgroundColor,
                   ),
-                  clipBehavior: Clip.hardEdge,
+                  clipBehavior: Clip.antiAliasWithSaveLayer,
                   margin: const EdgeInsets.all(16),
                   constraints: BoxConstraints(
                     maxWidth: maxWidth,

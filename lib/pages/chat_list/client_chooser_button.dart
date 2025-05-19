@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 
+import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
 import 'package:go_router/go_router.dart';
+import 'package:pingmechat/utils/app_locker/app_locker.dart';
 import 'package:matrix/matrix.dart';
 
-import 'package:fluffychat/widgets/adaptive_dialogs/show_ok_cancel_alert_dialog.dart';
-import 'package:fluffychat/widgets/avatar.dart';
-import 'package:fluffychat/widgets/matrix.dart';
-import '../../utils/fluffy_share.dart';
+import 'package:pingmechat/widgets/avatar.dart';
+import 'package:pingmechat/widgets/matrix.dart';
+import '../../utils/pingme_share.dart';
 import 'chat_list.dart';
 
 class ClientChooserButton extends StatelessWidget {
@@ -25,7 +26,19 @@ class ClientChooserButton extends StatelessWidget {
                 ? -1
                 : 1,
       );
+
     return <PopupMenuEntry<Object>>[
+      if (AppLocker.getLockApp())
+        PopupMenuItem(
+          value: SettingsAction.lockApp,
+          child: Row(
+            children: [
+              const Icon(Icons.lock_outlined),
+              const SizedBox(width: 18),
+              Text(L10n.of(context).appLock),
+            ],
+          ),
+        ),
       PopupMenuItem(
         value: SettingsAction.newGroup,
         child: Row(
@@ -56,16 +69,18 @@ class ClientChooserButton extends StatelessWidget {
           ],
         ),
       ),
-      PopupMenuItem(
+      // Currently disabled because of:
+      // https://github.com/matrix-org/matrix-react-sdk/pull/12286
+      /*PopupMenuItem(
         value: SettingsAction.archive,
         child: Row(
           children: [
             const Icon(Icons.archive_outlined),
             const SizedBox(width: 18),
-            Text(L10n.of(context).archive),
+            Text(L10n.of(context)!.archive),
           ],
         ),
-      ),
+      ),*/
       PopupMenuItem(
         value: SettingsAction.settings,
         child: Row(
@@ -97,43 +112,44 @@ class ClientChooserButton extends StatelessWidget {
               ],
             ),
           ),
-        ...matrix.accountBundles[bundle]!
-            .whereType<Client>()
-            .where((client) => client.isLogged())
-            .map(
-              (client) => PopupMenuItem(
-                value: client,
-                child: FutureBuilder<Profile?>(
-                  future: client.fetchOwnProfile(),
-                  builder: (context, snapshot) => Row(
-                    children: [
-                      Avatar(
-                        mxContent: snapshot.data?.avatarUrl,
-                        name: snapshot.data?.displayName ??
-                            client.userID!.localpart,
-                        size: 32,
-                      ),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: Text(
-                          snapshot.data?.displayName ??
-                              client.userID!.localpart!,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                      const SizedBox(width: 12),
-                      IconButton(
-                        icon: const Icon(Icons.edit_outlined),
-                        onPressed: () => controller.editBundlesForAccount(
-                          client.userID,
-                          bundle,
-                        ),
-                      ),
-                    ],
+        ...matrix.accountBundles[bundle]!.map(
+          (client) => PopupMenuItem(
+            value: client,
+            child: FutureBuilder<Profile?>(
+              // analyzer does not understand this type cast for error
+              // handling
+              //
+              // ignore: unnecessary_cast
+              future: (client!.fetchOwnProfile() as Future<Profile?>)
+                  .onError((e, s) => null),
+              builder: (context, snapshot) => Row(
+                children: [
+                  Avatar(
+                    mxContent: snapshot.data?.avatarUrl,
+                    name:
+                        snapshot.data?.displayName ?? client.userID!.localpart,
+                    size: 32,
                   ),
-                ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Text(
+                      snapshot.data?.displayName ?? client.userID!.localpart!,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  IconButton(
+                    icon: const Icon(Icons.edit_outlined),
+                    onPressed: () => controller.editBundlesForAccount(
+                      client.userID,
+                      bundle,
+                    ),
+                  ),
+                ],
               ),
             ),
+          ),
+        ),
       ],
       PopupMenuItem(
         value: SettingsAction.addAccount,
@@ -156,22 +172,30 @@ class ClientChooserButton extends StatelessWidget {
     matrix.accountBundles.forEach((key, value) => clientCount += value.length);
     return FutureBuilder<Profile>(
       future: matrix.client.fetchOwnProfile(),
-      builder: (context, snapshot) => Material(
-        clipBehavior: Clip.hardEdge,
-        borderRadius: BorderRadius.circular(99),
-        color: Colors.transparent,
-        child: PopupMenuButton<Object>(
-          onSelected: (o) => _clientSelected(o, context),
-          itemBuilder: _bundleMenuItems,
-          child: Center(
-            child: Avatar(
-              mxContent: snapshot.data?.avatarUrl,
-              name:
-                  snapshot.data?.displayName ?? matrix.client.userID!.localpart,
-              size: 32,
+      builder: (context, snapshot) => Stack(
+        alignment: Alignment.center,
+        children: [
+          ...List.generate(
+            clientCount,
+            (index) => const SizedBox.shrink(),
+          ),
+          const SizedBox.shrink(),
+          const SizedBox.shrink(),
+          PopupMenuButton<Object>(
+            onSelected: (o) => _clientSelected(o, context),
+            itemBuilder: _bundleMenuItems,
+            child: Material(
+              color: Colors.transparent,
+              borderRadius: BorderRadius.circular(99),
+              child: Avatar(
+                mxContent: snapshot.data?.avatarUrl,
+                name: snapshot.data?.displayName ??
+                    matrix.client.userID!.localpart,
+                size: 32,
+              ),
             ),
           ),
-        ),
+        ],
       ),
     );
   }
@@ -201,9 +225,10 @@ class ClientChooserButton extends StatelessWidget {
           context.go('/rooms/newgroup');
           break;
         case SettingsAction.invite:
-          FluffyShare.shareInviteLink(context);
+          PingmeShare.shareInviteLink(context);
           break;
         case SettingsAction.settings:
+          await Future.delayed(const Duration(milliseconds: 300));
           context.go('/rooms/settings');
           break;
         case SettingsAction.archive:
@@ -211,6 +236,9 @@ class ClientChooserButton extends StatelessWidget {
           break;
         case SettingsAction.setStatus:
           controller.setStatus();
+          break;
+        case SettingsAction.lockApp:
+          AppLocker.lockApp();
           break;
       }
     }
@@ -224,4 +252,5 @@ enum SettingsAction {
   invite,
   settings,
   archive,
+  lockApp,
 }

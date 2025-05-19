@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
 import 'package:matrix/matrix.dart';
 
-import 'package:fluffychat/config/app_config.dart';
-import 'package:fluffychat/utils/adaptive_bottom_sheet.dart';
-import 'package:fluffychat/utils/date_time_extension.dart';
-import 'package:fluffychat/widgets/avatar.dart';
+import 'package:pingmechat/config/app_config.dart';
+import 'package:pingmechat/utils/adaptive_bottom_sheet.dart';
+import 'package:pingmechat/utils/date_time_extension.dart';
+import 'package:pingmechat/widgets/avatar.dart';
 
 extension EventInfoDialogExtension on Event {
   void showInfoDialog(BuildContext context) => showAdaptiveBottomSheet(
@@ -21,7 +21,6 @@ extension EventInfoDialogExtension on Event {
 class EventInfoDialog extends StatelessWidget {
   final Event event;
   final L10n l10n;
-
   const EventInfoDialog({
     required this.event,
     required this.l10n,
@@ -42,8 +41,10 @@ class EventInfoDialog extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(L10n.of(context).messageInfo),
-        leading: CloseButton(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_downward_outlined),
           onPressed: Navigator.of(context, rootNavigator: false).pop,
+          tooltip: L10n.of(context).close,
         ),
       ),
       body: ListView(

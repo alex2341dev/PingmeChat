@@ -4,11 +4,9 @@ import 'package:flutter_gen/gen_l10n/l10n.dart';
 import 'package:intl/intl.dart';
 import 'package:matrix/matrix.dart';
 
-import 'package:fluffychat/config/app_config.dart';
-import 'package:fluffychat/pages/chat/events/video_player.dart';
-import 'package:fluffychat/pages/image_viewer/image_viewer.dart';
-import 'package:fluffychat/utils/matrix_sdk_extensions/matrix_locals.dart';
-import 'package:fluffychat/widgets/mxc_image.dart';
+import 'package:pingmechat/pages/chat/events/image_bubble.dart';
+import 'package:pingmechat/pages/chat/events/video_player.dart';
+import 'package:pingmechat/utils/matrix_sdk_extensions/matrix_locals.dart';
 
 class ChatSearchImagesTab extends StatelessWidget {
   final Room room;
@@ -27,7 +25,6 @@ class ChatSearchImagesTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final borderRadius = BorderRadius.circular(AppConfig.borderRadius / 2);
     return StreamBuilder(
       stream: searchStream,
       builder: (context, snapshot) {
@@ -147,39 +144,16 @@ class ChatSearchImagesTab extends StatelessWidget {
                   shrinkWrap: true,
                   mainAxisSpacing: padding,
                   crossAxisSpacing: padding,
-                  clipBehavior: Clip.hardEdge,
                   padding: const EdgeInsets.all(padding),
                   crossAxisCount: 3,
                   children: monthEvents.map(
                     (event) {
                       if (event.messageType == MessageTypes.Video) {
-                        return Material(
-                          clipBehavior: Clip.hardEdge,
-                          borderRadius: borderRadius,
-                          child: EventVideoPlayer(event),
-                        );
+                        return EventVideoPlayer(event);
                       }
-                      return InkWell(
-                        onTap: () => showDialog(
-                          context: context,
-                          builder: (_) => ImageViewer(
-                            event,
-                            outerContext: context,
-                          ),
-                        ),
-                        borderRadius: borderRadius,
-                        child: Material(
-                          clipBehavior: Clip.hardEdge,
-                          borderRadius: borderRadius,
-                          child: MxcImage(
-                            event: event,
-                            width: 128,
-                            height: 128,
-                            fit: BoxFit.cover,
-                            animated: true,
-                            isThumbnail: true,
-                          ),
-                        ),
+                      return ImageBubble(
+                        event,
+                        fit: BoxFit.cover,
                       );
                     },
                   ).toList(),

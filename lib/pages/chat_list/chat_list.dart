@@ -1,38 +1,39 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'package:app_links/app_links.dart';
+import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:cross_file/cross_file.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
 import 'package:flutter_shortcuts_new/flutter_shortcuts_new.dart';
 import 'package:go_router/go_router.dart';
+import 'package:pingmechat/utils/thread_unread_data.dart';
 import 'package:matrix/matrix.dart' as sdk;
 import 'package:matrix/matrix.dart';
 import 'package:receive_sharing_intent/receive_sharing_intent.dart';
-
-import 'package:fluffychat/config/app_config.dart';
-import 'package:fluffychat/pages/chat_list/chat_list_view.dart';
-import 'package:fluffychat/utils/localized_exception_extension.dart';
-import 'package:fluffychat/utils/matrix_sdk_extensions/matrix_locals.dart';
-import 'package:fluffychat/utils/platform_infos.dart';
-import 'package:fluffychat/utils/show_scaffold_dialog.dart';
-import 'package:fluffychat/utils/show_update_snackbar.dart';
-import 'package:fluffychat/widgets/adaptive_dialogs/show_modal_action_popup.dart';
-import 'package:fluffychat/widgets/adaptive_dialogs/show_ok_cancel_alert_dialog.dart';
-import 'package:fluffychat/widgets/adaptive_dialogs/show_text_input_dialog.dart';
-import 'package:fluffychat/widgets/avatar.dart';
-import 'package:fluffychat/widgets/future_loading_dialog.dart';
-import 'package:fluffychat/widgets/share_scaffold_dialog.dart';
+import 'package:app_links/app_links.dart';
+import 'package:matrix/matrix_api_lite/generated/fixed_model.dart';
+import 'package:pingmechat/config/app_config.dart';
+import 'package:pingmechat/pages/chat_list/chat_list_view.dart';
+import 'package:pingmechat/utils/localized_exception_extension.dart';
+import 'package:pingmechat/utils/matrix_sdk_extensions/matrix_locals.dart';
+import 'package:pingmechat/utils/platform_infos.dart';
+import 'package:pingmechat/utils/show_scaffold_dialog.dart';
+import 'package:pingmechat/utils/show_update_snackbar.dart';
+import 'package:pingmechat/widgets/avatar.dart';
+import 'package:pingmechat/widgets/future_loading_dialog.dart';
+import 'package:pingmechat/widgets/share_scaffold_dialog.dart';
 import '../../../utils/account_bundles.dart';
 import '../../config/setting_keys.dart';
 import '../../utils/url_launcher.dart';
+import '../../widgets/pingme_chat_app.dart';
 import '../../widgets/matrix.dart';
 import '../bootstrap/bootstrap_dialog.dart';
 
-import 'package:fluffychat/utils/tor_stub.dart'
+import 'package:pingmechat/utils/tor_stub.dart'
     if (dart.library.html) 'package:tor_detector_web/tor_detector_web.dart';
 
 enum PopupMenuAction {
@@ -50,6 +51,7 @@ enum ActiveFilter {
   groups,
   unread,
   spaces,
+  pinned,
 }
 
 extension LocalizedActiveFilter on ActiveFilter {
@@ -65,6 +67,8 @@ extension LocalizedActiveFilter on ActiveFilter {
         return L10n.of(context).groups;
       case ActiveFilter.spaces:
         return L10n.of(context).spaces;
+      case ActiveFilter.pinned:
+        return L10n.of(context).pinned;
     }
   }
 }
@@ -92,6 +96,8 @@ class ChatListController extends State<ChatList>
 
   StreamSubscription? _intentUriStreamSubscription;
 
+  ThreadUnreadData threadUnreadData = ThreadUnreadData();
+
   ActiveFilter activeFilter = AppConfig.separateChatTypes
       ? ActiveFilter.messages
       : ActiveFilter.allChats;
@@ -113,6 +119,47 @@ class ChatListController extends State<ChatList>
 
   void onChatTap(Room room) async {
     if (room.membership == Membership.invite) {
+      final inviterId =
+          room.getState(EventTypes.RoomMember, room.client.userID!)?.senderId;
+      final inviteAction = await showModalActionSheet<InviteActions>(
+        context: context,
+        message: room.isDirectChat
+            ? L10n.of(context).invitePrivateChat
+            : L10n.of(context).inviteGroupChat,
+        title: room.getLocalizedDisplayname(MatrixLocals(L10n.of(context))),
+        actions: [
+          SheetAction(
+            key: InviteActions.accept,
+            label: L10n.of(context).accept,
+            icon: Icons.check_outlined,
+            isDefaultAction: true,
+          ),
+          SheetAction(
+            key: InviteActions.decline,
+            label: L10n.of(context).decline,
+            icon: Icons.close_outlined,
+            isDestructiveAction: true,
+          ),
+          SheetAction(
+            key: InviteActions.block,
+            label: L10n.of(context).block,
+            icon: Icons.block_outlined,
+            isDestructiveAction: true,
+          ),
+        ],
+      );
+      if (inviteAction == null) return;
+      if (inviteAction == InviteActions.block) {
+        context.go('/rooms/settings/security/ignorelist', extra: inviterId);
+        return;
+      }
+      if (inviteAction == InviteActions.decline) {
+        await showFutureLoadingDialog(
+          context: context,
+          future: room.leave,
+        );
+        return;
+      }
       final joinResult = await showFutureLoadingDialog(
         context: context,
         future: () async {
@@ -150,19 +197,25 @@ class ChatListController extends State<ChatList>
     context.go('/rooms/${room.id}');
   }
 
+  bool a = false;
+
   bool Function(Room) getRoomFilterByActiveFilter(ActiveFilter activeFilter) {
-    switch (activeFilter) {
-      case ActiveFilter.allChats:
-        return (room) => true;
-      case ActiveFilter.messages:
-        return (room) => !room.isSpace && room.isDirectChat;
-      case ActiveFilter.groups:
-        return (room) => !room.isSpace && !room.isDirectChat;
-      case ActiveFilter.unread:
-        return (room) => room.isUnreadOrInvited;
-      case ActiveFilter.spaces:
-        return (room) => room.isSpace;
-    }
+    return (room) {
+      switch (activeFilter) {
+        case ActiveFilter.allChats:
+          return true;
+        case ActiveFilter.messages:
+          return !room.isSpace && room.isDirectChat;
+        case ActiveFilter.groups:
+          return !room.isSpace && !room.isDirectChat;
+        case ActiveFilter.unread:
+          return room.isUnreadOrInvited;
+        case ActiveFilter.spaces:
+          return room.isSpace;
+        case ActiveFilter.pinned:
+          return room.isFavourite;
+      }
+    };
   }
 
   List<Room> get filteredRooms => Matrix.of(context)
@@ -179,7 +232,7 @@ class ChatListController extends State<ChatList>
   QueryPublicRoomsResponse? roomSearchResult;
 
   bool isSearching = false;
-  static const String _serverStoreNamespace = 'im.fluffychat.search.server';
+  static const String _serverStoreNamespace = 'im.pingmechat.search.server';
 
   void setServer() async {
     final newServer = await showTextInputDialog(
@@ -188,19 +241,23 @@ class ChatListController extends State<ChatList>
       context: context,
       okLabel: L10n.of(context).ok,
       cancelLabel: L10n.of(context).cancel,
-      prefixText: 'https://',
-      hintText: Matrix.of(context).client.homeserver?.host,
-      initialText: searchServer,
-      keyboardType: TextInputType.url,
-      autocorrect: false,
-      validator: (server) => server.contains('.') == true
-          ? null
-          : L10n.of(context).invalidServerName,
+      textFields: [
+        DialogTextField(
+          prefixText: 'https://',
+          hintText: Matrix.of(context).client.homeserver?.host,
+          initialText: searchServer,
+          keyboardType: TextInputType.url,
+          autocorrect: false,
+          validator: (server) => server?.contains('.') == true
+              ? null
+              : L10n.of(context).invalidServerName,
+        ),
+      ],
     );
     if (newServer == null) return;
-    Matrix.of(context).store.setString(_serverStoreNamespace, newServer);
+    Matrix.of(context).store.setString(_serverStoreNamespace, newServer.single);
     setState(() {
-      searchServer = newServer;
+      searchServer = newServer.single;
     });
     _coolDown?.cancel();
     _coolDown = Timer(const Duration(milliseconds: 500), _search);
@@ -343,6 +400,7 @@ class ChatListController extends State<ChatList>
       builder: (context) => ShareScaffoldDialog(
         items: files.map(
           (file) {
+            inspect(file);
             if ({
               SharedMediaType.text,
               SharedMediaType.url,
@@ -404,6 +462,7 @@ class ChatListController extends State<ChatList>
     scrollController.addListener(_onScroll);
     _waitForFirstSync();
     _hackyWebRTCFixForWeb();
+
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       if (mounted) {
         searchServer =
@@ -437,6 +496,10 @@ class ChatListController extends State<ChatList>
     BuildContext posContext, [
     Room? space,
   ]) async {
+    if (room.membership == Membership.invite) {
+      return onChatTap(room);
+    }
+
     final overlay =
         Overlay.of(posContext).context.findRenderObject() as RenderBox;
 
@@ -509,90 +572,68 @@ class ChatListController extends State<ChatList>
               ],
             ),
           ),
-        if (room.membership == Membership.join) ...[
-          PopupMenuItem(
-            value: ChatContextAction.mute,
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Icon(
-                  room.pushRuleState == PushRuleState.notify
-                      ? Icons.notifications_off_outlined
-                      : Icons.notifications_off,
-                ),
-                const SizedBox(width: 12),
-                Text(
-                  room.pushRuleState == PushRuleState.notify
-                      ? L10n.of(context).muteChat
-                      : L10n.of(context).unmuteChat,
-                ),
-              ],
-            ),
-          ),
-          PopupMenuItem(
-            value: ChatContextAction.markUnread,
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Icon(
-                  room.markedUnread
-                      ? Icons.mark_as_unread
-                      : Icons.mark_as_unread_outlined,
-                ),
-                const SizedBox(width: 12),
-                Text(
-                  room.markedUnread
-                      ? L10n.of(context).markAsRead
-                      : L10n.of(context).markAsUnread,
-                ),
-              ],
-            ),
-          ),
-          PopupMenuItem(
-            value: ChatContextAction.favorite,
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Icon(
-                  room.isFavourite ? Icons.push_pin : Icons.push_pin_outlined,
-                ),
-                const SizedBox(width: 12),
-                Text(
-                  room.isFavourite
-                      ? L10n.of(context).unpin
-                      : L10n.of(context).pin,
-                ),
-              ],
-            ),
-          ),
-          if (spacesWithPowerLevels.isNotEmpty)
-            PopupMenuItem(
-              value: ChatContextAction.addToSpace,
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const Icon(Icons.group_work_outlined),
-                  const SizedBox(width: 12),
-                  Text(L10n.of(context).addToSpace),
-                ],
+        PopupMenuItem(
+          value: ChatContextAction.mute,
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                room.pushRuleState == PushRuleState.notify
+                    ? Icons.notifications_off_outlined
+                    : Icons.notifications_off,
               ),
-            ),
-        ],
-        if (room.membership == Membership.invite)
+              const SizedBox(width: 12),
+              Text(
+                room.pushRuleState == PushRuleState.notify
+                    ? L10n.of(context).muteChat
+                    : L10n.of(context).unmuteChat,
+              ),
+            ],
+          ),
+        ),
+        PopupMenuItem(
+          value: ChatContextAction.markUnread,
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                room.markedUnread
+                    ? Icons.mark_as_unread
+                    : Icons.mark_as_unread_outlined,
+              ),
+              const SizedBox(width: 12),
+              Text(
+                room.markedUnread
+                    ? L10n.of(context).markAsRead
+                    : L10n.of(context).markAsUnread,
+              ),
+            ],
+          ),
+        ),
+        PopupMenuItem(
+          value: ChatContextAction.favorite,
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(room.isFavourite ? Icons.push_pin : Icons.push_pin_outlined),
+              const SizedBox(width: 12),
+              Text(
+                room.isFavourite
+                    ? L10n.of(context).unpin
+                    : L10n.of(context).pin,
+              ),
+            ],
+          ),
+        ),
+        if (spacesWithPowerLevels.isNotEmpty && !room.isSpace)
           PopupMenuItem(
-            value: ChatContextAction.block,
+            value: ChatContextAction.addToSpace,
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Icon(
-                  Icons.block_outlined,
-                  color: Theme.of(context).colorScheme.error,
-                ),
+                const Icon(Icons.group_work_outlined),
                 const SizedBox(width: 12),
-                Text(
-                  L10n.of(context).block,
-                  style: TextStyle(color: Theme.of(context).colorScheme.error),
-                ),
+                Text(L10n.of(context).addToSpace),
               ],
             ),
           ),
@@ -601,19 +642,9 @@ class ChatListController extends State<ChatList>
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(
-                Icons.delete_outlined,
-                color: Theme.of(context).colorScheme.onErrorContainer,
-              ),
+              const Icon(Icons.delete_outlined),
               const SizedBox(width: 12),
-              Text(
-                room.membership == Membership.invite
-                    ? L10n.of(context).delete
-                    : L10n.of(context).leave,
-                style: TextStyle(
-                  color: Theme.of(context).colorScheme.onErrorContainer,
-                ),
-              ),
+              Text(L10n.of(context).leave),
             ],
           ),
         ),
@@ -654,12 +685,13 @@ class ChatListController extends State<ChatList>
         return;
       case ChatContextAction.leave:
         final confirmed = await showOkCancelAlertDialog(
+          useRootNavigator: false,
           context: context,
           title: L10n.of(context).areYouSure,
-          message: L10n.of(context).archiveRoomDescription,
           okLabel: L10n.of(context).leave,
-          cancelLabel: L10n.of(context).cancel,
-          isDestructive: true,
+          cancelLabel: L10n.of(context).no,
+          message: L10n.of(context).archiveRoomDescription,
+          isDestructiveAction: true,
         );
         if (confirmed == OkCancelResult.cancel) return;
         if (!mounted) return;
@@ -668,13 +700,13 @@ class ChatListController extends State<ChatList>
 
         return;
       case ChatContextAction.addToSpace:
-        final space = await showModalActionPopup(
+        final space = await showConfirmationDialog(
           context: context,
           title: L10n.of(context).space,
           actions: spacesWithPowerLevels
               .map(
-                (space) => AdaptiveModalAction(
-                  value: space,
+                (space) => AlertDialogAction(
+                  key: space,
                   label: space
                       .getLocalizedDisplayname(MatrixLocals(L10n.of(context))),
                 ),
@@ -686,10 +718,6 @@ class ChatListController extends State<ChatList>
           context: context,
           future: () => space.setSpaceChild(room.id),
         );
-      case ChatContextAction.block:
-        final userId =
-            room.getState(EventTypes.RoomMember, room.client.userID!)?.senderId;
-        context.go('/rooms/settings/security/ignorelist', extra: userId);
     }
   }
 
@@ -715,11 +743,15 @@ class ChatListController extends State<ChatList>
       message: L10n.of(context).leaveEmptyToClearStatus,
       okLabel: L10n.of(context).ok,
       cancelLabel: L10n.of(context).cancel,
-      hintText: L10n.of(context).statusExampleMessage,
-      maxLines: 6,
-      minLines: 1,
-      maxLength: 255,
-      initialText: currentPresence.statusMsg,
+      textFields: [
+        DialogTextField(
+          hintText: L10n.of(context).statusExampleMessage,
+          maxLines: 6,
+          minLines: 1,
+          maxLength: 255,
+          initialText: currentPresence.statusMsg,
+        ),
+      ],
     );
     if (input == null) return;
     if (!mounted) return;
@@ -728,7 +760,7 @@ class ChatListController extends State<ChatList>
       future: () => client.setPresence(
         client.userID!,
         PresenceType.online,
-        statusMsg: input,
+        statusMsg: input.single,
       ),
     );
   }
@@ -823,18 +855,17 @@ class ChatListController extends State<ChatList>
     final client = Matrix.of(context)
         .widget
         .clients[Matrix.of(context).getClientIndexByMatrixId(userId!)];
-    final action = await showModalActionPopup<EditBundleAction>(
+    final action = await showConfirmationDialog<EditBundleAction>(
       context: context,
       title: L10n.of(context).editBundlesForAccount,
-      cancelLabel: L10n.of(context).cancel,
       actions: [
-        AdaptiveModalAction(
-          value: EditBundleAction.addToBundle,
+        AlertDialogAction(
+          key: EditBundleAction.addToBundle,
           label: L10n.of(context).addToBundle,
         ),
         if (activeBundle != client.userID)
-          AdaptiveModalAction(
-            value: EditBundleAction.removeFromBundle,
+          AlertDialogAction(
+            key: EditBundleAction.removeFromBundle,
             label: L10n.of(context).removeFromBundle,
           ),
       ],
@@ -845,12 +876,12 @@ class ChatListController extends State<ChatList>
         final bundle = await showTextInputDialog(
           context: context,
           title: l10n.bundleName,
-          hintText: l10n.bundleName,
+          textFields: [DialogTextField(hintText: l10n.bundleName)],
         );
-        if (bundle == null || bundle.isEmpty || bundle.isEmpty) return;
+        if (bundle == null || bundle.isEmpty || bundle.single.isEmpty) return;
         await showFutureLoadingDialog(
           context: context,
-          future: () => client.setAccountBundle(bundle),
+          future: () => client.setAccountBundle(bundle.single),
         );
         break;
       case EditBundleAction.removeFromBundle:
@@ -916,5 +947,4 @@ enum ChatContextAction {
   mute,
   leave,
   addToSpace,
-  block
 }

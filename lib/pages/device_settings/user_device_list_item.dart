@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
+import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
 import 'package:matrix/matrix.dart';
 
-import 'package:fluffychat/config/app_config.dart';
-import 'package:fluffychat/widgets/adaptive_dialogs/show_modal_action_popup.dart';
+import 'package:pingmechat/config/app_config.dart';
 import '../../utils/date_time_extension.dart';
 import '../../utils/matrix_sdk_extensions/device_extension.dart';
 import '../../widgets/matrix.dart';
@@ -46,46 +46,40 @@ class UserDeviceListItem extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
       child: Material(
         borderRadius: BorderRadius.circular(AppConfig.borderRadius),
-        clipBehavior: Clip.hardEdge,
+        clipBehavior: Clip.antiAliasWithSaveLayer,
         child: ListTile(
           onTap: () async {
-            final action = await showModalActionPopup<UserDeviceListItemAction>(
+            final action = await showModalActionSheet<UserDeviceListItemAction>(
               context: context,
               title: '${userDevice.displayName} (${userDevice.deviceId})',
-              cancelLabel: L10n.of(context).cancel,
               actions: [
-                AdaptiveModalAction(
-                  value: UserDeviceListItemAction.rename,
-                  icon: const Icon(Icons.edit_outlined),
+                SheetAction(
+                  key: UserDeviceListItemAction.rename,
                   label: L10n.of(context).changeDeviceName,
                 ),
                 if (!isOwnDevice && keys != null) ...{
-                  AdaptiveModalAction(
-                    value: UserDeviceListItemAction.verify,
-                    icon: const Icon(Icons.verified_outlined),
+                  SheetAction(
+                    key: UserDeviceListItemAction.verify,
                     label: L10n.of(context).verifyStart,
                   ),
                   if (!keys.blocked)
-                    AdaptiveModalAction(
-                      value: UserDeviceListItemAction.block,
-                      icon: const Icon(Icons.block_outlined),
+                    SheetAction(
+                      key: UserDeviceListItemAction.block,
                       label: L10n.of(context).blockDevice,
-                      isDestructive: true,
+                      isDestructiveAction: true,
                     ),
                   if (keys.blocked)
-                    AdaptiveModalAction(
-                      value: UserDeviceListItemAction.unblock,
-                      icon: const Icon(Icons.block),
+                    SheetAction(
+                      key: UserDeviceListItemAction.unblock,
                       label: L10n.of(context).unblockDevice,
-                      isDestructive: true,
+                      isDestructiveAction: true,
                     ),
                 },
                 if (!isOwnDevice)
-                  AdaptiveModalAction(
-                    value: UserDeviceListItemAction.remove,
-                    icon: const Icon(Icons.delete_outlined),
+                  SheetAction(
+                    key: UserDeviceListItemAction.remove,
                     label: L10n.of(context).delete,
-                    isDestructive: true,
+                    isDestructiveAction: true,
                   ),
               ],
             );

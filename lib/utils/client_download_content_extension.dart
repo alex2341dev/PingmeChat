@@ -1,6 +1,5 @@
 import 'dart:typed_data';
 
-import 'package:image/image.dart';
 import 'package:matrix/matrix.dart';
 
 extension ClientDownloadContentExtension on Client {
@@ -11,7 +10,6 @@ extension ClientDownloadContentExtension on Client {
     bool isThumbnail = false,
     bool? animated,
     ThumbnailMethod? thumbnailMethod,
-    bool rounded = false,
   }) async {
     // To stay compatible with previous storeKeys:
     final cacheKey = isThumbnail
@@ -46,17 +44,12 @@ extension ClientDownloadContentExtension on Client {
     if (response.statusCode != 200) {
       throw Exception();
     }
-    var imageData = response.bodyBytes;
+    final remoteData = response.bodyBytes;
 
-    if (rounded) {
-      final image = decodeImage(imageData);
-      if (image != null) {
-        imageData = encodePng(copyCropCircle(image));
-      }
-    }
+    try {
+      await database?.storeFile(cacheKey, remoteData, 0);
+    } catch (_) {}
 
-    await database?.storeFile(cacheKey, imageData, 0);
-
-    return imageData;
+    return remoteData;
   }
 }

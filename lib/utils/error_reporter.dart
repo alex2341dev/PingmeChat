@@ -7,8 +7,8 @@ import 'package:flutter_highlighter/themes/shades-of-purple.dart';
 import 'package:matrix/matrix.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import 'package:fluffychat/config/app_config.dart';
-import 'package:fluffychat/widgets/adaptive_dialogs/adaptive_dialog_action.dart';
+import 'package:pingmechat/config/app_config.dart';
+import 'package:pingmechat/widgets/adaptive_dialog_action.dart';
 
 class ErrorReporter {
   final BuildContext context;
@@ -48,7 +48,12 @@ class ErrorReporter {
           AdaptiveDialogAction(
             onPressed: () => launchUrl(
               AppConfig.newIssueUrl.resolveUri(
-                Uri(queryParameters: {'template': 'bug_report.yaml'}),
+                Uri(
+                  queryParameters: {
+                    'template': 'bug_report.yaml',
+                    'title': '[BUG]: ${message ?? error.toString()}',
+                  },
+                ),
               ),
               mode: LaunchMode.externalApplication,
             ),

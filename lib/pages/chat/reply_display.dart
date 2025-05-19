@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
 import 'package:matrix/matrix.dart';
 
-import 'package:fluffychat/utils/matrix_sdk_extensions/matrix_locals.dart';
+import 'package:pingmechat/utils/matrix_sdk_extensions/matrix_locals.dart';
 import '../../config/themes.dart';
 import 'chat.dart';
 import 'events/reply_content.dart';
@@ -17,12 +17,12 @@ class ReplyDisplay extends StatelessWidget {
     final theme = Theme.of(context);
 
     return AnimatedContainer(
-      duration: FluffyThemes.animationDuration,
-      curve: FluffyThemes.animationCurve,
+      duration: PingmeThemes.animationDuration,
+      curve: PingmeThemes.animationCurve,
       height: controller.editEvent != null || controller.replyEvent != null
           ? 56
           : 0,
-      clipBehavior: Clip.hardEdge,
+      clipBehavior: Clip.antiAliasWithSaveLayer,
       decoration: BoxDecoration(
         color: theme.colorScheme.onInverseSurface,
       ),
@@ -38,6 +38,7 @@ class ReplyDisplay extends StatelessWidget {
                 ? ReplyContent(
                     controller.replyEvent!,
                     timeline: controller.timeline!,
+                    backgroundColor: Colors.transparent,
                   )
                 : _EditContent(
                     controller.editEvent?.getDisplayEvent(controller.timeline!),

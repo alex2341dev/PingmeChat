@@ -4,39 +4,39 @@ import 'package:flutter/material.dart';
 
 import 'package:go_router/go_router.dart';
 
-import 'package:fluffychat/config/themes.dart';
-import 'package:fluffychat/pages/archive/archive.dart';
-import 'package:fluffychat/pages/chat/chat.dart';
-import 'package:fluffychat/pages/chat_access_settings/chat_access_settings_controller.dart';
-import 'package:fluffychat/pages/chat_details/chat_details.dart';
-import 'package:fluffychat/pages/chat_encryption_settings/chat_encryption_settings.dart';
-import 'package:fluffychat/pages/chat_list/chat_list.dart';
-import 'package:fluffychat/pages/chat_members/chat_members.dart';
-import 'package:fluffychat/pages/chat_permissions_settings/chat_permissions_settings.dart';
-import 'package:fluffychat/pages/chat_search/chat_search_page.dart';
-import 'package:fluffychat/pages/device_settings/device_settings.dart';
-import 'package:fluffychat/pages/homeserver_picker/homeserver_picker.dart';
-import 'package:fluffychat/pages/invitation_selection/invitation_selection.dart';
-import 'package:fluffychat/pages/login/login.dart';
-import 'package:fluffychat/pages/new_group/new_group.dart';
-import 'package:fluffychat/pages/new_private_chat/new_private_chat.dart';
-import 'package:fluffychat/pages/settings/settings.dart';
-import 'package:fluffychat/pages/settings_3pid/settings_3pid.dart';
-import 'package:fluffychat/pages/settings_chat/settings_chat.dart';
-import 'package:fluffychat/pages/settings_emotes/settings_emotes.dart';
-import 'package:fluffychat/pages/settings_homeserver/settings_homeserver.dart';
-import 'package:fluffychat/pages/settings_ignore_list/settings_ignore_list.dart';
-import 'package:fluffychat/pages/settings_multiple_emotes/settings_multiple_emotes.dart';
-import 'package:fluffychat/pages/settings_notifications/settings_notifications.dart';
-import 'package:fluffychat/pages/settings_password/settings_password.dart';
-import 'package:fluffychat/pages/settings_security/settings_security.dart';
-import 'package:fluffychat/pages/settings_style/settings_style.dart';
-import 'package:fluffychat/widgets/config_viewer.dart';
-import 'package:fluffychat/widgets/layouts/empty_page.dart';
-import 'package:fluffychat/widgets/layouts/two_column_layout.dart';
-import 'package:fluffychat/widgets/log_view.dart';
-import 'package:fluffychat/widgets/matrix.dart';
-import 'package:fluffychat/widgets/share_scaffold_dialog.dart';
+import 'package:pingmechat/config/themes.dart';
+import 'package:pingmechat/pages/all_threads/all_threads.dart';
+import 'package:pingmechat/pages/archive/archive.dart';
+import 'package:pingmechat/pages/chat/chat.dart';
+import 'package:pingmechat/pages/chat_access_settings/chat_access_settings_controller.dart';
+import 'package:pingmechat/pages/chat_details/chat_details.dart';
+import 'package:pingmechat/pages/chat_encryption_settings/chat_encryption_settings.dart';
+import 'package:pingmechat/pages/chat_list/chat_list.dart';
+import 'package:pingmechat/pages/chat_members/chat_members.dart';
+import 'package:pingmechat/pages/chat_permissions_settings/chat_permissions_settings.dart';
+import 'package:pingmechat/pages/chat_search/chat_search_page.dart';
+import 'package:pingmechat/pages/device_settings/device_settings.dart';
+import 'package:pingmechat/pages/homeserver_picker/homeserver_picker.dart';
+import 'package:pingmechat/pages/invitation_selection/invitation_selection.dart';
+import 'package:pingmechat/pages/login/login.dart';
+import 'package:pingmechat/pages/new_group/new_group.dart';
+import 'package:pingmechat/pages/new_private_chat/new_private_chat.dart';
+import 'package:pingmechat/pages/settings/settings.dart';
+import 'package:pingmechat/pages/settings_3pid/settings_3pid.dart';
+import 'package:pingmechat/pages/settings_chat/settings_chat.dart';
+import 'package:pingmechat/pages/settings_emotes/settings_emotes.dart';
+import 'package:pingmechat/pages/settings_homeserver/settings_homeserver.dart';
+import 'package:pingmechat/pages/settings_ignore_list/settings_ignore_list.dart';
+import 'package:pingmechat/pages/settings_multiple_emotes/settings_multiple_emotes.dart';
+import 'package:pingmechat/pages/settings_notifications/settings_notifications.dart';
+import 'package:pingmechat/pages/settings_password/settings_password.dart';
+import 'package:pingmechat/pages/settings_security/settings_security.dart';
+import 'package:pingmechat/pages/settings_style/settings_style.dart';
+import 'package:pingmechat/widgets/layouts/empty_page.dart';
+import 'package:pingmechat/widgets/layouts/two_column_layout.dart';
+import 'package:pingmechat/widgets/log_view.dart';
+import 'package:pingmechat/widgets/matrix.dart';
+import 'package:pingmechat/widgets/share_scaffold_dialog.dart';
 
 abstract class AppRoutes {
   static FutureOr<String?> loggedInRedirect(
@@ -55,10 +55,13 @@ abstract class AppRoutes {
 
   static final List<RouteBase> routes = [
     GoRoute(
-      path: '/',
-      redirect: (context, state) =>
-          Matrix.of(context).client.isLogged() ? '/rooms' : '/home',
-    ),
+        path: '/',
+        redirect: (context, state) {
+          if (Matrix.of(context).isAutoLoginAccountDetect()) {
+            return Matrix.of(context).autoLoginAccountRedirect();
+          }
+          return Matrix.of(context).client.isLogged() ? '/rooms' : '/home';
+        },),
     GoRoute(
       path: '/home',
       pageBuilder: (context, state) => defaultPageBuilder(
@@ -87,24 +90,15 @@ abstract class AppRoutes {
         const LogViewer(),
       ),
     ),
-    GoRoute(
-      path: '/configs',
-      pageBuilder: (context, state) => defaultPageBuilder(
-        context,
-        state,
-        const ConfigViewer(),
-      ),
-    ),
     ShellRoute(
-      // Never use a transition on the shell route. Changing the PageBuilder
-      // here based on a MediaQuery causes the child to briefly be rendered
-      // twice with the same GlobalKey, blowing up the rendering.
-      pageBuilder: (context, state, child) => noTransitionPageBuilder(
+      pageBuilder: (context, state, child) => defaultPageBuilder(
         context,
         state,
-        FluffyThemes.isColumnMode(context) &&
+        PingmeThemes.isColumnMode(context) &&
                 state.fullPath?.startsWith('/rooms/settings') == false
             ? TwoColumnLayout(
+                displayNavigationRail:
+                    state.path?.startsWith('/rooms/settings') != true,
                 mainView: ChatList(
                   activeChat: state.pathParameters['roomid'],
                   displayNavigationRail:
@@ -121,13 +115,26 @@ abstract class AppRoutes {
           pageBuilder: (context, state) => defaultPageBuilder(
             context,
             state,
-            FluffyThemes.isColumnMode(context)
+            PingmeThemes.isColumnMode(context)
                 ? const EmptyPage()
                 : ChatList(
                     activeChat: state.pathParameters['roomid'],
                   ),
           ),
           routes: [
+            GoRoute(
+              path: 'threads',
+              pageBuilder: (context, state) => defaultPageBuilder(
+                context,
+                state,
+                AllThreads(
+                  roomId: state.uri.queryParameters['roomId'],
+                  roomsSearch: state.uri.queryParameters['roomsSearch'],
+                  threadsSearch: state.uri.queryParameters['threadsSearch'],
+                ),
+              ),
+              redirect: loggedOutRedirect,
+            ),
             GoRoute(
               path: 'archive',
               pageBuilder: (context, state) => defaultPageBuilder(
@@ -178,14 +185,26 @@ abstract class AppRoutes {
               ),
               redirect: loggedOutRedirect,
             ),
+            GoRoute(
+              path: 'global_search',
+              pageBuilder: (context, state) => defaultPageBuilder(
+                context,
+                state,
+                ChatSearchPage(
+                    isGlobal: true,
+                    searchQuery: state.uri.queryParameters['search'],),
+              ),
+              redirect: loggedOutRedirect,
+            ),
             ShellRoute(
               pageBuilder: (context, state, child) => defaultPageBuilder(
                 context,
                 state,
-                FluffyThemes.isColumnMode(context)
+                PingmeThemes.isColumnMode(context)
                     ? TwoColumnLayout(
-                        mainView: Settings(key: state.pageKey),
+                        mainView: const Settings(),
                         sideView: child,
+                        displayNavigationRail: false,
                       )
                     : child,
               ),
@@ -195,7 +214,7 @@ abstract class AppRoutes {
                   pageBuilder: (context, state) => defaultPageBuilder(
                     context,
                     state,
-                    FluffyThemes.isColumnMode(context)
+                    PingmeThemes.isColumnMode(context)
                         ? const EmptyPage()
                         : const Settings(),
                   ),
@@ -337,6 +356,9 @@ abstract class AppRoutes {
                   shareItems ??= [];
                   shareItems.add(TextShareItem(body));
                 }
+
+                final from = (state.extra as Map?)?['from'];
+
                 return defaultPageBuilder(
                   context,
                   state,
@@ -344,6 +366,9 @@ abstract class AppRoutes {
                     roomId: state.pathParameters['roomid']!,
                     shareItems: shareItems,
                     eventId: state.uri.queryParameters['event'],
+                    thread: state.uri.queryParameters['thread'],
+                    eventIdInThread: state.uri.queryParameters['threadEvent'],
+                    from: from,
                   ),
                 );
               },
@@ -470,24 +495,17 @@ abstract class AppRoutes {
     ),
   ];
 
-  static Page noTransitionPageBuilder(
-    BuildContext context,
-    GoRouterState state,
-    Widget child,
-  ) =>
-      NoTransitionPage(
-        key: state.pageKey,
-        restorationId: state.pageKey.value,
-        child: child,
-      );
-
   static Page defaultPageBuilder(
     BuildContext context,
     GoRouterState state,
     Widget child,
   ) =>
-      FluffyThemes.isColumnMode(context)
-          ? noTransitionPageBuilder(context, state, child)
+      PingmeThemes.isColumnMode(context)
+          ? NoTransitionPage(
+              key: state.pageKey,
+              restorationId: state.pageKey.value,
+              child: child,
+            )
           : MaterialPage(
               key: state.pageKey,
               restorationId: state.pageKey.value,

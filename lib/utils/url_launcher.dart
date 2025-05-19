@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:collection/collection.dart' show IterableExtension;
 import 'package:flutter_gen/gen_l10n/l10n.dart';
 import 'package:go_router/go_router.dart';
@@ -7,12 +8,12 @@ import 'package:matrix/matrix.dart';
 import 'package:punycode/punycode.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
-import 'package:fluffychat/config/app_config.dart';
-import 'package:fluffychat/widgets/adaptive_dialogs/show_ok_cancel_alert_dialog.dart';
-import 'package:fluffychat/widgets/adaptive_dialogs/user_dialog.dart';
-import 'package:fluffychat/widgets/future_loading_dialog.dart';
-import 'package:fluffychat/widgets/matrix.dart';
-import '../widgets/adaptive_dialogs/public_room_dialog.dart';
+import 'package:pingmechat/config/app_config.dart';
+import 'package:pingmechat/pages/user_bottom_sheet/user_bottom_sheet.dart';
+import 'package:pingmechat/utils/adaptive_bottom_sheet.dart';
+import 'package:pingmechat/widgets/future_loading_dialog.dart';
+import 'package:pingmechat/widgets/matrix.dart';
+import 'package:pingmechat/widgets/public_room_bottom_sheet.dart';
 import 'platform_infos.dart';
 
 class UrlLauncher {
@@ -50,7 +51,7 @@ class UrlLauncher {
         context: context,
         title: L10n.of(context).openLinkInBrowser,
         message: url,
-        okLabel: L10n.of(context).open,
+        okLabel: L10n.of(context).yes,
         cancelLabel: L10n.of(context).cancel,
       );
       if (consent != OkCancelResult.ok) return;
@@ -178,10 +179,11 @@ class UrlLauncher {
         }
         return;
       } else {
-        await showAdaptiveDialog(
+        await showAdaptiveBottomSheet(
           context: context,
-          builder: (c) => PublicRoomDialog(
+          builder: (c) => PublicRoomBottomSheet(
             roomAlias: identityParts.primaryIdentifier,
+            outerContext: context,
           ),
         );
       }
@@ -219,21 +221,12 @@ class UrlLauncher {
         }
       }
     } else if (identityParts.primaryIdentifier.sigil == '@') {
-      final userId = identityParts.primaryIdentifier;
-      var noProfileWarning = false;
-      final profileResult = await showFutureLoadingDialog(
+      await showAdaptiveBottomSheet(
         context: context,
-        future: () => matrix.client.getProfileFromUserId(userId).catchError(
-          (_) {
-            noProfileWarning = true;
-            return Profile(userId: userId);
-          },
+        builder: (c) => LoadProfileBottomSheet(
+          userId: identityParts.primaryIdentifier,
+          outerContext: context,
         ),
-      );
-      await UserDialog.show(
-        context: context,
-        profile: profileResult.result!,
-        noProfileWarning: noProfileWarning,
       );
     }
   }

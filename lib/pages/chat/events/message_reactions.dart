@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
 import 'package:collection/collection.dart' show IterableExtension;
+import 'package:pingmechat/widgets/pingme_chat_app.dart';
 import 'package:matrix/matrix.dart';
-
-import 'package:fluffychat/config/app_config.dart';
-import 'package:fluffychat/config/themes.dart';
-import 'package:fluffychat/widgets/avatar.dart';
-import 'package:fluffychat/widgets/future_loading_dialog.dart';
-import 'package:fluffychat/widgets/matrix.dart';
-import 'package:fluffychat/widgets/mxc_image.dart';
+import 'package:flutter_gen/gen_l10n/l10n.dart';
+import 'package:pingmechat/config/app_config.dart';
+import 'package:pingmechat/widgets/avatar.dart';
+import 'package:pingmechat/widgets/future_loading_dialog.dart';
+import 'package:pingmechat/widgets/matrix.dart';
+import 'package:pingmechat/widgets/mxc_image.dart';
 
 class MessageReactions extends StatelessWidget {
   final Event event;
@@ -37,7 +37,7 @@ class MessageReactions extends StatelessWidget {
           );
         }
         reactionMap[key]!.count++;
-        reactionMap[key]!.reactors!.add(e.senderFromMemoryOrFallback);
+        reactionMap[key]!.reactors.add(e.senderFromMemoryOrFallback);
         reactionMap[key]!.reacted |= e.senderId == e.room.client.userID;
       }
     }
@@ -55,6 +55,9 @@ class MessageReactions extends StatelessWidget {
             reactionKey: r.key,
             count: r.count,
             reacted: r.reacted,
+            tooltip: r.reactors.length > 5
+                ? '${r.reactors.take(5).map((u) => u.displayName).join(", ")} ${L10n.of(context).moreUsers(r.reactors.length - 5)}'
+                : r.reactors.map((u) => u.displayName).join(", "),
             onTap: () {
               if (r.reacted) {
                 final evt = allReactionEvents.firstWhereOrNull(
@@ -94,6 +97,7 @@ class MessageReactions extends StatelessWidget {
 
 class _Reaction extends StatelessWidget {
   final String reactionKey;
+  final String tooltip;
   final int count;
   final bool? reacted;
   final void Function()? onTap;
@@ -105,6 +109,7 @@ class _Reaction extends StatelessWidget {
     required this.reacted,
     required this.onTap,
     required this.onLongPress,
+    required this.tooltip,
   });
 
   @override
@@ -112,9 +117,7 @@ class _Reaction extends StatelessWidget {
     final theme = Theme.of(context);
     final textColor =
         theme.brightness == Brightness.dark ? Colors.white : Colors.black;
-    final color = reacted == true
-        ? theme.bubbleColor
-        : theme.colorScheme.surfaceContainerHigh;
+    final color = theme.colorScheme.surface;
     Widget content;
     if (reactionKey.startsWith('mxc://')) {
       content = Row(
@@ -147,22 +150,31 @@ class _Reaction extends StatelessWidget {
       content = Text(
         renderKey.toString() + (count > 1 ? ' $count' : ''),
         style: TextStyle(
-          color: reacted == true ? theme.onBubbleColor : textColor,
+          color: textColor,
           fontSize: DefaultTextStyle.of(context).style.fontSize,
         ),
       );
     }
-    return InkWell(
-      onTap: () => onTap != null ? onTap!() : null,
-      onLongPress: () => onLongPress != null ? onLongPress!() : null,
-      borderRadius: BorderRadius.circular(AppConfig.borderRadius / 2),
-      child: Container(
-        decoration: BoxDecoration(
-          color: color,
-          borderRadius: BorderRadius.circular(AppConfig.borderRadius / 2),
+    return Tooltip(
+      message: tooltip,
+      child: InkWell(
+        onTap: () => onTap != null ? onTap!() : null,
+        onLongPress: () => onLongPress != null ? onLongPress!() : null,
+        borderRadius: BorderRadius.circular(AppConfig.borderRadius / 2),
+        child: Container(
+          decoration: BoxDecoration(
+            color: color,
+            border: Border.all(
+              width: 1,
+              color: reacted!
+                  ? theme.colorScheme.primary
+                  : theme.colorScheme.primaryContainer,
+            ),
+            borderRadius: BorderRadius.circular(AppConfig.borderRadius / 2),
+          ),
+          padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
+          child: content,
         ),
-        padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
-        child: content,
       ),
     );
   }
@@ -172,13 +184,13 @@ class _ReactionEntry {
   String key;
   int count;
   bool reacted;
-  List<User>? reactors;
+  List<User> reactors;
 
   _ReactionEntry({
     required this.key,
     required this.count,
     required this.reacted,
-    this.reactors,
+    required this.reactors,
   });
 }
 
@@ -192,7 +204,7 @@ class _AdaptableReactorsDialog extends StatelessWidget {
   });
 
   Future<bool?> show(BuildContext context) => showAdaptiveDialog(
-        context: context,
+        context: navigatorKey.currentContext!,
         builder: (context) => this,
         barrierDismissible: true,
         useRootNavigator: false,
@@ -206,7 +218,7 @@ class _AdaptableReactorsDialog extends StatelessWidget {
         runSpacing: 4.0,
         alignment: WrapAlignment.center,
         children: <Widget>[
-          for (final reactor in reactionEntry!.reactors!)
+          for (final reactor in reactionEntry!.reactors)
             Chip(
               avatar: Avatar(
                 mxContent: reactor.avatarUrl,

@@ -2,14 +2,14 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
 import 'package:matrix/matrix.dart';
 
-import 'package:fluffychat/pages/chat/chat.dart';
-import 'package:fluffychat/pages/chat/chat_app_bar_list_tile.dart';
-import 'package:fluffychat/utils/matrix_sdk_extensions/matrix_locals.dart';
-import 'package:fluffychat/widgets/adaptive_dialogs/show_modal_action_popup.dart';
-import 'package:fluffychat/widgets/future_loading_dialog.dart';
+import 'package:pingmechat/pages/chat/chat.dart';
+import 'package:pingmechat/pages/chat/chat_app_bar_list_tile.dart';
+import 'package:pingmechat/utils/matrix_sdk_extensions/matrix_locals.dart';
+import 'package:pingmechat/widgets/future_loading_dialog.dart';
 
 class PinnedEvents extends StatelessWidget {
   final ChatController controller;
@@ -30,15 +30,13 @@ class PinnedEvents extends StatelessWidget {
 
     final eventId = events.length == 1
         ? events.single?.eventId
-        : await showModalActionPopup<String>(
+        : await showConfirmationDialog<String>(
             context: context,
-            title: L10n.of(context).pin,
-            cancelLabel: L10n.of(context).cancel,
+            title: L10n.of(context).pinMessage,
             actions: events
                 .map(
-                  (event) => AdaptiveModalAction(
-                    value: event?.eventId ?? '',
-                    icon: const Icon(Icons.push_pin_outlined),
+                  (event) => AlertDialogAction(
+                    key: event?.eventId ?? '',
                     label: event?.calcLocalizedBodyFallback(
                           MatrixLocals(L10n.of(context)),
                           withSenderNamePrefix: true,

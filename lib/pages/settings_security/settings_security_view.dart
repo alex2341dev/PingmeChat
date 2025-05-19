@@ -2,21 +2,19 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_gen/gen_l10n/l10n.dart';
 import 'package:go_router/go_router.dart';
-import 'package:matrix/matrix.dart';
 
-import 'package:fluffychat/config/app_config.dart';
-import 'package:fluffychat/config/setting_keys.dart';
-import 'package:fluffychat/config/themes.dart';
-import 'package:fluffychat/utils/beautify_string_extension.dart';
-import 'package:fluffychat/utils/platform_infos.dart';
-import 'package:fluffychat/widgets/layouts/max_width_body.dart';
-import 'package:fluffychat/widgets/matrix.dart';
-import 'package:fluffychat/widgets/settings_switch_list_tile.dart';
+import 'package:pingmechat/config/app_config.dart';
+import 'package:pingmechat/config/setting_keys.dart';
+import 'package:pingmechat/utils/app_locker/app_locker.dart';
+import 'package:pingmechat/utils/beautify_string_extension.dart';
+import 'package:pingmechat/utils/platform_infos.dart';
+import 'package:pingmechat/widgets/layouts/max_width_body.dart';
+import 'package:pingmechat/widgets/matrix.dart';
+import 'package:pingmechat/widgets/settings_switch_list_tile.dart';
 import 'settings_security.dart';
 
 class SettingsSecurityView extends StatelessWidget {
   final SettingsSecurityController controller;
-
   const SettingsSecurityView(this.controller, {super.key});
 
   @override
@@ -24,11 +22,7 @@ class SettingsSecurityView extends StatelessWidget {
     final theme = Theme.of(context);
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(L10n.of(context).security),
-        automaticallyImplyLeading: !FluffyThemes.isColumnMode(context),
-        centerTitle: FluffyThemes.isColumnMode(context),
-      ),
+      appBar: AppBar(title: Text(L10n.of(context).security)),
       body: ListTileTheme(
         iconColor: theme.colorScheme.onSurface,
         child: MaxWidthBody(
@@ -86,49 +80,22 @@ class SettingsSecurityView extends StatelessWidget {
                         context.go('/rooms/settings/security/ignorelist'),
                   ),
                   if (Matrix.of(context).client.encryption != null) ...{
-                    if (PlatformInfos.isMobile)
+                    if (!PlatformInfos.isWeb)
                       ListTile(
                         trailing: const Icon(Icons.chevron_right_outlined),
                         title: Text(L10n.of(context).appLock),
                         subtitle: Text(L10n.of(context).appLockDescription),
                         onTap: controller.setAppLockAction,
                       ),
+                    if (AppLocker.getLockMethod() != null)
+                      ListTile(
+                        trailing: const Icon(Icons.chevron_right_outlined),
+                        title: Text(L10n.of(context).appLockTimeout),
+                        subtitle:
+                            Text(L10n.of(context).appLockTimeoutDescription),
+                        onTap: controller.setAppLockTimeoutAction,
+                      ),
                   },
-                  Divider(color: theme.dividerColor),
-                  ListTile(
-                    title: Text(
-                      L10n.of(context).shareKeysWith,
-                      style: TextStyle(
-                        color: theme.colorScheme.secondary,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    subtitle: Text(L10n.of(context).shareKeysWithDescription),
-                  ),
-                  ListTile(
-                    title: Material(
-                      borderRadius:
-                          BorderRadius.circular(AppConfig.borderRadius / 2),
-                      color: theme.colorScheme.onInverseSurface,
-                      child: DropdownButton<ShareKeysWith>(
-                        isExpanded: true,
-                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                        borderRadius:
-                            BorderRadius.circular(AppConfig.borderRadius / 2),
-                        underline: const SizedBox.shrink(),
-                        value: Matrix.of(context).client.shareKeysWith,
-                        items: ShareKeysWith.values
-                            .map(
-                              (share) => DropdownMenuItem(
-                                value: share,
-                                child: Text(share.localized(L10n.of(context))),
-                              ),
-                            )
-                            .toList(),
-                        onChanged: controller.changeShareKeysWith,
-                      ),
-                    ),
-                  ),
                   Divider(color: theme.dividerColor),
                   ListTile(
                     title: Text(
@@ -144,7 +111,7 @@ class SettingsSecurityView extends StatelessWidget {
                     leading: const Icon(Icons.vpn_key_outlined),
                     subtitle: SelectableText(
                       Matrix.of(context).client.fingerprintKey.beautified,
-                      style: const TextStyle(fontFamily: 'RobotoMono'),
+                      style: const TextStyle(fontFamily: 'monospace'),
                     ),
                   ),
                   if (capabilities?.mChangePassword?.enabled != false ||
@@ -182,20 +149,5 @@ class SettingsSecurityView extends StatelessWidget {
         ),
       ),
     );
-  }
-}
-
-extension on ShareKeysWith {
-  String localized(L10n l10n) {
-    switch (this) {
-      case ShareKeysWith.all:
-        return l10n.allDevices;
-      case ShareKeysWith.crossVerifiedIfEnabled:
-        return l10n.crossVerifiedDevicesIfEnabled;
-      case ShareKeysWith.crossVerified:
-        return l10n.crossVerifiedDevices;
-      case ShareKeysWith.directlyVerifiedOnly:
-        return l10n.verifiedDevicesOnly;
-    }
   }
 }

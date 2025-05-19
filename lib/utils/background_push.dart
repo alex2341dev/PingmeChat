@@ -1,7 +1,7 @@
 /*
  *   Famedly
  *   Copyright (C) 2020, 2021 Famedly GmbH
- *   Copyright (C) 2021 Fluffychat
+ *   Copyright (C) 2021 Pingmechat
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU Affero General Public License as
@@ -24,22 +24,22 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+import 'package:flutter_new_badger/flutter_new_badger.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:flutter_new_badger/flutter_new_badger.dart';
 import 'package:http/http.dart' as http;
 import 'package:matrix/matrix.dart';
 import 'package:unifiedpush/unifiedpush.dart';
 import 'package:unifiedpush_ui/unifiedpush_ui.dart';
 
-import 'package:fluffychat/utils/push_helper.dart';
-import 'package:fluffychat/widgets/fluffy_chat_app.dart';
+import 'package:pingmechat/utils/push_helper.dart';
+import 'package:pingmechat/widgets/pingme_chat_app.dart';
 import '../config/app_config.dart';
 import '../config/setting_keys.dart';
 import '../widgets/matrix.dart';
 import 'platform_infos.dart';
 
-//import 'package:fcm_shared_isolate/fcm_shared_isolate.dart';
+import 'package:fcm_shared_isolate/fcm_shared_isolate.dart';
 
 class NoTokenException implements Exception {
   String get cause => 'Cannot get firebase token';
@@ -64,7 +64,7 @@ class BackgroundPush {
 
   final pendingTests = <String, Completer<void>>{};
 
-  final dynamic firebase = null; //FcmSharedIsolate();
+  final dynamic firebase = FcmSharedIsolate(); //FcmSharedIsolate();
 
   DateTime? lastReceivedPush;
 
@@ -142,15 +142,21 @@ class BackgroundPush {
   }
 
   Future<void> setupPusher({
-    String? gatewayUrl,
     String? token,
     Set<String?>? oldTokens,
     bool useDeviceSpecificAppId = false,
   }) async {
+    var gatewayUrl = "${(matrix!.client.homeserver!.origin.split('.')
+              ..[0] += '-push')
+            .join('.')}/_matrix/push/v1/notify";
+
+    if (gatewayUrl.contains("https")) {
+      gatewayUrl = gatewayUrl.replaceFirst("https", "http");
+    }
+
     if (PlatformInfos.isIOS) {
       await firebase?.requestPermission();
-    }
-    if (PlatformInfos.isAndroid) {
+    } else if (PlatformInfos.isAndroid) {
       _flutterLocalNotificationsPlugin
           .resolvePlatformSpecificImplementation<
               AndroidFlutterLocalNotificationsPlugin>()
@@ -176,7 +182,7 @@ class BackgroundPush {
       appId += '.data_message';
     }
     final thisAppId = useDeviceSpecificAppId ? deviceAppId : appId;
-    if (gatewayUrl != null && token != null) {
+    if (token != null) {
       final currentPushers = pushers.where((pusher) => pusher.pushkey == token);
       if (currentPushers.length == 1 &&
           currentPushers.first.kind == 'http' &&
@@ -186,8 +192,7 @@ class BackgroundPush {
           currentPushers.first.lang == 'en' &&
           currentPushers.first.data.url.toString() == gatewayUrl &&
           currentPushers.first.data.format ==
-              AppSettings.pushNotificationsPusherFormat
-                  .getItem(matrix!.store) &&
+              AppConfig.pushNotificationsPusherFormat &&
           mapEquals(
             currentPushers.single.data.additionalProperties,
             {"data_message": pusherDataMessageFormat},
@@ -226,9 +231,8 @@ class BackgroundPush {
             deviceDisplayName: client.deviceName!,
             lang: 'en',
             data: PusherData(
-              url: Uri.parse(gatewayUrl!),
-              format: AppSettings.pushNotificationsPusherFormat
-                  .getItem(matrix!.store),
+              url: Uri.parse(gatewayUrl),
+              format: AppConfig.pushNotificationsPusherFormat,
               additionalProperties: {"data_message": pusherDataMessageFormat},
             ),
             kind: 'http',
@@ -317,30 +321,51 @@ class BackgroundPush {
       }
     }
     await setupPusher(
-      gatewayUrl:
-          AppSettings.pushNotificationsGatewayUrl.getItem(matrix!.store),
       token: _fcmToken,
     );
   }
 
   Future<void> goToRoom(NotificationResponse? response) async {
     try {
-      final roomId = response?.payload;
-      Logs().v('[Push] Attempting to go to room $roomId...');
-      if (roomId == null) {
+      if (response?.payload == null) {
         return;
       }
+
+      final payload =
+          NotificationPayload.fromJson(jsonDecode(response!.payload!));
+
+      Logs().v('[Push] Attempting to go to room ${payload.roomId}...');
+
       await client.roomsLoading;
       await client.accountDataLoading;
-      if (client.getRoomById(roomId) == null) {
+
+      Room? room = client.getRoomById(payload.roomId);
+
+      if (room == null) {
         await client
-            .waitForRoomInSync(roomId)
+            .waitForRoomInSync(payload.roomId)
             .timeout(const Duration(seconds: 30));
+
+        room = client.getRoomById(payload.roomId);
       }
-      FluffyChatApp.router.go(
-        client.getRoomById(roomId)?.membership == Membership.invite
+
+      final event = await room!.getEventById(payload.eventId);
+
+      if (event != null && event.relationshipEventId != null) {
+        PingmeChatApp.router.go('/${Uri(
+          pathSegments: ['rooms', room.id],
+          queryParameters: {
+            'thread': event.eventId,
+            'event': event.eventId,
+          },
+        )}');
+        return;
+      }
+
+      PingmeChatApp.router.go(
+        client.getRoomById(payload.roomId)?.membership == Membership.invite
             ? '/rooms'
-            : '/rooms/$roomId',
+            : '/rooms/${payload.roomId}',
       );
     } catch (e, s) {
       Logs().e('[Push] Failed to open room', e, s);
@@ -388,7 +413,6 @@ class BackgroundPush {
       oldTokens.add(fcmToken);
     } catch (_) {}
     await setupPusher(
-      gatewayUrl: endpoint,
       token: newEndpoint,
       oldTokens: oldTokens,
       useDeviceSpecificAppId: true,
@@ -430,10 +454,7 @@ class BackgroundPush {
 }
 
 class UPFunctions extends UnifiedPushFunctions {
-  final List<String> features = [
-    /*list of features*/
-  ];
-
+  final List<String> features = [/*list of features*/];
   @override
   Future<String?> getDistributor() async {
     return await UnifiedPush.getDistributor();

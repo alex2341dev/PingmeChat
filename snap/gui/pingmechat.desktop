@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=PingmeChat
+GenericName=Matrix Client
+Comment=Chat with your friends
+Exec=pingmechat
+Icon=${SNAP}/meta/gui/pingmechat.png
+Terminal=false
+Type=Application
+Categories=Network;Chat;InstantMessaging;

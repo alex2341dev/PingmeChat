@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
 import 'package:matrix/matrix.dart';
 
-import 'package:fluffychat/config/app_config.dart';
-import 'package:fluffychat/utils/date_time_extension.dart';
-import 'package:fluffychat/utils/matrix_sdk_extensions/event_extension.dart';
-import 'package:fluffychat/utils/matrix_sdk_extensions/matrix_locals.dart';
+import 'package:pingmechat/config/app_config.dart';
+import 'package:pingmechat/utils/date_time_extension.dart';
+import 'package:pingmechat/utils/matrix_sdk_extensions/event_extension.dart';
+import 'package:pingmechat/utils/matrix_sdk_extensions/matrix_locals.dart';
 
 class ChatSearchFilesTab extends StatelessWidget {
   final Room room;
@@ -151,7 +151,7 @@ class ChatSearchFilesTab extends StatelessWidget {
                       borderRadius:
                           BorderRadius.circular(AppConfig.borderRadius),
                       color: theme.colorScheme.onInverseSurface,
-                      clipBehavior: Clip.hardEdge,
+                      clipBehavior: Clip.antiAliasWithSaveLayer,
                       child: ListTile(
                         leading: const Icon(Icons.file_present_outlined),
                         title: Text(

@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:badges/badges.dart';
 import 'package:matrix/matrix.dart';
 
-import 'package:fluffychat/config/app_config.dart';
-import 'package:fluffychat/widgets/hover_builder.dart';
-import 'package:fluffychat/widgets/unread_rooms_badge.dart';
+import 'package:pingmechat/config/app_config.dart';
+import 'package:pingmechat/widgets/hover_builder.dart';
+import 'package:pingmechat/widgets/unread_rooms_badge.dart';
 import '../../config/themes.dart';
 
 class NaviRailItem extends StatelessWidget {
@@ -15,6 +15,7 @@ class NaviRailItem extends StatelessWidget {
   final Widget icon;
   final Widget? selectedIcon;
   final bool Function(Room)? unreadBadgeFilter;
+  final int? badgeCount;
 
   const NaviRailItem({
     required this.toolTip,
@@ -23,6 +24,7 @@ class NaviRailItem extends StatelessWidget {
     required this.icon,
     this.selectedIcon,
     this.unreadBadgeFilter,
+    this.badgeCount,
     super.key,
   });
   @override
@@ -35,18 +37,18 @@ class NaviRailItem extends StatelessWidget {
     return HoverBuilder(
       builder: (context, hovered) {
         return SizedBox(
-          height: 72,
-          width: FluffyThemes.navRailWidth,
+          height: PingmeThemes.navRailWidth,
+          width: PingmeThemes.navRailWidth,
           child: Stack(
             children: [
               Positioned(
-                top: 8,
-                bottom: 8,
+                top: 16,
+                bottom: 16,
                 left: 0,
                 child: AnimatedContainer(
-                  width: isSelected ? 8 : 0,
-                  duration: FluffyThemes.animationDuration,
-                  curve: FluffyThemes.animationCurve,
+                  width: isSelected ? 4 : 0,
+                  duration: PingmeThemes.animationDuration,
+                  curve: PingmeThemes.animationCurve,
                   decoration: BoxDecoration(
                     color: theme.colorScheme.primary,
                     borderRadius: const BorderRadius.only(
@@ -58,29 +60,36 @@ class NaviRailItem extends StatelessWidget {
               ),
               Center(
                 child: AnimatedScale(
-                  scale: hovered ? 1.1 : 1.0,
-                  duration: FluffyThemes.animationDuration,
-                  curve: FluffyThemes.animationCurve,
+                  scale: hovered ? 1.2 : 1.0,
+                  duration: PingmeThemes.animationDuration,
+                  curve: PingmeThemes.animationCurve,
                   child: Material(
                     borderRadius: borderRadius,
                     color: isSelected
                         ? theme.colorScheme.primaryContainer
-                        : theme.colorScheme.surfaceContainerHigh,
+                        : theme.colorScheme.surface,
                     child: Tooltip(
                       message: toolTip,
                       child: InkWell(
                         borderRadius: borderRadius,
                         onTap: onTap,
-                        child: unreadBadgeFilter == null
-                            ? icon
-                            : UnreadRoomsBadge(
-                                filter: unreadBadgeFilter,
-                                badgePosition: BadgePosition.topEnd(
-                                  top: -12,
-                                  end: -8,
-                                ),
-                                child: icon,
-                              ),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 8.0,
+                            vertical: 8.0,
+                          ),
+                          child: unreadBadgeFilter != null || badgeCount != null
+                              ? UnreadRoomsBadge(
+                                  filter: unreadBadgeFilter,
+                                  badgePosition: BadgePosition.topEnd(
+                                    top: -12,
+                                    end: -8,
+                                  ),
+                                  count: badgeCount,
+                                  child: icon,
+                                )
+                              : icon,
+                        ),
                       ),
                     ),
                   ),

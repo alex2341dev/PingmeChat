@@ -2,412 +2,372 @@
   "@@last_modified": "2021-08-14 12:41:09.918296",
   "about": "Despre",
   "@about": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "accept": "Accept",
   "@accept": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "acceptedTheInvitation": "{username} a aceptat invitați",
   "@acceptedTheInvitation": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "username": {
-        "type": "String"
-      }
+      "username": {}
     }
   },
   "account": "Cont",
   "@account": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "activatedEndToEndEncryption": "{username} a activat criptarea end-to-end",
   "@activatedEndToEndEncryption": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "username": {
-        "type": "String"
-      }
+      "username": {}
     }
   },
   "admin": "Administrator",
   "@admin": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "alias": "poreclă",
   "@alias": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "answeredTheCall": "{senderName} a acceptat apelul",
   "@answeredTheCall": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "senderName": {
-        "type": "String"
-      }
+      "senderName": {}
     }
   },
   "anyoneCanJoin": "Oricine se poate alătura",
   "@anyoneCanJoin": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "archive": "Arhivă",
   "@archive": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "areGuestsAllowedToJoin": "Vizitatorii \"guest\" se pot alătura",
   "@areGuestsAllowedToJoin": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "areYouSure": "Ești sigur?",
   "@areYouSure": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "askSSSSSign": "Pentru a putea conecta cealaltă persoană, te rog introdu parola sau cheia ta de recuperare.",
   "@askSSSSSign": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "askVerificationRequest": "Accepți cererea de verificare de la {username}?",
   "@askVerificationRequest": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "username": {
-        "type": "String"
-      }
+      "username": {}
     }
   },
   "banFromChat": "Interzis din conversație",
   "@banFromChat": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "banned": "Interzis",
   "@banned": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "bannedUser": "{username} a interzis pe {targetName}",
   "@bannedUser": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "username": {
-        "type": "String"
-      },
-      "targetName": {
-        "type": "String"
-      }
+      "username": {},
+      "targetName": {}
     }
   },
   "blockDevice": "Blochează dispozitiv",
   "@blockDevice": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "cancel": "Anulează",
   "@cancel": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "changeDeviceName": "Schimbă numele dispozitiv",
   "@changeDeviceName": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "changedTheChatAvatar": "{username} a schimbat poza conversați",
   "@changedTheChatAvatar": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "username": {
-        "type": "String"
-      }
+      "username": {}
     }
   },
   "changedTheChatDescriptionTo": "{username} a schimbat descrierea grupului în '{description}'",
   "@changedTheChatDescriptionTo": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "username": {
-        "type": "String"
-      },
-      "description": {
-        "type": "String"
-      }
+      "username": {},
+      "description": {}
     }
   },
   "changedTheChatNameTo": "{username} a schimbat porecla în '{chatname}'",
   "@changedTheChatNameTo": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "username": {
-        "type": "String"
-      },
-      "chatname": {
-        "type": "String"
-      }
+      "username": {},
+      "chatname": {}
     }
   },
   "commandHint_unban": "Dezinterziceți utilizatorul ales din această cameră",
   "@commandHint_unban": {
-    "type": "String",
+    "type": "text",
     "description": "Usage hint for the command /unban"
   },
   "dateAndTimeOfDay": "{date}, {timeOfDay}",
   "@dateAndTimeOfDay": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "date": {
-        "type": "String"
-      },
-      "timeOfDay": {
-        "type": "String"
-      }
+      "date": {},
+      "timeOfDay": {}
     }
   },
   "deviceId": "ID-ul Dispozitiv",
   "@deviceId": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "devices": "Dispozitive",
   "@devices": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "directChats": "Chaturi directe",
   "@directChats": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "endedTheCall": "{senderName} a terminat apelul",
   "@endedTheCall": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "senderName": {
-        "type": "String"
-      }
+      "senderName": {}
     }
   },
   "enterYourHomeserver": "Introduceți homeserverul vostru",
   "@enterYourHomeserver": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "groupWith": "Grup cu {displayname}",
   "@groupWith": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "displayname": {
-        "type": "String"
-      }
+      "displayname": {}
     }
   },
   "howOffensiveIsThisContent": "Cât de ofensiv este acest conținut?",
   "@howOffensiveIsThisContent": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "kickFromChat": "Dați afară din chat",
   "@kickFromChat": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "rejoin": "Reintrați",
   "@rejoin": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "sentCallInformations": "{senderName} a trimis informație de apel",
   "@sentCallInformations": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "senderName": {
-        "type": "String"
-      }
+      "senderName": {}
     }
   },
   "showPassword": "Afișați parola",
   "@showPassword": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "no": "Nu",
   "@no": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "sendMessages": "Trimiteți mesaje",
   "@sendMessages": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "submit": "Trimiteți",
   "@submit": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "unreadChats": "{unreadCount, plural, =1{Un chat necitit} other{{unreadCount} chaturi necitite}}",
   "@unreadChats": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "unreadCount": {
-        "type": "int"
-      }
+      "unreadCount": {}
     }
   },
   "verifySuccess": "A reușit verificarea!",
   "@verifySuccess": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "voiceMessage": "Mesaj vocal",
   "@voiceMessage": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "wallpaper": "Imagine de fundal",
   "@wallpaper": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "reactedWith": "{sender} a reacționat cu {reaction}",
   "@reactedWith": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "sender": {
-        "type": "String"
-      },
-      "reaction": {
-        "type": "String"
-      }
+      "sender": {},
+      "reaction": {}
     }
   },
   "changePassword": "Schimbați parola",
   "@changePassword": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "next": "Următor",
   "@next": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "noConnectionToTheServer": "Fără conexiune la server",
   "@noConnectionToTheServer": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "noPasswordRecoveryDescription": "Nu ați adăugat încă nici un mod de recuperare pentru parola voastră.",
   "@noPasswordRecoveryDescription": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "notifications": "Notificări",
   "@notifications": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "openVideoCamera": "Deschideți camera pentru video",
   "@openVideoCamera": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "openAppToReadMessages": "Deschideți aplicația să citiți mesajele",
   "@openAppToReadMessages": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "openCamera": "Deschideți camera",
   "@openCamera": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "removedBy": "Eliminat de {username}",
   "@removedBy": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "username": {
-        "type": "String"
-      }
+      "username": {}
     }
   },
   "removeDevice": "Eliminați dispozitivul",
   "@removeDevice": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "share": "Partajați",
   "@share": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "shareLocation": "Partajați locația",
   "@shareLocation": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "skip": "Săriți peste",
   "@skip": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "sourceCode": "Codul surs",
   "@sourceCode": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "spaceIsPublic": "Spațiul este public",
   "@spaceIsPublic": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "spaceName": "Numele spațiului",
   "@spaceName": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "toggleFavorite": "Comutați favoritul",
   "@toggleFavorite": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "unblockDevice": "Debloca dispozitiv",
   "@unblockDevice": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "unknownDevice": "Dispozitiv necunoscut",
   "@unknownDevice": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "verify": "Verificați",
   "@verify": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "weSentYouAnEmail": "V-am trimis un email",
   "@weSentYouAnEmail": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "youAreNoLongerParticipatingInThisChat": "Nu mai participați în acest chat",
   "@youAreNoLongerParticipatingInThisChat": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "yourPublicKey": "Cheia voastră publică",
   "@yourPublicKey": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "addToSpaceDescription": "Alegeți un spațiu în care să adăugați acest chat.",
@@ -422,11 +382,9 @@
   "@previousAccount": {},
   "userIsTyping": "{username} tastează…",
   "@userIsTyping": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "username": {
-        "type": "String"
-      }
+      "username": {}
     }
   },
   "widgetCustom": "Personalizat",
@@ -437,41 +395,39 @@
   "@newGroup": {},
   "changedTheRoomInvitationLink": "{username} a schimbat linkul de invitație",
   "@changedTheRoomInvitationLink": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "username": {
-        "type": "String"
-      }
+      "username": {}
     }
   },
   "chat": "Chat",
   "@chat": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "chats": "Chaturi",
   "@chats": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "invited": "Invitat",
   "@invited": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "login": "Conectați-vă",
   "@login": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "online": "Online",
   "@online": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "onlineKeyBackupEnabled": "Backup de cheie online este activat",
   "@onlineKeyBackupEnabled": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "removeFromBundle": "Stergeți din acest pachet",
@@ -480,121 +436,113 @@
   "@enableMultiAccounts": {},
   "participant": "Participant",
   "@participant": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "openInMaps": "Deschideți pe hartă",
   "@openInMaps": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "pleaseEnterYourPin": "Vă rugăm să introduceți pinul vostru",
   "@pleaseEnterYourPin": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "privacy": "Confidențialitate",
   "@privacy": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "pushRules": "Regulile Push",
   "@pushRules": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "recording": "Înregistrare",
   "@recording": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "register": "Înregistrați-vă",
   "@register": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "redactMessage": "Redactați mesaj",
   "@redactMessage": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "roomVersion": "Versiunea camerei",
   "@roomVersion": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "security": "Securitate",
   "@security": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "sendFile": "Trimiteți fișier",
   "@sendFile": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "setStatus": "Stabiliți status",
   "@setStatus": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "settings": "Configurări",
   "@settings": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "inviteForMe": "Invitați pentru mine",
   "@inviteForMe": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
-  "fluffychat": "FluffyChat",
-  "@fluffychat": {
-    "type": "String",
+  "pingmechat": "PingmeChat",
+  "@pingmechat": {
+    "type": "text",
     "placeholders": {}
   },
   "hasWithdrawnTheInvitationFor": "{username} a retras invitația pentru {targetName}",
   "@hasWithdrawnTheInvitationFor": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "username": {
-        "type": "String"
-      },
-      "targetName": {
-        "type": "String"
-      }
+      "username": {},
+      "targetName": {}
     }
   },
   "help": "Ajutor",
   "@help": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "unknownEncryptionAlgorithm": "Algoritm de criptare necunoscut",
   "@unknownEncryptionAlgorithm": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "unmuteChat": "Dezamuțați chat",
   "@unmuteChat": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "unpin": "Anulează fixarea",
   "@unpin": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "unbannedUser": "{username} a ridicat interzicerea lui {targetName}",
   "@unbannedUser": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "username": {
-        "type": "String"
-      },
-      "targetName": {
-        "type": "String"
-      }
+      "username": {},
+      "targetName": {}
     }
   },
   "openChat": "Deschideți Chat",
@@ -604,9 +552,7 @@
   "youBannedUser": "Ați interzis pe {user}",
   "@youBannedUser": {
     "placeholders": {
-      "user": {
-        "type": "String"
-      }
+      "user": {}
     }
   },
   "fileIsTooBigForServer": "Serverul reportează că fișierul este prea mare să fie trimis.",
@@ -617,32 +563,30 @@
   "@sorryThatsNotPossible": {},
   "enableEncryptionWarning": "Activând criptare, nu mai puteți să o dezactivați în viitor. Sunteți sigur?",
   "@enableEncryptionWarning": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "commandMissing": "{command} nu este o comandă.",
   "@commandMissing": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "command": {
-        "type": "String"
-      }
+      "command": {}
     },
     "description": "State that {command} is not a valid /command."
   },
   "status": "Status",
   "@status": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "connect": "Conectați",
   "@connect": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "you": "Voi",
   "@you": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "start": "Începeți",
@@ -653,68 +597,62 @@
   "@pinMessage": {},
   "wasDirectChatDisplayName": "Chat gol (a fost {oldDisplayName})",
   "@wasDirectChatDisplayName": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "oldDisplayName": {
-        "type": "String"
-      }
+      "oldDisplayName": {}
     }
   },
   "pleaseClickOnLink": "Vă rugăm să deschideți linkul din email și apoi să procedați.",
   "@pleaseClickOnLink": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "reportUser": "Reportați utilizator",
   "@reportUser": {},
   "encryptionNotEnabled": "Criptare nu e activată",
   "@encryptionNotEnabled": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "publicRooms": "Camere Publice",
   "@publicRooms": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "addToBundle": "Adăugați în pachet",
   "@addToBundle": {},
   "theyDontMatch": "Nu sunt asemănători",
   "@theyDontMatch": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "loadingPleaseWait": "Încărcând... Vă rugăm să așteptați.",
   "@loadingPleaseWait": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "dateWithoutYear": "{month}-{day}",
   "@dateWithoutYear": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "month": {
-        "type": "String"
-      },
-      "day": {
-        "type": "String"
-      }
+      "month": {},
+      "day": {}
     }
   },
   "theyMatch": "Sunt asemănători",
   "@theyMatch": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
-  "title": "FluffyChat",
+  "title": "PingmeChat",
   "@title": {
     "description": "Title for the application",
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "toggleMuted": "Comutați amuțeștarea",
   "@toggleMuted": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "scanQrCode": "Scanați cod QR",
@@ -731,9 +669,7 @@
   "@switchToAccount": {
     "type": "number",
     "placeholders": {
-      "number": {
-        "type": "String"
-      }
+      "number": {}
     }
   },
   "nextAccount": "Contul următor",
@@ -750,37 +686,37 @@
   "@callingAccount": {},
   "foregroundServiceRunning": "Această notificare apare când serviciul de foreground rulează.",
   "@foregroundServiceRunning": {},
-  "callingAccountDetails": "Permite FluffyChat să folosească aplicația de apeluri nativă android.",
+  "callingAccountDetails": "Permite PingmeChat să folosească aplicația de apeluri nativă android.",
   "@callingAccountDetails": {},
   "appearOnTop": "Apare deasupra",
   "@appearOnTop": {},
-  "appearOnTopDetails": "Permite aplicația să apare deasupra (nu este necesar dacă aveți FluffyChat stabilit ca cont de apeluri)",
+  "appearOnTopDetails": "Permite aplicația să apare deasupra (nu este necesar dacă aveți PingmeChat stabilit ca cont de apeluri)",
   "@appearOnTopDetails": {},
   "currentlyActive": "Activ acum",
   "@currentlyActive": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "containsDisplayName": "Conține displayname",
   "@containsDisplayName": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "isTyping": "tastează…",
   "@isTyping": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "chatBackup": "Backup de chat",
   "@chatBackup": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "repeatPassword": "Repetați parola",
   "@repeatPassword": {},
   "changeTheme": "Schimbați tema aplicației",
   "@changeTheme": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "chatHasBeenAddedToThisSpace": "Chatul a fost adăugat la acest spațiu",
@@ -793,259 +729,233 @@
   "@commandHint_markasgroup": {},
   "commandHint_ban": "Interziceți acesul utilizatorului ales din această cameră",
   "@commandHint_ban": {
-    "type": "String",
+    "type": "text",
     "description": "Usage hint for the command /ban"
   },
   "commandHint_clearcache": "Ștergeți cache",
   "@commandHint_clearcache": {
-    "type": "String",
+    "type": "text",
     "description": "Usage hint for the command /clearcache"
   },
   "commandHint_create": "Creați un grup de chat gol\nFolosiți --no-encryption să dezactivați criptare",
   "@commandHint_create": {
-    "type": "String",
+    "type": "text",
     "description": "Usage hint for the command /create"
   },
   "commandHint_discardsession": "Renunțați sesiunea",
   "@commandHint_discardsession": {
-    "type": "String",
+    "type": "text",
     "description": "Usage hint for the command /discardsession"
   },
   "commandHint_kick": "Dați afară pe utilizatorul ales din această cameră",
   "@commandHint_kick": {
-    "type": "String",
+    "type": "text",
     "description": "Usage hint for the command /kick"
   },
   "commandHint_leave": "Renunțați la această cameră",
   "@commandHint_leave": {
-    "type": "String",
+    "type": "text",
     "description": "Usage hint for the command /leave"
   },
   "commandHint_myroomavatar": "Alegeți un avatar pentru această cameră (foloșește mxc-uri)",
   "@commandHint_myroomavatar": {
-    "type": "String",
+    "type": "text",
     "description": "Usage hint for the command /myroomavatar"
   },
   "commandHint_myroomnick": "Alegeți un displayname pentru această cameră",
   "@commandHint_myroomnick": {
-    "type": "String",
+    "type": "text",
     "description": "Usage hint for the command /myroomnick"
   },
   "commandHint_op": "Stabiliți nivelul de putere a utilizatorul ales (implicit: 50)",
   "@commandHint_op": {
-    "type": "String",
+    "type": "text",
     "description": "Usage hint for the command /op"
   },
   "commandHint_plain": "Trimiteți text simplu/neformatat",
   "@commandHint_plain": {
-    "type": "String",
+    "type": "text",
     "description": "Usage hint for the command /plain"
   },
   "commandHint_react": "Trimiteți răspuns ca reacție",
   "@commandHint_react": {
-    "type": "String",
+    "type": "text",
     "description": "Usage hint for the command /react"
   },
   "commandHint_send": "Trimiteți text",
   "@commandHint_send": {
-    "type": "String",
+    "type": "text",
     "description": "Usage hint for the command /send"
   },
   "commandInvalid": "Comandă nevalibilă",
   "@commandInvalid": {
-    "type": "String"
+    "type": "text"
   },
   "compareEmojiMatch": "Vă rugăm să comparați emoji-urile",
   "@compareEmojiMatch": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "compareNumbersMatch": "Vă rugăm să comparați numerele",
   "@compareNumbersMatch": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "couldNotDecryptMessage": "Dezcriptarea mesajului a eșuat: {error}",
   "@couldNotDecryptMessage": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "error": {
-        "type": "String"
-      }
+      "error": {}
     }
   },
   "create": "Creați",
   "@create": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "createdTheChat": "💬{username} a creat chatul",
   "@createdTheChat": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "username": {
-        "type": "String"
-      }
+      "username": {}
     }
   },
   "createNewSpace": "Spațiu nou",
   "@createNewSpace": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "dateWithYear": "{year}-{month}-{day}",
   "@dateWithYear": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "year": {
-        "type": "String"
-      },
-      "month": {
-        "type": "String"
-      },
-      "day": {
-        "type": "String"
-      }
+      "year": {},
+      "month": {},
+      "day": {}
     }
   },
   "allRooms": "Toate chaturi de grup",
   "@allRooms": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "forward": "Înainte",
   "@forward": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "groups": "Grupuri",
   "@groups": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "hideRedactedEvents": "Ascunde evenimente redactate",
   "@hideRedactedEvents": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "hideUnknownEvents": "Ascunde evenimente necunoscute",
   "@hideUnknownEvents": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "identity": "Identitate",
   "@identity": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "ignore": "Ignorați",
   "@ignore": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "ignoredUsers": "Utilizatori ignorați",
   "@ignoredUsers": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "iHaveClickedOnLink": "Am făcut click pe link",
   "@iHaveClickedOnLink": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "incorrectPassphraseOrKey": "Parolă sau cheie de recuperare incorectă",
   "@incorrectPassphraseOrKey": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "inoffensive": "Inofensiv",
   "@inoffensive": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "inviteContact": "Invitați contact",
   "@inviteContact": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "inviteContactToGroup": "Invitați contact la {groupName}",
   "@inviteContactToGroup": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "groupName": {
-        "type": "String"
-      }
+      "groupName": {}
     }
   },
-  "inviteText": "{username} v-a invitat la FluffyChat.\n1. Instalați FluffyChat: https://fluffychat.im\n2. Înregistrați-vă sau conectați-vă\n3. Deschideți invitația: {link}",
+  "inviteText": "{username} v-a invitat la PingmeChat.\n1. Instalați PingmeChat: https://pingmechat.im\n2. Înregistrați-vă sau conectați-vă\n3. Deschideți invitația: {link}",
   "@inviteText": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "username": {
-        "type": "String"
-      },
-      "link": {
-        "type": "String"
-      }
+      "username": {},
+      "link": {}
     }
   },
   "joinedTheChat": "👋{username} a intrat în chat",
   "@joinedTheChat": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "username": {
-        "type": "String"
-      }
+      "username": {}
     }
   },
   "kicked": "👞{username} a dat afară pe {targetName}",
   "@kicked": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "username": {
-        "type": "String"
-      },
-      "targetName": {
-        "type": "String"
-      }
+      "username": {},
+      "targetName": {}
     }
   },
   "lastActiveAgo": "Ultima dată activ: {localizedTimeShort}",
   "@lastActiveAgo": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "localizedTimeShort": {
-        "type": "String"
-      }
+      "localizedTimeShort": {}
     }
   },
   "leave": "Renunțați",
   "@leave": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "leftTheChat": "A plecat din chat",
   "@leftTheChat": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "license": "Permis",
   "@license": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "lightTheme": "Luminat",
   "@lightTheme": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "loadCountMoreParticipants": "Încărcați încă mai {count} participanți",
   "@loadCountMoreParticipants": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "count": {
-        "type": "int"
-      }
+      "count": {}
     }
   },
   "dehydrate": "Exportați sesiunea și ștergeți dispozitivul",
@@ -1062,200 +972,196 @@
   "@hydrate": {},
   "loadMore": "Încarcă mai multe…",
   "@loadMore": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "logout": "Deconectați-vă",
   "@logout": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "mention": "Menționați",
   "@mention": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "messages": "Mesaje",
   "@messages": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "moderator": "Moderator",
   "@moderator": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "noEmotesFound": "Nu s-a găsit nici un emote. 😕",
   "@noEmotesFound": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "noEncryptionForPublicRooms": "Criptare nu poate fi activată până când camera este accesibilă public.",
   "@noEncryptionForPublicRooms": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "none": "Niciunul",
   "@none": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "noPermission": "Fără permisie",
   "@noPermission": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "noRoomsFound": "Nici o cameră nu s-a găsit…",
   "@noRoomsFound": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "notificationsEnabledForThisAccount": "Notificări activate pentru acest cont",
   "@notificationsEnabledForThisAccount": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "obtainingLocation": "Obținând locație…",
   "@obtainingLocation": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "offline": "Offline",
   "@offline": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "oopsSomethingWentWrong": "Ups, ceva a eșuat…",
   "@oopsSomethingWentWrong": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "reject": "Respingeți",
   "@reject": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "unbanFromChat": "Revoca interzicerea din chat",
   "@unbanFromChat": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "roomHasBeenUpgraded": "Camera a fost actualizată",
   "@roomHasBeenUpgraded": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "setCustomEmotes": "Stabiliți emoji-uri personalizate",
   "@setCustomEmotes": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "setPermissionsLevel": "Stabiliți nivelul de permisii",
   "@setPermissionsLevel": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "singlesignon": "Autentificare unică",
   "@singlesignon": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "startedACall": "{senderName} a început un apel",
   "@startedACall": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "senderName": {
-        "type": "String"
-      }
+      "senderName": {}
     }
   },
   "statusExampleMessage": "Ce faceți?",
   "@statusExampleMessage": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "tooManyRequestsWarning": "Prea multe cereri. Vă rugăm să încercați din nou mai tărziu!",
   "@tooManyRequestsWarning": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "unknownEvent": "Evenimet necunoscut '{type}'",
   "@unknownEvent": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "type": {
-        "type": "String"
-      }
+      "type": {}
     }
   },
   "verified": "Verificat",
   "@verified": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "verifyStart": "Începeți verificare",
   "@verifyStart": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "videoCall": "Apel video",
   "@videoCall": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "visibilityOfTheChatHistory": "Vizibilitatea istoria chatului",
   "@visibilityOfTheChatHistory": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "visibleForAllParticipants": "Vizibil pentru toți participanți",
   "@visibleForAllParticipants": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "waitingPartnerEmoji": "Așteptând pe partenerul să accepte emoji-ul…",
   "@waitingPartnerEmoji": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "waitingPartnerNumbers": "Așteptând pe partenerul să accepte numerele…",
   "@waitingPartnerNumbers": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "warning": "Avertizment!",
   "@warning": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "whoCanPerformWhichAction": "Cine poate face care acțiune",
   "@whoCanPerformWhichAction": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "whoIsAllowedToJoinThisGroup": "Cine se poate alătura la acest grup",
   "@whoIsAllowedToJoinThisGroup": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "whyDoYouWantToReportThis": "De ce doriți să reportați acest conținut?",
   "@whyDoYouWantToReportThis": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "wipeChatBackup": "Ștergeți backup-ul vostru de chat să creați o nouă cheie de recuperare?",
   "@wipeChatBackup": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "withTheseAddressesRecoveryDescription": "Cu acestea adrese puteți să vă recuperați parola.",
   "@withTheseAddressesRecoveryDescription": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "youHaveBeenBannedFromThisChat": "Ați fost interzis din acest chat",
   "@youHaveBeenBannedFromThisChat": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "messageInfo": "Info mesajului",
@@ -1274,11 +1180,9 @@
   "@publish": {},
   "videoWithSize": "Video ({size})",
   "@videoWithSize": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "size": {
-        "type": "String"
-      }
+      "size": {}
     }
   },
   "unsupportedAndroidVersionLong": "Această funcție are nevoie de o versiune de Android mai nouă. Vă rugăm să verificați dacă sunt actualizări sau suport de la Lineage OS.",
@@ -1306,17 +1210,13 @@
   "youHaveWithdrawnTheInvitationFor": "Ați retras invitația pentru {user}",
   "@youHaveWithdrawnTheInvitationFor": {
     "placeholders": {
-      "user": {
-        "type": "String"
-      }
+      "user": {}
     }
   },
   "youInvitedBy": "📩Ați fost invitat de {user}",
   "@youInvitedBy": {
     "placeholders": {
-      "user": {
-        "type": "String"
-      }
+      "user": {}
     }
   },
   "unlockOldMessages": "Deblocați mesajele vechi",
@@ -1324,25 +1224,19 @@
   "youInvitedUser": "📩Ați invitat pe {user}",
   "@youInvitedUser": {
     "placeholders": {
-      "user": {
-        "type": "String"
-      }
+      "user": {}
     }
   },
   "youKicked": "👞Ați dat afară pe {user}",
   "@youKicked": {
     "placeholders": {
-      "user": {
-        "type": "String"
-      }
+      "user": {}
     }
   },
   "youUnbannedUser": "Ați ridicat interzicerea lui {user}",
   "@youUnbannedUser": {
     "placeholders": {
-      "user": {
-        "type": "String"
-      }
+      "user": {}
     }
   },
   "storeInAndroidKeystore": "Stoca în Android KeyStore",
@@ -1351,11 +1245,11 @@
   "@user": {},
   "custom": "Personalizat",
   "@custom": {},
-  "screenSharingDetail": "Partajați ecranul în FluffyChat",
+  "screenSharingDetail": "Partajați ecranul în PingmeChat",
   "@screenSharingDetail": {},
   "storeSecurlyOnThisDevice": "Stoca sigur pe acest dispozitiv",
   "@storeSecurlyOnThisDevice": {},
-  "otherCallingPermissions": "Microfon, cameră și alte permisiuni lui FluffyChat",
+  "otherCallingPermissions": "Microfon, cameră și alte permisiuni lui PingmeChat",
   "@otherCallingPermissions": {},
   "whyIsThisMessageEncrypted": "De ce este acest mesaj ilizibil?",
   "@whyIsThisMessageEncrypted": {},
@@ -1371,9 +1265,7 @@
   "@numChats": {
     "type": "number",
     "placeholders": {
-      "number": {
-        "type": "String"
-      }
+      "number": {}
     }
   },
   "hideUnimportantStateEvents": "Ascundeți evenimente de stare neimportante",
@@ -1392,11 +1284,9 @@
   "@noOtherDevicesFound": {},
   "fileHasBeenSavedAt": "Fișierul a fost salvat la {path}",
   "@fileHasBeenSavedAt": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "path": {
-        "type": "String"
-      }
+      "path": {}
     }
   },
   "jump": "Săriți",
@@ -1407,349 +1297,309 @@
   "@jumpToLastReadMessage": {},
   "memberChanges": "Schimbări de membri",
   "@memberChanges": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "guestsCanJoin": "Musafiri pot să se alăture",
   "@guestsCanJoin": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "fileName": "Nume de fișier",
   "@fileName": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "fontSize": "Mărimea fontului",
   "@fontSize": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "fromJoining": "De la alăturare",
   "@fromJoining": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "fromTheInvitation": "De la invitația",
   "@fromTheInvitation": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "goToTheNewRoom": "Mergeți la camera nouă",
   "@goToTheNewRoom": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "group": "Grup",
   "@group": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "groupIsPublic": "Grupul este public",
   "@groupIsPublic": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "guestsAreForbidden": "Musafiri sunt interziși",
   "@guestsAreForbidden": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "kickedAndBanned": "🙅{username} a dat afară și a interzis pe {targetName} din cameră",
   "@kickedAndBanned": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "username": {
-        "type": "String"
-      },
-      "targetName": {
-        "type": "String"
-      }
+      "username": {},
+      "targetName": {}
     }
   },
   "dehydrateWarning": "Această actiune nu poate fi anulată. Asigurați-vă că păstrați fișierul backup.",
   "@dehydrateWarning": {},
   "joinRoom": "Alăturați la cameră",
   "@joinRoom": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "logInTo": "Conectați-vă la {homeserver}",
   "@logInTo": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "homeserver": {
-        "type": "String"
-      }
+      "homeserver": {}
     }
   },
   "locationDisabledNotice": "Servicile de locație sunt dezactivate. Vă rugăm să le activați să împărțiți locația voastră.",
   "@locationDisabledNotice": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
-  "noGoogleServicesWarning": "Se pare că nu aveți serviciile google pe dispozitivul vostru. Această decizie este bună pentru confidențialitatea voastră! Să primiți notificari push în FluffyChat vă recomandăm https://microg.org/ sau https://unifiedpush.org/.",
+  "noGoogleServicesWarning": "Se pare că nu aveți serviciile google pe dispozitivul vostru. Această decizie este bună pentru confidențialitatea voastră! Să primiți notificari push în PingmeChat vă recomandăm https://microg.org/ sau https://unifiedpush.org/.",
   "@noGoogleServicesWarning": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "noMatrixServer": "{server1} nu este server matrix, înlocuiți cu {server2}?",
   "@noMatrixServer": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "server1": {
-        "type": "String"
-      },
-      "server2": {
-        "type": "String"
-      }
+      "server1": {},
+      "server2": {}
     }
   },
   "numUsersTyping": "{count} utilizatori tastează…",
   "@numUsersTyping": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "count": {
-        "type": "int"
-      }
+      "count": {}
     }
   },
   "offensive": "Ofensiv",
   "@offensive": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "confirm": "Confirmați",
   "@confirm": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "or": "Sau",
   "@or": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "serverRequiresEmail": "Acest server trebuie să valideze emailul vostru pentru înregistrare.",
   "@serverRequiresEmail": {},
   "waitingPartnerAcceptRequest": "Așteptând pe partenerul să accepte cererea…",
   "@waitingPartnerAcceptRequest": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "darkTheme": "Întunecat",
   "@darkTheme": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "sharedTheLocation": "{username} sa partajat locația",
   "@sharedTheLocation": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "username": {
-        "type": "String"
-      }
+      "username": {}
     }
   },
   "setInvitationLink": "Stabiliți linkul de invitație",
   "@setInvitationLink": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "transferFromAnotherDevice": "Transfera de la alt dispozitiv",
   "@transferFromAnotherDevice": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "synchronizingPleaseWait": "Sincronizează... Vă rugăm să așteptați.",
   "@synchronizingPleaseWait": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "systemTheme": "Sistem",
   "@systemTheme": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "toggleUnread": "Marcați Citit/Necitit",
   "@toggleUnread": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "tryToSendAgain": "Încercați să trimiteți din nou",
   "@tryToSendAgain": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "unavailable": "Nedisponibil",
   "@unavailable": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "userAndUserAreTyping": "{username} și {username2} tastează…",
   "@userAndUserAreTyping": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "username": {
-        "type": "String"
-      },
-      "username2": {
-        "type": "String"
-      }
+      "username": {},
+      "username2": {}
     }
   },
   "userLeftTheChat": "🚪{username} a plecat din chat",
   "@userLeftTheChat": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "username": {
-        "type": "String"
-      }
+      "username": {}
     }
   },
   "userAndOthersAreTyping": "{username} și {count} alți tastează…",
   "@userAndOthersAreTyping": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "username": {
-        "type": "String"
-      },
-      "count": {
-        "type": "int"
-      }
+      "username": {},
+      "count": {}
     }
   },
   "userSentUnknownEvent": "{username} a trimis un eveniment {type}",
   "@userSentUnknownEvent": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "username": {
-        "type": "String"
-      },
-      "type": {
-        "type": "String"
-      }
+      "username": {},
+      "type": {}
     }
   },
   "unverified": "Neverificat",
   "@unverified": {},
   "verifyTitle": "Verificând celălalt cont",
   "@verifyTitle": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "visibleForEveryone": "Vizibil pentru toți",
   "@visibleForEveryone": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "readUpToHere": "Citit până aici",
   "@readUpToHere": {},
   "changedTheHistoryVisibility": "{username} a schimbat vizibilitatea istoriei chatului",
   "@changedTheHistoryVisibility": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "username": {
-        "type": "String"
-      }
+      "username": {}
     }
   },
   "copy": "Copiați",
   "@copy": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "displaynameHasBeenChanged": "Displayname a fost schimbat",
   "@displaynameHasBeenChanged": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "invitedUsersOnly": "Numai utilizatori invitați",
   "@invitedUsersOnly": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "configureChat": "Configurați chat",
   "@configureChat": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "copiedToClipboard": "Copiat în clipboard",
   "@copiedToClipboard": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "device": "Dispozitiv",
   "@device": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "username": "Nume de utilizator",
   "@username": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "sentAnAudio": "🎤{username} a trimis audio",
   "@sentAnAudio": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "username": {
-        "type": "String"
-      }
+      "username": {}
     }
   },
   "sentAFile": "📁{username} a trimis un fișier",
   "@sentAFile": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "username": {
-        "type": "String"
-      }
+      "username": {}
     }
   },
-  "indexedDbErrorLong": "Stocarea de mesaje nu este activat implicit în modul privat.\nVă rugăm să vizitați\n- about:config\n- stabiliți dom.indexedDB.privateBrowsing.enabled la true\nAstfel, nu este posibil să folosiți FluffyChat.",
+  "indexedDbErrorLong": "Stocarea de mesaje nu este activat implicit în modul privat.\nVă rugăm să vizitați\n- about:config\n- stabiliți dom.indexedDB.privateBrowsing.enabled la true\nAstfel, nu este posibil să folosiți PingmeChat.",
   "@indexedDbErrorLong": {},
   "addWidget": "Adăugați widget",
   "@addWidget": {},
   "locationPermissionDeniedNotice": "Permisiunea locației blocată. Vă rugăm să o dezblocați să împărțiți locația voastră.",
   "@locationPermissionDeniedNotice": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "newChat": "Chat nou",
   "@newChat": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
-  "newMessageInFluffyChat": "💬 Mesaj nou în FluffyChat",
-  "@newMessageInFluffyChat": {
-    "type": "String",
+  "newMessageInPingmeChat": "💬 Mesaj nou în PingmeChat",
+  "@newMessageInPingmeChat": {
+    "type": "text",
     "placeholders": {}
   },
   "sentAPicture": "🖼️ {username} a trimis o poză",
   "@sentAPicture": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "username": {
-        "type": "String"
-      }
+      "username": {}
     }
   },
   "sentAVideo": "🎥{username} a trimis un video",
   "@sentAVideo": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "username": {
-        "type": "String"
-      }
+      "username": {}
     }
   },
   "sentASticker": "😊 {username} a trimis un sticker",
   "@sentASticker": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "username": {
-        "type": "String"
-      }
+      "username": {}
     }
   },
   "storeInSecureStorageDescription": "Păstrați cheia de recuperare în stocarea sigură a acestui dispozitiv.",
@@ -1759,50 +1609,42 @@
   "countFiles": "{count} fișiere",
   "@countFiles": {
     "placeholders": {
-      "count": {
-        "type": "int"
-      }
+      "count": {}
     }
   },
   "hugContent": "{senderName} vă îmbrățișează",
   "@hugContent": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "senderName": {
-        "type": "String"
-      }
+      "senderName": {}
     }
   },
   "storeInAppleKeyChain": "Stoca în Apple KeyChain",
   "@storeInAppleKeyChain": {},
   "addEmail": "Adăugați email",
   "@addEmail": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "confirmMatrixId": "Vă rugăm să confirmați Matrix ID-ul vostru să ștergeți contul vostru.",
   "@confirmMatrixId": {},
   "cuddleContent": "{senderName} vă îmbrățișează",
   "@cuddleContent": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "senderName": {
-        "type": "String"
-      }
+      "senderName": {}
     }
   },
   "supposedMxid": "ID-ul ar trebuii să fie {mxid}",
   "@supposedMxid": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "mxid": {
-        "type": "String"
-      }
+      "mxid": {}
     }
   },
   "commandHint_html": "Trimiteți text format ca HTML",
   "@commandHint_html": {
-    "type": "String",
+    "type": "text",
     "description": "Usage hint for the command /html"
   },
   "addToSpace": "Adăugați la spațiu",
@@ -1811,287 +1653,257 @@
   "@commandHint_hug": {},
   "badServerVersionsException": "Homeserver-ul suportă versiunele de Spec următoare:\n{serverVersions}\nDar această aplicație suportă numai {supportedVersions}",
   "@badServerVersionsException": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "serverVersions": {
-        "type": "String"
-      },
-      "supportedVersions": {
-        "type": "String"
-      }
+      "serverVersions": {},
+      "supportedVersions": {}
     }
   },
   "badServerLoginTypesException": "Homeserver-ul suportă următoarele feluri de login:\n{serverVersions}\nDar această aplicație suportă numai:\n{supportedVersions}",
   "@badServerLoginTypesException": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "serverVersions": {
-        "type": "String"
-      },
-      "supportedVersions": {
-        "type": "String"
-      }
+      "serverVersions": {},
+      "supportedVersions": {}
     }
   },
   "changedTheGuestAccessRulesTo": "{username} a schimbat regulile pentru acesul musafirilor la: {rules}",
   "@changedTheGuestAccessRulesTo": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "username": {
-        "type": "String"
-      },
-      "rules": {
-        "type": "String"
-      }
+      "username": {},
+      "rules": {}
     }
   },
   "changedTheJoinRulesTo": "{username} a schimbat regulile de alăturare la: {joinRules}",
   "@changedTheJoinRulesTo": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "username": {
-        "type": "String"
-      },
-      "joinRules": {
-        "type": "String"
-      }
+      "username": {},
+      "joinRules": {}
     }
   },
   "yourChatBackupHasBeenSetUp": "Backup-ul vostru de chat a fost configurat.",
   "@yourChatBackupHasBeenSetUp": {},
   "cantOpenUri": "Nu se poate deschide URI-ul {uri}",
   "@cantOpenUri": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "uri": {
-        "type": "String"
-      }
+      "uri": {}
     }
   },
   "changedTheDisplaynameTo": "{username} s-a schimbat displayname la: '{displayname}'",
   "@changedTheDisplaynameTo": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "username": {
-        "type": "String"
-      },
-      "displayname": {
-        "type": "String"
-      }
+      "username": {},
+      "displayname": {}
     }
   },
   "changedTheGuestAccessRules": "{username} a schimbat regulile pentru acesul musafirilor",
   "@changedTheGuestAccessRules": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "username": {
-        "type": "String"
-      }
+      "username": {}
     }
   },
   "changeTheHomeserver": "Schimbați homeserver-ul",
   "@changeTheHomeserver": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "chatBackupDescription": "Mesajele voastre vechi sunt sigurate cu o cheie de recuperare. Vă rugăm să nu o pierdeți.",
   "@chatBackupDescription": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "contentHasBeenReported": "Conținutul a fost reportat la administratori serverului",
   "@contentHasBeenReported": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "chatDetails": "Detalii de chat",
   "@chatDetails": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "commandHint_dm": "Porniți un chat direct\nFolosiți --no-encryption să dezactivați criptare",
   "@commandHint_dm": {
-    "type": "String",
+    "type": "text",
     "description": "Usage hint for the command /dm"
   },
   "commandHint_me": "Descrieți-vă",
   "@commandHint_me": {
-    "type": "String",
+    "type": "text",
     "description": "Usage hint for the command /me"
   },
   "contactHasBeenInvitedToTheGroup": "Contactul a fost invitat la grup",
   "@contactHasBeenInvitedToTheGroup": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "containsUserName": "Conține nume de utilizator",
   "@containsUserName": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "copyToClipboard": "Copiați în clipboard",
   "@copyToClipboard": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "countParticipants": "{count} participanți",
   "@countParticipants": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "count": {
-        "type": "int"
-      }
+      "count": {}
     }
   },
   "delete": "Ștergeți",
   "@delete": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "deactivateAccountWarning": "Această acțiune va dezactiva contul vostru. Nu poate fi anulat! Sunteți sigur?",
   "@deactivateAccountWarning": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "deleteAccount": "Ștergeți contul",
   "@deleteAccount": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "defaultPermissionLevel": "Nivel de permisiuni implicită",
   "@defaultPermissionLevel": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "deleteMessage": "Ștergeți mesajul",
   "@deleteMessage": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "downloadFile": "Descărcați fișierul",
   "@downloadFile": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "enableEmotesGlobally": "Activați pachet de emote global",
   "@enableEmotesGlobally": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "everythingReady": "Totul e gata!",
   "@everythingReady": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "editBlockedServers": "Editați servere blocate",
   "@editBlockedServers": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "emoteInvalid": "Shortcode de emote nevalibil!",
   "@emoteInvalid": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "edit": "Editați",
   "@edit": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "editRoomAliases": "Schimbați pseudonimele camerei",
   "@editRoomAliases": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "emptyChat": "Chat gol",
   "@emptyChat": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "enableEncryption": "Activați criptare",
   "@enableEncryption": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "encrypted": "Criptat",
   "@encrypted": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "editDisplayname": "Schimbați displayname",
   "@editDisplayname": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "editRoomAvatar": "Schimbați avatarul din cameră",
   "@editRoomAvatar": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "emoteExists": "Emote deja există!",
   "@emoteExists": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "emotePacks": "Pachete de emoturi din cameră",
   "@emotePacks": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "emoteSettings": "Configurări Emote",
   "@emoteSettings": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "emoteShortcode": "Shortcode de emote",
   "@emoteShortcode": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "emoteWarnNeedToPick": "Trebuie să alegeți shortcode pentru emote și o imagine!",
   "@emoteWarnNeedToPick": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "encryption": "Criptare",
   "@encryption": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "enterAnEmailAddress": "Introduceți o adresă email",
   "@enterAnEmailAddress": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "homeserver": "Homeserver",
   "@homeserver": {},
   "errorObtainingLocation": "Obținerea locației a eșuat: {error}",
   "@errorObtainingLocation": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "error": {
-        "type": "String"
-      }
+      "error": {}
     }
   },
   "ok": "Ok",
   "@ok": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "youKickedAndBanned": "🙅Ați dat afară și interzis pe {user}",
   "@youKickedAndBanned": {
     "placeholders": {
-      "user": {
-        "type": "String"
-      }
+      "user": {}
     }
   },
   "noKeyForThisMessage": "Această chestie poate să se întâmple când mesajul a fost trimis înainte să vă conectați contul cu acest dispozitiv.\n\nO altă explicație ar fi dacă trimițătorul a blocat dispozitivul vostru sau ceva s-a întâmplat cu conexiunea la internet\n\nPuteți să citiți mesajul în o altă seșiune? Atunci puteți să transferați mesajul de acolo! Mergeți la Configurări > Dispozitive și verificați că dispozitivele s-au verificat. Când deschideți camera în viitor și ambele seșiune sunt în foreground, cheile va fi transmise automat. \n\nDoriți să îți păstrați cheile când deconectați sau schimbați dispozitive? Fiți atenți să activați backup de chat în configurări.",
   "@noKeyForThisMessage": {},
   "sendAsText": "Trimiteți ca text",
   "@sendAsText": {
-    "type": "String"
+    "type": "text"
   },
   "reportErrorDescription": "Ceva a eșuat. Vă rugăm să încercați din nou mai tărziu. Dacă doriți, puteți să reportați problema la dezvoltatori.",
   "@reportErrorDescription": {},
@@ -2099,66 +1911,66 @@
   "@openLinkInBrowser": {},
   "send": "Trimiteți",
   "@send": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "sendAMessage": "Trimiteți un mesaj",
   "@sendAMessage": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "sendAudio": "Trimiteți audio",
   "@sendAudio": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "sendOriginal": "Trimiteți original",
   "@sendOriginal": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "sendVideo": "Trimiteți video",
   "@sendVideo": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "sendImage": "Trimiteți imagine",
   "@sendImage": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "sendSticker": "Trimiteți sticker",
   "@sendSticker": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "pleaseEnterRecoveryKeyDescription": "Să vă deblocați mesajele vechi, vă rugăm să introduceți cheia de recuperare creată de o seșiune anterioră. Cheia de recuperare NU este parola voastră.",
   "@pleaseEnterRecoveryKeyDescription": {},
   "separateChatTypes": "Afișați chaturi directe și grupuri separat",
   "@separateChatTypes": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "setAsCanonicalAlias": "Stabiliți ca pseudonimul primar",
   "@setAsCanonicalAlias": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "writeAMessage": "Scrieți un mesaj…",
   "@writeAMessage": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "yes": "Da",
   "@yes": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "markAsRead": "Marcați ca citit",
   "@markAsRead": {},
   "oopsPushError": "Ups! Din păcate, o eroare s-a întâmplat cu stabilirea de notificări push.",
   "@oopsPushError": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "oneClientLoggedOut": "Unul dintre clienților voștri a fost deconectat",
@@ -2171,140 +1983,136 @@
   "@link": {},
   "passphraseOrKey": "frază de acces sau cheie de recuperare",
   "@passphraseOrKey": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "password": "Parolă",
   "@password": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "passwordForgotten": "Parola uitată",
   "@passwordForgotten": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "passwordHasBeenChanged": "Parola a fost schimbată",
   "@passwordHasBeenChanged": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "passwordRecovery": "Recuperare parolei",
   "@passwordRecovery": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "people": "Persoane",
   "@people": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "pickImage": "Alegeți o imagine",
   "@pickImage": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "pleaseChoose": "Vă rugăm să alegeți",
   "@pleaseChoose": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "pin": "Fixați",
   "@pin": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "pleaseChooseAPasscode": "Vă rugăm să alegeți un passcode",
   "@pleaseChooseAPasscode": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "pleaseEnter4Digits": "Vă rugăm să introduceți 4 cifre sau puteți să lăsați gol să dezactivați lacătul aplicației.",
   "@pleaseEnter4Digits": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "pleaseEnterYourPassword": "Vă rugăm să introduceți parola voastră",
   "@pleaseEnterYourPassword": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "pleaseEnterYourUsername": "Vă rugăm să introduceți username-ul vostru",
   "@pleaseEnterYourUsername": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "pleaseFollowInstructionsOnWeb": "Vă rugăm să urmați instrucțiunele pe website și apoi să apăsați pe următor.",
   "@pleaseFollowInstructionsOnWeb": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "reason": "Motiv",
   "@reason": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "rejectedTheInvitation": "{username} a respins invitația",
   "@rejectedTheInvitation": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "username": {
-        "type": "String"
-      }
+      "username": {}
     }
   },
   "redactedAnEvent": "{username} a redactat un eveniment",
   "@redactedAnEvent": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "username": {
-        "type": "String"
-      }
+      "username": {}
     }
   },
   "removeAllOtherDevices": "Eliminați toate celelalte dispozitive",
   "@removeAllOtherDevices": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "removeYourAvatar": "Ștergeți avatarul",
   "@removeYourAvatar": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "renderRichContent": "Reda conținut bogat al mesajelor",
   "@renderRichContent": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "replaceRoomWithNewerVersion": "Înlocuiți camera cu versiune mai nouă",
   "@replaceRoomWithNewerVersion": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "reply": "Răspundeți",
   "@reply": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "reportMessage": "Raportați mesajul",
   "@reportMessage": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "requestPermission": "Cereți permisiune",
   "@requestPermission": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "saveFile": "Salvați fișierul",
   "@saveFile": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "search": "Căutați",
   "@search": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "recoveryKey": "Cheie de recuperare",
@@ -2313,59 +2121,51 @@
   "@recoveryKeyLost": {},
   "seenByUser": "Văzut de {username}",
   "@seenByUser": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "username": {
-        "type": "String"
-      }
+      "username": {}
     }
   },
   "muteChat": "Amuțați chatul",
   "@muteChat": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "needPantalaimonWarning": "Vă rugăm să fiți conștienți că e nevoie de Pantalaimon să folosiți criptare end-to-end deocamdată.",
   "@needPantalaimonWarning": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "autoplayImages": "Anima automatic stickere și emote animate",
   "@autoplayImages": {
-    "type": "String",
+    "type": "text",
     "placeholder": {}
   },
   "sendOnEnter": "Trimite cu tasta enter",
   "@sendOnEnter": {},
   "changedTheChatPermissions": "{username} a schimbat permisiunile chatului",
   "@changedTheChatPermissions": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "username": {
-        "type": "String"
-      }
+      "username": {}
     }
   },
   "extremeOffensive": "De foarte mare ofensă",
   "@extremeOffensive": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "id": "ID",
   "@id": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "invitedUser": "📩{username} a invitat {targetName}",
   "@invitedUser": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "username": {
-        "type": "String"
-      },
-      "targetName": {
-        "type": "String"
-      }
+      "username": {},
+      "targetName": {}
     }
   },
   "deviceKeys": "Cheile dispozitivului:",
@@ -2374,138 +2174,124 @@
   "@pleaseEnterRecoveryKey": {},
   "newVerificationRequest": "Cerere de verificare nouă!",
   "@newVerificationRequest": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "remove": "Eliminați",
   "@remove": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "play": "Redați {fileName}",
   "@play": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "fileName": {
-        "type": "String"
-      }
+      "fileName": {}
     }
   },
   "channelCorruptedDecryptError": "Criptarea a fost corupată",
   "@channelCorruptedDecryptError": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "chooseAStrongPassword": "Alegeți o parolă robustă",
   "@chooseAStrongPassword": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "commandHint_cuddle": "Trimiteți o îmbrățișare",
   "@commandHint_cuddle": {},
   "googlyEyesContent": "{senderName} v-a trimis ochi googly",
   "@googlyEyesContent": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "senderName": {
-        "type": "String"
-      }
+      "senderName": {}
     }
   },
   "areYouSureYouWantToLogout": "Sunteți sigur că doriți să vă deconectați?",
   "@areYouSureYouWantToLogout": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "changedTheRoomAliases": "{username} a schimbat pseudonimele camerei",
   "@changedTheRoomAliases": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "username": {
-        "type": "String"
-      }
+      "username": {}
     }
   },
   "changeYourAvatar": "Schimbați avatarul vostru",
   "@changeYourAvatar": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "commandHint_join": "Alăturați-vă la camera alesă",
   "@commandHint_join": {
-    "type": "String",
+    "type": "text",
     "description": "Usage hint for the command /join"
   },
   "allChats": "Toate Chaturile",
   "@allChats": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "commandHint_invite": "Invitați utilizatorul ales la această cameră",
   "@commandHint_invite": {
-    "type": "String",
+    "type": "text",
     "description": "Usage hint for the command /invite"
   },
   "changeTheNameOfTheGroup": "Schimbați numele grupului",
   "@changeTheNameOfTheGroup": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "commandHint_googly": "Trimiteți câțiva ochi googly",
   "@commandHint_googly": {},
   "botMessages": "Mesaje Bot",
   "@botMessages": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "all": "Toate",
   "@all": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "blocked": "Blocat",
   "@blocked": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "changedTheJoinRules": "{username} a schimbat regulile de alăturare",
   "@changedTheJoinRules": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "username": {
-        "type": "String"
-      }
+      "username": {}
     }
   },
   "changedTheProfileAvatar": "{username} s-a schimbat avatarul",
   "@changedTheProfileAvatar": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "username": {
-        "type": "String"
-      }
+      "username": {}
     }
   },
   "appLock": "Lacăt aplicație",
   "@appLock": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "changedTheHistoryVisibilityTo": "{username} a schimbat vizibilitatea istoriei chatului la: {rules}",
   "@changedTheHistoryVisibilityTo": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "username": {
-        "type": "String"
-      },
-      "rules": {
-        "type": "String"
-      }
+      "username": {},
+      "rules": {}
     }
   },
   "close": "Închideți",
   "@close": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "reopenChat": "Deschide din nou chatul",

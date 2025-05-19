@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 
-import 'package:collection/collection.dart';
 import 'package:desktop_notifications/desktop_notifications.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -13,17 +12,16 @@ import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:universal_html/html.dart' as html;
 
-import 'package:fluffychat/config/app_config.dart';
-import 'package:fluffychat/config/setting_keys.dart';
-import 'package:fluffychat/utils/custom_http_client.dart';
-import 'package:fluffychat/utils/custom_image_resizer.dart';
-import 'package:fluffychat/utils/init_with_restore.dart';
-import 'package:fluffychat/utils/platform_infos.dart';
+import 'package:pingmechat/config/app_config.dart';
+import 'package:pingmechat/utils/custom_http_client.dart';
+import 'package:pingmechat/utils/custom_image_resizer.dart';
+import 'package:pingmechat/utils/init_with_restore.dart';
+import 'package:pingmechat/utils/matrix_sdk_extensions/flutter_hive_collections_database.dart';
+import 'package:pingmechat/utils/platform_infos.dart';
 import 'matrix_sdk_extensions/flutter_matrix_dart_sdk_database/builder.dart';
 
 abstract class ClientManager {
-  static const String clientNamespace = 'im.fluffychat.store.clients';
-
+  static const String clientNamespace = 'im.pingmechat.store.clients';
   static Future<List<Client>> getClients({
     bool initialize = true,
     required SharedPreferences store,
@@ -45,8 +43,7 @@ abstract class ClientManager {
       clientNames.add(PlatformInfos.clientName);
       await store.setStringList(clientNamespace, clientNames.toList());
     }
-    final clients =
-        clientNames.map((name) => createClient(name, store)).toList();
+    final clients = clientNames.map(createClient).toList();
     if (initialize) {
       await Future.wait(
         clients.map(
@@ -100,9 +97,7 @@ abstract class ClientManager {
       ? const NativeImplementationsDummy()
       : NativeImplementationsIsolate(compute);
 
-  static Client createClient(String clientName, SharedPreferences store) {
-    final shareKeysWith = AppSettings.shareKeysWith.getItem(store);
-
+  static Client createClient(String clientName) {
     return Client(
       clientName,
       httpClient:
@@ -118,6 +113,7 @@ abstract class ClientManager {
       },
       logLevel: kReleaseMode ? Level.warning : Level.verbose,
       databaseBuilder: flutterMatrixSdkDatabaseBuilder,
+      legacyDatabaseBuilder: FlutterHiveCollectionsDatabase.databaseBuilder,
       supportedLoginTypes: {
         AuthenticationTypes.password,
         AuthenticationTypes.sso,
@@ -126,10 +122,6 @@ abstract class ClientManager {
       customImageResizer: PlatformInfos.isMobile ? customImageResizer : null,
       defaultNetworkRequestTimeout: const Duration(minutes: 30),
       enableDehydratedDevices: true,
-      shareKeysWith: ShareKeysWith.values
-              .singleWhereOrNull((share) => share.name == shareKeysWith) ??
-          ShareKeysWith.all,
-      convertLinebreaksInFormatting: false,
     );
   }
 

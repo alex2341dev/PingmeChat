@@ -1,32 +1,37 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 
+import 'package:pingmechat/utils/highlights_rooms_and_threads.dart';
+import 'package:pingmechat/utils/thread_unread_data.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:collection/collection.dart';
 import 'package:desktop_notifications/desktop_notifications.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
-import 'package:just_audio/just_audio.dart';
 import 'package:matrix/encryption.dart';
 import 'package:matrix/matrix.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tray_manager/tray_manager.dart';
 import 'package:universal_html/html.dart' as html;
 import 'package:url_launcher/url_launcher_string.dart';
 
-import 'package:fluffychat/utils/client_manager.dart';
-import 'package:fluffychat/utils/init_with_restore.dart';
-import 'package:fluffychat/utils/matrix_sdk_extensions/matrix_file_extension.dart';
-import 'package:fluffychat/utils/platform_infos.dart';
-import 'package:fluffychat/utils/uia_request_manager.dart';
-import 'package:fluffychat/utils/voip_plugin.dart';
-import 'package:fluffychat/widgets/adaptive_dialogs/show_ok_cancel_alert_dialog.dart';
-import 'package:fluffychat/widgets/fluffy_chat_app.dart';
-import 'package:fluffychat/widgets/future_loading_dialog.dart';
+import 'package:pingmechat/utils/client_manager.dart';
+import 'package:pingmechat/utils/init_with_restore.dart';
+import 'package:pingmechat/utils/matrix_sdk_extensions/matrix_file_extension.dart';
+import 'package:pingmechat/utils/platform_infos.dart';
+import 'package:pingmechat/utils/uia_request_manager.dart';
+import 'package:pingmechat/utils/voip_plugin.dart';
+import 'package:pingmechat/widgets/pingme_chat_app.dart';
+import 'package:pingmechat/widgets/future_loading_dialog.dart';
+import 'package:window_manager/window_manager.dart';
+import 'package:windows_taskbar/windows_taskbar.dart';
 import '../config/app_config.dart';
 import '../config/setting_keys.dart';
 import '../pages/key_verification/key_verification_dialog.dart';
@@ -61,9 +66,12 @@ class Matrix extends StatefulWidget {
       Provider.of<MatrixState>(context, listen: false);
 }
 
-class MatrixState extends State<Matrix> with WidgetsBindingObserver {
+class MatrixState extends State<Matrix>
+    with TrayListener, WidgetsBindingObserver {
   int _activeClient = -1;
   String? activeBundle;
+
+  ThreadUnreadData threadUnreadData = ThreadUnreadData();
 
   SharedPreferences get store => widget.store;
 
@@ -73,11 +81,20 @@ class MatrixState extends State<Matrix> with WidgetsBindingObserver {
 
   BackgroundPush? backgroundPush;
 
+  StreamSubscription? unreadCountSubscription;
+
   Client get client {
     if (widget.clients.isEmpty) {
       widget.clients.add(getLoginClient());
     }
     if (_activeClient < 0 || _activeClient >= widget.clients.length) {
+      final lastClient = store.getInt("lastClient");
+
+      if (lastClient != null && widget.clients.length - 1 >= lastClient) {
+        _activeClient = lastClient;
+        return widget.clients[lastClient];
+      }
+
       return currentBundle!.first!;
     }
     return widget.clients[_activeClient];
@@ -93,12 +110,85 @@ class MatrixState extends State<Matrix> with WidgetsBindingObserver {
   late String currentClientSecret;
   RequestTokenResponse? currentThreepidCreds;
 
+  void setMarker() async {
+    final unreadCount = client.rooms
+        .where((r) => (r.isUnread || r.membership == Membership.invite))
+        .length;
+
+    if (PlatformInfos.isWindows) {
+      if (unreadCount == 0) {
+        WindowsTaskbar.resetOverlayIcon();
+
+        await trayManager.setIcon(
+          Platform.isWindows ? 'assets/logo.ico' : 'assets/logo.png',
+        );
+      } else {
+        if (unreadCount < 10) {
+          WindowsTaskbar.setOverlayIcon(
+            ThumbnailToolbarAssetIcon('assets/$unreadCount.ico'),
+            tooltip: 'Stop',
+          );
+        } else {
+          WindowsTaskbar.setOverlayIcon(
+            ThumbnailToolbarAssetIcon('assets/10.ico'),
+            tooltip: 'Stop',
+          );
+        }
+
+        await trayManager.setIcon(
+          Platform.isWindows ? 'assets/logoN.ico' : 'assets/logoN.png',
+        );
+      }
+    }
+  }
+
+  @override
+  void onTrayMenuItemClick(MenuItem menuItem) async {
+    if (menuItem.key == 'show_window') {
+      await windowManager.show();
+    } else if (menuItem.key == 'exit_app') {
+      exit(0);
+    }
+  }
+
+  @override
+  void onTrayIconMouseDown() {
+    windowManager.show();
+  }
+
+  @override
+  void onTrayIconRightMouseUp() {
+    trayManager.popUpContextMenu();
+  }
+
+  @override
+  void onTrayIconRightMouseDown() {
+    trayManager.popUpContextMenu();
+  }
+
+  void setUnreadCount() async {
+    await unreadCountSubscription?.cancel();
+
+    setMarker();
+
+    unreadCountSubscription = client.onSync.stream
+        .where((syncUpdate) => syncUpdate.hasRoomUpdate)
+        .listen((syncUpdate) {
+      setMarker();
+    });
+  }
+
   void setActiveClient(Client? cl) {
     final i = widget.clients.indexWhere((c) => c == cl);
     if (i != -1) {
       _activeClient = i;
+      store.setInt("lastClient", i);
+
       // TODO: Multi-client VoiP support
       createVoipPlugin();
+      setUnreadCount();
+
+      HighlightsRoomsAndThreads().init(this);
     } else {
       Logs().w('Tried to set an unknown client ${cl!.userID} as active');
     }
@@ -149,16 +239,12 @@ class MatrixState extends State<Matrix> with WidgetsBindingObserver {
 
   Client? _loginClientCandidate;
 
-  AudioPlayer? audioPlayer;
-  final ValueNotifier<String?> voiceMessageEventId = ValueNotifier(null);
-
   Client getLoginClient() {
     if (widget.clients.isNotEmpty && !client.isLogged()) {
       return client;
     }
     final candidate = _loginClientCandidate ??= ClientManager.createClient(
       '${AppConfig.applicationName}-${DateTime.now().millisecondsSinceEpoch}',
-      store,
     )..onLoginStateChanged
           .stream
           .where((l) => l == LoginState.loggedIn)
@@ -173,7 +259,7 @@ class MatrixState extends State<Matrix> with WidgetsBindingObserver {
         );
         _registerSubs(_loginClientCandidate!.clientName);
         _loginClientCandidate = null;
-        FluffyChatApp.router.go('/rooms');
+        PingmeChatApp.router.go('/rooms');
       });
     return candidate;
   }
@@ -207,7 +293,7 @@ class MatrixState extends State<Matrix> with WidgetsBindingObserver {
   bool webHasFocus = true;
 
   String? get activeRoomId {
-    final route = FluffyChatApp.router.routeInformationProvider.value.uri.path;
+    final route = PingmeChatApp.router.routeInformationProvider.value.uri.path;
     if (!route.startsWith('/rooms/')) return null;
     return route.split('/')[2];
   }
@@ -219,6 +305,8 @@ class MatrixState extends State<Matrix> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
+    trayManager.addListener(this);
+    _initializeTray();
     WidgetsBinding.instance.addObserver(this);
     initMatrix();
     if (PlatformInfos.isWeb) {
@@ -226,6 +314,47 @@ class MatrixState extends State<Matrix> with WidgetsBindingObserver {
     } else {
       initSettings();
     }
+    setUnreadCount();
+    HighlightsRoomsAndThreads().init(this);
+  }
+
+  Future<void> _initializeTray() async {
+    await trayManager.setIcon(
+      Platform.isWindows ? 'assets/logo.ico' : 'assets/logo.png',
+    );
+
+    await trayManager.setContextMenu(
+      Menu(
+        items: [
+          MenuItem(
+            key: 'show_window',
+            label: 'Show',
+          ),
+          MenuItem(
+            key: 'exit_app',
+            label: 'Exit',
+          ),
+        ],
+      ),
+    );
+  }
+
+  String autoLoginAccountRedirect() {
+    if (store.getString("autoLoginToken") != null &&
+        store.getString("autoLoginHomeserver") != null) {
+      if (widget.clients.isNotEmpty) {
+        return "/rooms/settings/addaccount";
+      } else {
+        return "/home";
+      }
+    } else {
+      return client.isLogged() ? '/rooms' : '/home';
+    }
+  }
+
+  bool isAutoLoginAccountDetect() {
+    return store.getString("autoLoginToken") != null &&
+        store.getString("autoLoginHomeserver") != null;
   }
 
   Future<void> initConfig() async {
@@ -241,6 +370,24 @@ class MatrixState extends State<Matrix> with WidgetsBindingObserver {
     }
   }
 
+  Future<bool> checkHomeserverIsSupportedRegistration() async {
+    try {
+      await getLoginClient().register();
+    } on MatrixException catch (e) {
+      if (e.session == null || e.authenticationFlows == null) {
+        return false;
+      } else {
+        if (e.authenticationFlows![0].stages
+                .contains("m.login.email.identity") &&
+            e.authenticationFlows![0].stages.length == 1) {
+          return true;
+        }
+      }
+    }
+
+    return false;
+  }
+
   void _registerSubs(String name) {
     final c = getClientByName(name);
     if (c == null) {
@@ -251,7 +398,11 @@ class MatrixState extends State<Matrix> with WidgetsBindingObserver {
     }
     onRoomKeyRequestSub[name] ??=
         c.onRoomKeyRequest.stream.listen((RoomKeyRequest request) async {
-      if (widget.clients.any(
+      Logs().i(
+        '[Key Request] Get request ${request.requestingDevice.userId}',
+      );
+      await request.forwardKey();
+      /*if (widget.clients.any(
         ((cl) =>
             cl.userID == request.requestingDevice.userId &&
             cl.identityKey == request.requestingDevice.curve25519Key),
@@ -260,7 +411,7 @@ class MatrixState extends State<Matrix> with WidgetsBindingObserver {
           '[Key Request] Request is from one of our own clients, forwarding the key...',
         );
         await request.forwardKey();
-      }
+      }*/
     });
     onKeyVerificationRequestSub[name] ??= c.onKeyVerificationRequest.stream
         .listen((KeyVerification request) async {
@@ -269,14 +420,14 @@ class MatrixState extends State<Matrix> with WidgetsBindingObserver {
         if (!hidPopup &&
             {KeyVerificationState.done, KeyVerificationState.error}
                 .contains(request.state)) {
-          FluffyChatApp.router.pop('dialog');
+          PingmeChatApp.router.pop('dialog');
         }
         hidPopup = true;
       };
       request.onUpdate = null;
       hidPopup = true;
       await KeyVerificationDialog(request: request).show(
-        FluffyChatApp.router.routerDelegate.navigatorKey.currentContext ??
+        PingmeChatApp.router.routerDelegate.navigatorKey.currentContext ??
             context,
       );
     });
@@ -290,7 +441,7 @@ class MatrixState extends State<Matrix> with WidgetsBindingObserver {
         widget.clients.remove(c);
         ClientManager.removeClientNameFromStore(c.clientName, store);
         ScaffoldMessenger.of(
-          FluffyChatApp.router.routerDelegate.navigatorKey.currentContext ??
+          PingmeChatApp.router.routerDelegate.navigatorKey.currentContext ??
               context,
         ).showSnackBar(
           SnackBar(
@@ -299,19 +450,28 @@ class MatrixState extends State<Matrix> with WidgetsBindingObserver {
         );
 
         if (state != LoginState.loggedIn) {
-          FluffyChatApp.router.go('/rooms');
+          PingmeChatApp.router.go('/rooms');
         }
       } else {
-        FluffyChatApp.router
+        PingmeChatApp.router
             .go(state == LoginState.loggedIn ? '/rooms' : '/home');
       }
     });
     onUiaRequest[name] ??= c.onUiaRequest.stream.listen(uiaRequestHandler);
-    if (PlatformInfos.isWeb || PlatformInfos.isLinux) {
+    if (PlatformInfos.isWeb ||
+        PlatformInfos.isLinux ||
+        PlatformInfos.isWindows) {
       c.onSync.stream.first.then((s) {
         html.Notification.requestPermission();
-        onNotification[name] ??=
-            c.onNotification.stream.listen(showLocalNotification);
+        onNotification[name] ??= c.onEvent.stream
+            .where(
+              (e) =>
+                  e.type == EventUpdateType.timeline &&
+                  [EventTypes.Message, EventTypes.Sticker, EventTypes.Encrypted]
+                      .contains(e.content['type']) &&
+                  e.content['sender'] != c.userID,
+            )
+            .listen(showLocalNotification);
       });
     }
   }
@@ -342,11 +502,13 @@ class MatrixState extends State<Matrix> with WidgetsBindingObserver {
         this,
         onFcmError: (errorMsg, {Uri? link}) async {
           final result = await showOkCancelAlertDialog(
-            context: FluffyChatApp
+            barrierDismissible: true,
+            context: PingmeChatApp
                     .router.routerDelegate.navigatorKey.currentContext ??
                 context,
             title: L10n.of(context).pushNotificationsNotAvailable,
             message: errorMsg,
+            fullyCapitalizedForMaterial: false,
             okLabel:
                 link == null ? L10n.of(context).ok : L10n.of(context).learnMore,
             cancelLabel: L10n.of(context).doNotShowAgain,
@@ -451,7 +613,7 @@ class MatrixState extends State<Matrix> with WidgetsBindingObserver {
     onBlurSub?.cancel();
 
     linuxNotifications?.close();
-
+    unreadCountSubscription?.cancel();
     super.dispose();
   }
 
@@ -466,7 +628,7 @@ class MatrixState extends State<Matrix> with WidgetsBindingObserver {
   Future<void> dehydrateAction(BuildContext context) async {
     final response = await showOkCancelAlertDialog(
       context: context,
-      isDestructive: true,
+      isDestructiveAction: true,
       title: L10n.of(context).dehydrate,
       message: L10n.of(context).dehydrateWarning,
     );
@@ -485,7 +647,7 @@ class MatrixState extends State<Matrix> with WidgetsBindingObserver {
     );
 
     final exportFileName =
-        'fluffychat-export-${DateFormat(DateFormat.YEAR_MONTH_DAY).format(DateTime.now())}.fluffybackup';
+        'pingmechat-export-${DateFormat(DateFormat.YEAR_MONTH_DAY).format(DateTime.now())}.pingmebackup';
 
     final file = MatrixFile(bytes: exportBytes, name: exportFileName);
     file.save(context);

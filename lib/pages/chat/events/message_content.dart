@@ -1,19 +1,21 @@
 import 'dart:math';
 
+import 'package:pingmechat/pages/chat/events/call_message.dart';
+import 'package:pingmechat/pages/chat/events/jitsi_message.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_gen/gen_l10n/l10n.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
+import 'package:matrix/encryption.dart';
 import 'package:matrix/matrix.dart';
 
-import 'package:fluffychat/pages/chat/events/video_player.dart';
-import 'package:fluffychat/utils/adaptive_bottom_sheet.dart';
-import 'package:fluffychat/utils/date_time_extension.dart';
-import 'package:fluffychat/utils/matrix_sdk_extensions/matrix_locals.dart';
-import 'package:fluffychat/widgets/avatar.dart';
-import 'package:fluffychat/widgets/matrix.dart';
+import 'package:pingmechat/pages/chat/events/video_player.dart';
+import 'package:pingmechat/utils/adaptive_bottom_sheet.dart';
+import 'package:pingmechat/utils/date_time_extension.dart';
+import 'package:pingmechat/utils/matrix_sdk_extensions/matrix_locals.dart';
+import 'package:pingmechat/widgets/avatar.dart';
+import 'package:pingmechat/widgets/matrix.dart';
 import '../../../config/app_config.dart';
-import '../../../utils/event_checkbox_extension.dart';
 import '../../../utils/platform_infos.dart';
 import '../../../utils/url_launcher.dart';
 import '../../bootstrap/bootstrap_dialog.dart';
@@ -27,19 +29,17 @@ import 'message_download_content.dart';
 class MessageContent extends StatelessWidget {
   final Event event;
   final Color textColor;
-  final Color linkColor;
   final void Function(Event)? onInfoTab;
   final BorderRadius borderRadius;
-  final Timeline timeline;
+  final bool isJitsi;
 
   const MessageContent(
     this.event, {
     this.onInfoTab,
     super.key,
-    required this.timeline,
     required this.textColor,
-    required this.linkColor,
     required this.borderRadius,
+    required this.isJitsi,
   });
 
   void _verifyOrRequestKey(BuildContext context) async {
@@ -89,6 +89,24 @@ class MessageContent extends StatelessWidget {
                 subtitle: Text(event.originServerTs.localizedTime(context)),
                 trailing: const Icon(Icons.lock_outlined),
               ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 8.0, top: 8.0),
+                child: SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton.icon(
+                    onPressed: event.requestKey,
+                    icon: const Icon(Icons.lock_open),
+                    label: Text(L10n.of(context).tryDecipherMessages),
+                    style: ElevatedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 12,
+                        horizontal: 24,
+                      ),
+                      textStyle: const TextStyle(fontSize: 18),
+                    ),
+                  ),
+                ),
+              ),
               const Divider(),
               Text(
                 event.calcLocalizedBodyFallback(
@@ -106,6 +124,7 @@ class MessageContent extends StatelessWidget {
   Widget build(BuildContext context) {
     final fontSize = AppConfig.messageFontSize * AppConfig.fontSizeFactor;
     final buttonTextColor = textColor;
+
     switch (event.type) {
       case EventTypes.Message:
       case EventTypes.Encrypted:
@@ -142,15 +161,14 @@ class MessageContent extends StatelessWidget {
               height: height,
               fit: fit,
               borderRadius: borderRadius,
-              timeline: timeline,
-              textColor: textColor,
             );
           case CuteEventContent.eventType:
             return CuteContent(event);
           case MessageTypes.Audio:
             if (PlatformInfos.isMobile ||
                     PlatformInfos.isMacOS ||
-                    PlatformInfos.isWeb
+                    PlatformInfos.isWeb ||
+                    PlatformInfos.isWindows
                 // Disabled until https://github.com/bleonard252/just_audio_mpv/issues/3
                 // is fixed
                 //   || PlatformInfos.isLinux
@@ -158,64 +176,40 @@ class MessageContent extends StatelessWidget {
               return AudioPlayerWidget(
                 event,
                 color: textColor,
-                linkColor: linkColor,
                 fontSize: fontSize,
               );
             }
-            return MessageDownloadContent(
-              event,
-              textColor: textColor,
-              linkColor: linkColor,
-            );
+            return MessageDownloadContent(event, textColor);
           case MessageTypes.Video:
-            return EventVideoPlayer(
-              event,
-              textColor: textColor,
-              linkColor: linkColor,
-              timeline: timeline,
-            );
+            return EventVideoPlayer(event);
           case MessageTypes.File:
-            return MessageDownloadContent(
-              event,
-              textColor: textColor,
-              linkColor: linkColor,
-            );
+            return MessageDownloadContent(event, textColor);
 
           case MessageTypes.Text:
           case MessageTypes.Notice:
           case MessageTypes.Emote:
+            if (isJitsi) {
+              return JitsiMessage(
+                event,
+                textColor: textColor,
+              );
+            }
+
             if (AppConfig.renderHtml &&
                 !event.redacted &&
-                event.isRichMessage) {
+                event.isRichMessage &&
+                event.body.length > 1 &&
+                !event.formattedText
+                    .trim()
+                    .endsWith('</mx-reply><ul><li></li></ul>')) {
               var html = event.formattedText;
               if (event.messageType == MessageTypes.Emote) {
                 html = '* $html';
               }
-              return Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 8,
-                ),
-                child: HtmlMessage(
-                  html: html,
-                  textColor: textColor,
-                  room: event.room,
-                  fontSize:
-                      AppConfig.fontSizeFactor * AppConfig.messageFontSize,
-                  linkStyle: TextStyle(
-                    color: linkColor,
-                    fontSize:
-                        AppConfig.fontSizeFactor * AppConfig.messageFontSize,
-                    decoration: TextDecoration.underline,
-                    decorationColor: linkColor,
-                  ),
-                  onOpen: (url) => UrlLauncher(context, url.url).launchUrl(),
-                  eventId: event.eventId,
-                  checkboxCheckedEvents: event.aggregatedEvents(
-                    timeline,
-                    EventCheckboxRoomExtension.relationshipType,
-                  ),
-                ),
+              return HtmlMessage(
+                html: html,
+                textColor: textColor,
+                room: event.room,
               );
             }
             // else we fall through to the normal message rendering
@@ -294,50 +288,30 @@ class MessageContent extends StatelessWidget {
             final bigEmotes = event.onlyEmotes &&
                 event.numberEmotes > 0 &&
                 event.numberEmotes <= 3;
-            return Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 16,
-                vertical: 8,
+            return Linkify(
+              text: event.calcLocalizedBodyFallback(
+                MatrixLocals(L10n.of(context)),
+                hideReply: true,
               ),
-              child: Linkify(
-                text: event.calcLocalizedBodyFallback(
-                  MatrixLocals(L10n.of(context)),
-                  hideReply: true,
-                ),
-                textScaleFactor: MediaQuery.textScalerOf(context).scale(1),
-                style: TextStyle(
-                  color: textColor,
-                  fontSize: bigEmotes ? fontSize * 5 : fontSize,
-                  decoration:
-                      event.redacted ? TextDecoration.lineThrough : null,
-                ),
-                options: const LinkifyOptions(humanize: false),
-                linkStyle: TextStyle(
-                  color: linkColor,
-                  fontSize: fontSize,
-                  decoration: TextDecoration.underline,
-                  decorationColor: linkColor,
-                ),
-                onOpen: (url) => UrlLauncher(context, url.url).launchUrl(),
+              style: TextStyle(
+                color: textColor,
+                fontSize: bigEmotes ? fontSize * 5 : fontSize,
+                decoration: event.redacted ? TextDecoration.lineThrough : null,
               ),
+              options: const LinkifyOptions(humanize: false),
+              linkStyle: TextStyle(
+                color: textColor.withAlpha(150),
+                fontSize: fontSize,
+                decoration: TextDecoration.underline,
+                decorationColor: textColor.withAlpha(150),
+              ),
+              onOpen: (url) => UrlLauncher(context, url.url).launchUrl(),
             );
         }
+      case EventTypes.CallHangup:
+      case EventTypes.CallReject:
       case EventTypes.CallInvite:
-        return FutureBuilder<User?>(
-          future: event.fetchSenderUser(),
-          builder: (context, snapshot) {
-            return _ButtonContent(
-              label: L10n.of(context).startedACall(
-                snapshot.data?.calcDisplayname() ??
-                    event.senderFromMemoryOrFallback.calcDisplayname(),
-              ),
-              icon: '📞',
-              textColor: buttonTextColor,
-              onPressed: () => onInfoTab!(event),
-              fontSize: fontSize,
-            );
-          },
-        );
+        return CallMessage(event, textColor: textColor);
       default:
         return FutureBuilder<User?>(
           future: event.fetchSenderUser(),
@@ -376,19 +350,13 @@ class _ButtonContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 16,
-        vertical: 8,
-      ),
-      child: InkWell(
-        onTap: onPressed,
-        child: Text(
-          '$icon  $label',
-          style: TextStyle(
-            color: textColor,
-            fontSize: fontSize,
-          ),
+    return InkWell(
+      onTap: onPressed,
+      child: Text(
+        '$icon  $label',
+        style: TextStyle(
+          color: textColor,
+          fontSize: fontSize,
         ),
       ),
     );

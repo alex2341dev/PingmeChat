@@ -1,43 +1,26 @@
 {
   "project_info": {
-    "project_number": "865731724731",
-    "project_id": "fluffychat-ef3e8",
-    "storage_bucket": "fluffychat-ef3e8.appspot.com"
+    "project_number": "617347504867",
+    "project_id": "pingmechat-f963d",
+    "storage_bucket": "pingmechat-f963d.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:865731724731:android:ec427b3b1dcd4a1e64309e",
+        "mobilesdk_app_id": "1:617347504867:android:d8bd89801957339d0803d6",
         "android_client_info": {
-          "package_name": "chat.fluffy.fluffychat"
+          "package_name": "chat.pingme.pingmechat"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "865731724731-od6969v178ul9970elgacpt936v5t7qg.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyBLdZpGSPjcinikB4lAU6awW_h88NG17Sg"
+          "current_key": "AIzaSyA2yBZN-03WtvZrr5J7o3qEw1px_4faFFw"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "865731724731-od6969v178ul9970elgacpt936v5t7qg.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "865731724731-ofdr7e6m04murgb1bvchlj9oaos0q5i3.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "im.fluffychat.app"
-              }
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     }

@@ -1,451 +1,397 @@
 {
   "@showPassword": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "hugContent": "{senderName} σε αγκαλιάζει",
   "@hugContent": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "senderName": {
-        "type": "String"
-      }
+      "senderName": {}
     }
   },
   "@darkTheme": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@passphraseOrKey": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@pleaseEnterYourPassword": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@theyMatch": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@connect": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@jumpToLastReadMessage": {},
   "@allRooms": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@obtainingLocation": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "commandHint_cuddle": "Στείλτε μια αγκαλιά",
   "@commandHint_cuddle": {},
   "@chats": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@widgetVideo": {},
   "@dismiss": {},
   "@unknownDevice": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@emoteShortcode": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@noEncryptionForPublicRooms": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "admin": "Διαχειριστής",
   "@admin": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@reportErrorDescription": {},
   "@directChats": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@setPermissionsLevel": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@inviteContactToGroup": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "groupName": {
-        "type": "String"
-      }
+      "groupName": {}
     }
   },
   "@addAccount": {},
   "@close": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@configureChat": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@chatHasBeenAddedToThisSpace": {},
   "@reply": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@currentlyActive": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@removeYourAvatar": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@unsupportedAndroidVersion": {},
   "@device": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "blockDevice": "Συσκευή μπλοκ",
   "@blockDevice": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@commandHint_html": {
-    "type": "String",
+    "type": "text",
     "description": "Usage hint for the command /html"
   },
   "@widgetJitsi": {},
   "@youAreNoLongerParticipatingInThisChat": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@encryption": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@messageType": {},
   "@indexedDbErrorLong": {},
   "@oneClientLoggedOut": {},
   "@toggleMuted": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@unsupportedAndroidVersionLong": {},
   "@kicked": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "username": {
-        "type": "String"
-      },
-      "targetName": {
-        "type": "String"
-      }
+      "username": {},
+      "targetName": {}
     }
   },
   "@title": {
     "description": "Title for the application",
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@changeTheNameOfTheGroup": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@changedTheChatAvatar": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "username": {
-        "type": "String"
-      }
+      "username": {}
     }
   },
   "@verifySuccess": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@sendFile": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@newVerificationRequest": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@startFirstChat": {},
   "@callingAccount": {},
   "@requestPermission": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@sentAPicture": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "username": {
-        "type": "String"
-      }
+      "username": {}
     }
   },
   "@invited": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@changedTheDisplaynameTo": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "username": {
-        "type": "String"
-      },
-      "displayname": {
-        "type": "String"
-      }
+      "username": {},
+      "displayname": {}
     }
   },
   "@setColorTheme": {},
   "@nextAccount": {},
   "@commandHint_create": {
-    "type": "String",
+    "type": "text",
     "description": "Usage hint for the command /create"
   },
   "@singlesignon": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@warning": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@password": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@allSpaces": {},
   "supposedMxid": "Αυτό θα πρέπει να είναι {mxid}",
   "@supposedMxid": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "mxid": {
-        "type": "String"
-      }
+      "mxid": {}
     }
   },
   "@editDisplayname": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@user": {},
   "@roomVersion": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@sentAFile": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "username": {
-        "type": "String"
-      }
+      "username": {}
     }
   },
   "@videoCall": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@youAcceptedTheInvitation": {},
   "banFromChat": "Απαγόρευση από τη συνομιλία",
   "@banFromChat": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@noMatrixServer": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "server1": {
-        "type": "String"
-      },
-      "server2": {
-        "type": "String"
-      }
+      "server1": {},
+      "server2": {}
     }
   },
   "@userAndOthersAreTyping": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "username": {
-        "type": "String"
-      },
-      "count": {
-        "type": "int"
-      }
+      "username": {},
+      "count": {}
     }
   },
   "@youInvitedBy": {
     "placeholders": {
-      "user": {
-        "type": "String"
-      }
+      "user": {}
     }
   },
   "@userIsTyping": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "username": {
-        "type": "String"
-      }
+      "username": {}
     }
   },
   "@openAppToReadMessages": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@sentAVideo": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "username": {
-        "type": "String"
-      }
+      "username": {}
     }
   },
   "@banUserDescription": {},
   "@inviteContact": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "askSSSSSign": "Για να μπορέσετε να υπογράψετε το άλλο άτομο, πληκτρολογήστε τη συνθηματική φράση ασφαλούς αποθήκευσης ή το κλειδί ανάκτησης.",
   "@askSSSSSign": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@widgetEtherpad": {},
   "@waitingPartnerAcceptRequest": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "remove": "Αφαιρέστε το",
   "@remove": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@writeAMessage": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@changeTheme": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@id": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@removeDevicesDescription": {},
   "@changedTheChatDescriptionTo": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "username": {
-        "type": "String"
-      },
-      "description": {
-        "type": "String"
-      }
+      "username": {},
+      "description": {}
     }
   },
   "@countParticipants": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "count": {
-        "type": "int"
-      }
+      "count": {}
     }
   },
   "@separateChatTypes": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@tryAgain": {},
   "areGuestsAllowedToJoin": "Επιτρέπεται στους φιλοξενούμενους χρήστες να συμμετάσχουν",
   "@areGuestsAllowedToJoin": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "blocked": "Αποκλεισμένο",
   "@blocked": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@youKickedAndBanned": {
     "placeholders": {
-      "user": {
-        "type": "String"
-      }
+      "user": {}
     }
   },
   "@dateWithoutYear": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "month": {
-        "type": "String"
-      },
-      "day": {
-        "type": "String"
-      }
+      "month": {},
+      "day": {}
     }
   },
   "@removeDevice": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@unbanUserDescription": {},
   "@userAndUserAreTyping": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "username": {
-        "type": "String"
-      },
-      "username2": {
-        "type": "String"
-      }
+      "username": {},
+      "username2": {}
     }
   },
   "@pleaseClickOnLink": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@saveFile": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "sendOnEnter": "Αποστολή με enter",
   "@sendOnEnter": {},
   "@pickImage": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "answeredTheCall": "{senderName} απάντησε στην κλήση",
   "@answeredTheCall": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "senderName": {
-        "type": "String"
-      }
+      "senderName": {}
     }
   },
   "@youRejectedTheInvitation": {},
   "@otherCallingPermissions": {},
   "@messagesStyle": {},
   "@couldNotDecryptMessage": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "error": {
-        "type": "String"
-      }
+      "error": {}
     }
   },
   "@invitedUsersOnly": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@link": {},
@@ -455,1027 +401,915 @@
   "@chatDescription": {},
   "@callingAccountDetails": {},
   "@next": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@pleaseFollowInstructionsOnWeb": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@changedTheGuestAccessRules": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "username": {
-        "type": "String"
-      }
+      "username": {}
     }
   },
   "@dateWithYear": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "year": {
-        "type": "String"
-      },
-      "month": {
-        "type": "String"
-      },
-      "day": {
-        "type": "String"
-      }
+      "year": {},
+      "month": {},
+      "day": {}
     }
   },
   "@editRoomAliases": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@enterSpace": {},
   "@encryptThisChat": {},
   "@fileName": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@unavailable": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@previousAccount": {},
   "@publicRooms": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@fromTheInvitation": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@sendMessages": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@incorrectPassphraseOrKey": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@emoteWarnNeedToPick": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@reopenChat": {},
   "@pleaseEnterRecoveryKey": {},
   "@create": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@toggleFavorite": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@no": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "alias": "ψευδώνυμο",
   "@alias": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@widgetNameError": {},
   "@inoffensive": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@unpin": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@addToBundle": {},
   "@reportMessage": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@spaceIsPublic": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@addWidget": {},
   "all": "Όλα",
   "@all": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@removeAllOtherDevices": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@unblockDevice": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@countFiles": {
     "placeholders": {
-      "count": {
-        "type": "int"
-      }
+      "count": {}
     }
   },
   "@noKeyForThisMessage": {},
   "@enableEncryptionWarning": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@inviteText": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "username": {
-        "type": "String"
-      },
-      "link": {
-        "type": "String"
-      }
+      "username": {},
+      "link": {}
     }
   },
   "@shareLocation": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@reason": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@commandHint_markasgroup": {},
   "@errorObtainingLocation": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "error": {
-        "type": "String"
-      }
+      "error": {}
     }
   },
   "@hydrateTor": {},
   "@pushNotificationsNotAvailable": {},
   "@passwordRecovery": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@storeInAppleKeyChain": {},
   "@replaceRoomWithNewerVersion": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@hydrate": {},
   "@invalidServerName": {},
   "@chatPermissions": {},
   "@voiceMessage": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "badServerLoginTypesException": "Ο homeserver υποστηρίζει τους τύπους σύνδεσης:\n{serverVersions}\nΑλλά αυτή η εφαρμογή υποστηρίζει μόνο:\n{supportedVersions}",
   "@badServerLoginTypesException": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "serverVersions": {
-        "type": "String"
-      },
-      "supportedVersions": {
-        "type": "String"
-      }
+      "serverVersions": {},
+      "supportedVersions": {}
     }
   },
   "@wipeChatBackup": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "cantOpenUri": "Δεν μπορεί να ανοίξει το URI {uri}",
   "@cantOpenUri": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "uri": {
-        "type": "String"
-      }
+      "uri": {}
     }
   },
   "@sender": {},
   "@storeInAndroidKeystore": {},
   "@hideRedactedEvents": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@online": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@signInWithPassword": {},
   "@ignoredUsers": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@lastActiveAgo": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "localizedTimeShort": {
-        "type": "String"
-      }
+      "localizedTimeShort": {}
     }
   },
   "@changedTheGuestAccessRulesTo": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "username": {
-        "type": "String"
-      },
-      "rules": {
-        "type": "String"
-      }
+      "username": {},
+      "rules": {}
     }
   },
   "@weSentYouAnEmail": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@offensive": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@needPantalaimonWarning": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@makeAdminDescription": {},
   "@edit": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@loadMore": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@noEmotesFound": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@synchronizingPleaseWait": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@transferFromAnotherDevice": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@passwordHasBeenChanged": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@pushRules": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@goToTheNewRoom": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@commandHint_clearcache": {
-    "type": "String",
+    "type": "text",
     "description": "Usage hint for the command /clearcache"
   },
   "@loadingPleaseWait": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@copy": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@saveKeyManuallyDescription": {},
   "@none": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@editBundlesForAccount": {},
   "@renderRichContent": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@enableEncryption": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@whyIsThisMessageEncrypted": {},
   "@unreadChats": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "unreadCount": {
-        "type": "int"
-      }
+      "unreadCount": {}
     }
   },
   "@rejectedTheInvitation": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "username": {
-        "type": "String"
-      }
+      "username": {}
     }
   },
   "@setChatDescription": {},
   "@userLeftTheChat": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "username": {
-        "type": "String"
-      }
+      "username": {}
     }
   },
   "@spaceName": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "importFromZipFile": "Εισαγωγή από αρχείο .zip",
   "@importFromZipFile": {},
   "@toggleUnread": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@or": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@dehydrateWarning": {},
   "@sendOriginal": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@noOtherDevicesFound": {},
   "@whoIsAllowedToJoinThisGroup": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@emptyChat": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@seenByUser": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "username": {
-        "type": "String"
-      }
+      "username": {}
     }
   },
   "@storeSecurlyOnThisDevice": {},
   "@yourChatBackupHasBeenSetUp": {},
   "@chatBackup": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@redactedBy": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "username": {
-        "type": "String"
-      }
+      "username": {}
     }
   },
   "@submit": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@videoCallsBetaWarning": {},
   "@unmuteChat": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@createdTheChat": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "username": {
-        "type": "String"
-      }
+      "username": {}
     }
   },
   "@redactedAnEvent": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "username": {
-        "type": "String"
-      }
+      "username": {}
     }
   },
   "autoplayImages": "Αυτόματη αναπαραγωγή κινούμενων αυτοκόλλητων και emotes",
   "@autoplayImages": {
-    "type": "String",
+    "type": "text",
     "placeholder": {}
   },
   "@compareEmojiMatch": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@participant": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@logInTo": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "homeserver": {
-        "type": "String"
-      }
+      "homeserver": {}
     }
   },
   "@yes": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@containsDisplayName": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@signInWith": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "provider": {
-        "type": "String"
-      }
+      "provider": {}
     }
   },
   "@username": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@changedTheRoomAliases": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "username": {
-        "type": "String"
-      }
+      "username": {}
     }
   },
   "@fileIsTooBigForServer": {},
   "@homeserver": {},
   "@help": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@chatDetails": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@people": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@changedTheHistoryVisibilityTo": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "username": {
-        "type": "String"
-      },
-      "rules": {
-        "type": "String"
-      }
+      "username": {},
+      "rules": {}
     }
   },
   "@leftTheChat": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@verified": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "repeatPassword": "Επανάληψη κωδικού πρόσβασης",
   "@repeatPassword": {},
   "@setStatus": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@groupWith": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "displayname": {
-        "type": "String"
-      }
+      "displayname": {}
     }
   },
   "@callingPermissions": {},
   "@delete": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
-  "@newMessageInFluffyChat": {
-    "type": "String",
+  "@newMessageInPingmeChat": {
+    "type": "text",
     "placeholders": {}
   },
   "@readUpToHere": {},
   "@start": {},
   "@downloadFile": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@deviceId": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@register": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@unlockOldMessages": {},
   "@identity": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@numChats": {
     "type": "number",
     "placeholders": {
-      "number": {
-        "type": "String"
-      }
+      "number": {}
     }
   },
   "@changedTheJoinRulesTo": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "username": {
-        "type": "String"
-      },
-      "joinRules": {
-        "type": "String"
-      }
+      "username": {},
+      "joinRules": {}
     }
   },
   "@ignore": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@recording": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@changedTheChatPermissions": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "username": {
-        "type": "String"
-      }
+      "username": {}
     }
   },
   "@moderator": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@optionalRedactReason": {},
   "acceptedTheInvitation": "👍 {username} αποδέχτηκε την πρόσκληση",
   "@acceptedTheInvitation": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "username": {
-        "type": "String"
-      }
+      "username": {}
     }
   },
   "@waitingPartnerEmoji": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@channelCorruptedDecryptError": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@tryToSendAgain": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@guestsCanJoin": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@ok": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@copyToClipboard": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@dehydrate": {},
   "@locationPermissionDeniedNotice": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@send": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@hasWithdrawnTheInvitationFor": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "username": {
-        "type": "String"
-      },
-      "targetName": {
-        "type": "String"
-      }
+      "username": {},
+      "targetName": {}
     }
   },
   "@visibleForAllParticipants": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@noRoomsFound": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "banned": "Απαγορευμένο",
   "@banned": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@sendAsText": {
-    "type": "String"
+    "type": "text"
   },
   "@inviteForMe": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@archiveRoomDescription": {},
   "exportEmotePack": "Εξαγωγή πακέτου Emote ως .zip",
   "@exportEmotePack": {},
   "@changedTheChatNameTo": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "username": {
-        "type": "String"
-      },
-      "chatname": {
-        "type": "String"
-      }
+      "username": {},
+      "chatname": {}
     }
   },
   "@sendSticker": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "account": "Λογαριασμός",
   "@account": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@switchToAccount": {
     "type": "number",
     "placeholders": {
-      "number": {
-        "type": "String"
-      }
+      "number": {}
     }
   },
   "@commandInvalid": {
-    "type": "String"
+    "type": "text"
   },
   "@setAsCanonicalAlias": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@whyDoYouWantToReportThis": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@locationDisabledNotice": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@placeCall": {},
   "@removedBy": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "username": {
-        "type": "String"
-      }
+      "username": {}
     }
   },
   "@changedTheRoomInvitationLink": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "username": {
-        "type": "String"
-      }
+      "username": {}
     }
   },
   "@newChat": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@notifications": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@commandHint_plain": {
-    "type": "String",
+    "type": "text",
     "description": "Usage hint for the command /plain"
   },
   "@emoteSettings": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@experimentalVideoCalls": {},
   "@openCamera": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@pleaseEnterRecoveryKeyDescription": {},
   "@guestsAreForbidden": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@mention": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@openInMaps": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@withTheseAddressesRecoveryDescription": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@inviteContactToGroupQuestion": {},
   "@emoteExists": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@redactedByBecause": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "username": {
-        "type": "String"
-      },
-      "reason": {
-        "type": "String"
-      }
+      "username": {},
+      "reason": {}
     }
   },
   "@isTyping": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@youHaveWithdrawnTheInvitationFor": {
     "placeholders": {
-      "user": {
-        "type": "String"
-      }
+      "user": {}
     }
   },
   "@chat": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@group": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@leave": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@skip": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@appearOnTopDetails": {},
   "@roomHasBeenUpgraded": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@enterRoom": {},
   "@enableEmotesGlobally": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "areYouSure": "Είσαι σίγουρος;",
   "@areYouSure": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@pleaseChooseAPasscode": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@noPasswordRecoveryDescription": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@changedTheProfileAvatar": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "username": {
-        "type": "String"
-      }
+      "username": {}
     }
   },
   "allChats": "Όλες οι συνομιλίες",
   "@allChats": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@reportUser": {},
   "@sharedTheLocation": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "username": {
-        "type": "String"
-      }
+      "username": {}
     }
   },
   "@commandHint_send": {
-    "type": "String",
+    "type": "text",
     "description": "Usage hint for the command /send"
   },
   "@onlineKeyBackupEnabled": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@unbannedUser": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "username": {
-        "type": "String"
-      },
-      "targetName": {
-        "type": "String"
-      }
+      "username": {},
+      "targetName": {}
     }
   },
   "@confirmEventUnpin": {},
   "badServerVersionsException": "Ο homeserver υποστηρίζει τις εκδόσεις Spec:\n{serverVersions}\nΑλλά αυτή η εφαρμογή υποστηρίζει μόνο τις {supportedVersions}",
   "@badServerVersionsException": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "serverVersions": {
-        "type": "String"
-      },
-      "supportedVersions": {
-        "type": "String"
-      }
+      "serverVersions": {},
+      "supportedVersions": {}
     }
   },
   "@youInvitedUser": {
     "placeholders": {
-      "user": {
-        "type": "String"
-      }
+      "user": {}
     }
   },
   "@kickedAndBanned": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "username": {
-        "type": "String"
-      },
-      "targetName": {
-        "type": "String"
-      }
+      "username": {},
+      "targetName": {}
     }
   },
   "@noConnectionToTheServer": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@fileHasBeenSavedAt": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "path": {
-        "type": "String"
-      }
+      "path": {}
     }
   },
   "@license": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "addToSpace": "Προσθήκη στο χώρο",
   "@addToSpace": {},
   "@unbanFromChat": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@commandMissing": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "command": {
-        "type": "String"
-      }
+      "command": {}
     },
     "description": "State that {command} is not a valid /command."
   },
   "@redactMessageDescription": {},
   "@rejoin": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@recoveryKey": {},
   "@redactMessage": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@forward": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@commandHint_discardsession": {
-    "type": "String",
+    "type": "text",
     "description": "Usage hint for the command /discardsession"
   },
   "@invalidInput": {},
   "about": "Σχετικά με το",
   "@about": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@chooseAStrongPassword": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@hideUnknownEvents": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@dehydrateTorLong": {},
   "@yourPublicKey": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@tooManyRequestsWarning": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@invitedUser": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "username": {
-        "type": "String"
-      },
-      "targetName": {
-        "type": "String"
-      }
+      "username": {},
+      "targetName": {}
     }
   },
   "@kickFromChat": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@commandHint_myroomnick": {
-    "type": "String",
+    "type": "text",
     "description": "Usage hint for the command /myroomnick"
   },
   "@offline": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@noPermission": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@doNotShowAgain": {},
   "activatedEndToEndEncryption": "🔐 {username} ενεργοποίησε κρυπτογράφηση από άκρη σε άκρη",
   "@activatedEndToEndEncryption": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "username": {
-        "type": "String"
-      }
+      "username": {}
     }
   },
   "@report": {},
   "@status": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@compareNumbersMatch": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@groupIsPublic": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@verifyStart": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@memberChanges": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@joinRoom": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@unverified": {},
-  "@fluffychat": {
-    "type": "String",
+  "@pingmechat": {
+    "type": "text",
     "placeholders": {}
   },
   "@howOffensiveIsThisContent": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@serverRequiresEmail": {},
@@ -1483,78 +1317,68 @@
   "@screenSharingTitle": {},
   "@widgetCustom": {},
   "@sentCallInformations": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "senderName": {
-        "type": "String"
-      }
+      "senderName": {}
     }
   },
   "@addToSpaceDescription": {},
   "googlyEyesContent": "{senderName} σας στέλνει googly eyes",
   "@googlyEyesContent": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "senderName": {
-        "type": "String"
-      }
+      "senderName": {}
     }
   },
   "@youBannedUser": {
     "placeholders": {
-      "user": {
-        "type": "String"
-      }
+      "user": {}
     }
   },
   "@theyDontMatch": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@youHaveBeenBannedFromThisChat": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@displaynameHasBeenChanged": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "addChatDescription": "Προσθέστε μια περιγραφή συνομιλίας...",
   "@addChatDescription": {},
   "@sentAnAudio": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "username": {
-        "type": "String"
-      }
+      "username": {}
     }
   },
   "@editRoomAvatar": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@encrypted": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@commandHint_leave": {
-    "type": "String",
+    "type": "text",
     "description": "Usage hint for the command /leave"
   },
   "@commandHint_myroomavatar": {
-    "type": "String",
+    "type": "text",
     "description": "Usage hint for the command /myroomavatar"
   },
   "cancel": "Ακύρωση",
   "@cancel": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@hasKnocked": {
     "placeholders": {
-      "user": {
-        "type": "String"
-      }
+      "user": {}
     }
   },
   "@publish": {},
@@ -1562,132 +1386,124 @@
   "@clearArchive": {},
   "appLock": "Κλείδωμα εφαρμογών",
   "@appLock": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@commandHint_react": {
-    "type": "String",
+    "type": "text",
     "description": "Usage hint for the command /react"
   },
   "@changedTheHistoryVisibility": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "username": {
-        "type": "String"
-      }
+      "username": {}
     }
   },
   "@commandHint_me": {
-    "type": "String",
+    "type": "text",
     "description": "Usage hint for the command /me"
   },
   "@pleaseEnterYourUsername": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@messageInfo": {},
   "@disableEncryptionWarning": {},
   "@directChat": {},
   "@encryptionNotEnabled": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@wrongPinEntered": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "seconds": {
-        "type": "int"
-      }
+      "seconds": {}
     }
   },
   "sendTypingNotifications": "Αποστολή ειδοποιήσεων δακτυλογράφησης",
   "@sendTypingNotifications": {},
   "@lightTheme": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@inviteGroupChat": {},
   "@appearOnTop": {},
   "@invitePrivateChat": {},
   "@verifyTitle": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@foregroundServiceRunning": {},
   "@enterAnEmailAddress": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@voiceCall": {},
   "@commandHint_kick": {
-    "type": "String",
+    "type": "text",
     "description": "Usage hint for the command /kick"
   },
   "@copiedToClipboard": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@createNewSpace": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@commandHint_unban": {
-    "type": "String",
+    "type": "text",
     "description": "Usage hint for the command /unban"
   },
   "@unknownEncryptionAlgorithm": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@commandHint_ban": {
-    "type": "String",
+    "type": "text",
     "description": "Usage hint for the command /ban"
   },
   "importEmojis": "Εισαγωγή Emojis",
   "@importEmojis": {},
   "@confirm": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@wasDirectChatDisplayName": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "oldDisplayName": {
-        "type": "String"
-      }
+      "oldDisplayName": {}
     }
   },
   "@noChatDescriptionYet": {},
   "@defaultPermissionLevel": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@removeFromBundle": {},
   "@numUsersTyping": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "count": {
-        "type": "int"
-      }
+      "count": {}
     }
   },
   "@fontSize": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@whoCanPerformWhichAction": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "confirmMatrixId": "Παρακαλούμε επιβεβαιώστε το Matrix ID σας για να διαγράψετε τον λογαριασμό σας.",
   "@confirmMatrixId": {},
   "@learnMore": {},
   "@iHaveClickedOnLink": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@you": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "notAnImage": "Δεν είναι αρχείο εικόνας.",
@@ -1696,7 +1512,7 @@
   "@openGallery": {},
   "@chatDescriptionHasBeenChanged": {},
   "@search": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@newGroup": {},
@@ -1704,122 +1520,98 @@
   "@dehydrateTor": {},
   "@removeFromSpace": {},
   "@dateAndTimeOfDay": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "date": {
-        "type": "String"
-      },
-      "timeOfDay": {
-        "type": "String"
-      }
+      "date": {},
+      "timeOfDay": {}
     }
   },
   "@commandHint_op": {
-    "type": "String",
+    "type": "text",
     "description": "Usage hint for the command /op"
   },
   "@commandHint_join": {
-    "type": "String",
+    "type": "text",
     "description": "Usage hint for the command /join"
   },
   "@sourceCode": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@roomUpgradeDescription": {},
   "@commandHint_invite": {
-    "type": "String",
+    "type": "text",
     "description": "Usage hint for the command /invite"
   },
   "@userSentUnknownEvent": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "username": {
-        "type": "String"
-      },
-      "type": {
-        "type": "String"
-      }
+      "username": {},
+      "type": {}
     }
   },
   "@scanQrCode": {},
   "@logout": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@pleaseEnterANumber": {},
   "@contactHasBeenInvitedToTheGroup": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@youKicked": {
     "placeholders": {
-      "user": {
-        "type": "String"
-      }
+      "user": {}
     }
   },
   "areYouSureYouWantToLogout": "Σίγουρα θέλετε να αποσυνδεθείτε;",
   "@areYouSureYouWantToLogout": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@changedTheJoinRules": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "username": {
-        "type": "String"
-      }
+      "username": {}
     }
   },
   "@profileNotFound": {},
   "@jump": {},
   "@groups": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@reactedWith": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "sender": {
-        "type": "String"
-      },
-      "reaction": {
-        "type": "String"
-      }
+      "sender": {},
+      "reaction": {}
     }
   },
   "bannedUser": "{username} banned {targetName}",
   "@bannedUser": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "username": {
-        "type": "String"
-      },
-      "targetName": {
-        "type": "String"
-      }
+      "username": {},
+      "targetName": {}
     }
   },
   "@sorryThatsNotPossible": {},
   "@videoWithSize": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "size": {
-        "type": "String"
-      }
+      "size": {}
     }
   },
   "@oopsSomethingWentWrong": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@loadCountMoreParticipants": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "count": {
-        "type": "int"
-      }
+      "count": {}
     }
   },
   "@shareInviteLink": {},
@@ -1827,151 +1619,141 @@
   "@recoveryKeyLost": {},
   "cuddleContent": "{senderName} σε αγκαλιάζει",
   "@cuddleContent": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "senderName": {
-        "type": "String"
-      }
+      "senderName": {}
     }
   },
   "askVerificationRequest": "Αποδοχή αυτού του αιτήματος επαλήθευσης από {username};",
   "@askVerificationRequest": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "username": {
-        "type": "String"
-      }
+      "username": {}
     }
   },
   "@containsUserName": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@messages": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@login": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@deviceKeys": {},
   "@waitingPartnerNumbers": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@noGoogleServicesWarning": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@everythingReady": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "addEmail": "Προσθήκη email",
   "@addEmail": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@emoteKeyboardNoRecents": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@setCustomEmotes": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@startedACall": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "senderName": {
-        "type": "String"
-      }
+      "senderName": {}
     }
   },
   "@emoteInvalid": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@systemTheme": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@notificationsEnabledForThisAccount": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@deleteMessage": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@visibilityOfTheChatHistory": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@settings": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@setTheme": {},
   "@changeTheHomeserver": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@youJoinedTheChat": {},
   "@wallpaper": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@openVideoCamera": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@play": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "fileName": {
-        "type": "String"
-      }
+      "fileName": {}
     }
   },
   "@chatBackupDescription": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@changeDeviceName": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@passwordForgotten": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@statusExampleMessage": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@security": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@markAsRead": {},
   "@sendAudio": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@widgetName": {},
   "@sentASticker": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "username": {
-        "type": "String"
-      }
+      "username": {}
     }
   },
   "@errorAddingWidget": {},
   "@commandHint_dm": {
-    "type": "String",
+    "type": "text",
     "description": "Usage hint for the command /dm"
   },
   "commandHint_hug": "Στείλτε μια αγκαλιά",
@@ -1979,86 +1761,80 @@
   "replace": "Αντικαταστήστε το",
   "@replace": {},
   "@reject": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@extremeOffensive": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@editBlockedServers": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@oopsPushError": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@youUnbannedUser": {
     "placeholders": {
-      "user": {
-        "type": "String"
-      }
+      "user": {}
     }
   },
   "@deactivateAccountWarning": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "archive": "Αρχείο",
   "@archive": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@joinedTheChat": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "username": {
-        "type": "String"
-      }
+      "username": {}
     }
   },
   "@visibleForEveryone": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@pleaseEnter4Digits": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@newSpace": {},
   "@changePassword": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@devices": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "accept": "Αποδοχή",
   "@accept": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@unknownEvent": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "type": {
-        "type": "String"
-      }
+      "type": {}
     }
   },
   "@emojis": {},
   "@pleaseEnterYourPin": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@pleaseChoose": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@share": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "commandHint_googly": "Στείλτε μερικά μάτια",
@@ -2066,91 +1842,89 @@
   "@pleaseTryAgainLaterOrChooseDifferentServer": {},
   "@createGroup": {},
   "@privacy": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@changeYourAvatar": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@sendImage": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@hydrateTorLong": {},
   "@time": {},
   "@enterYourHomeserver": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "botMessages": "Μηνύματα bot",
   "@botMessages": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@contentHasBeenReported": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@custom": {},
   "@noBackupWarning": {},
   "@fromJoining": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@verify": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@sendVideo": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@storeInSecureStorageDescription": {},
   "@openChat": {},
   "@kickUserDescription": {},
   "@sendAMessage": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@pin": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "importNow": "Εισαγωγή τώρα",
   "@importNow": {},
   "@deleteAccount": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@setInvitationLink": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@pinMessage": {},
   "@screenSharingDetail": {},
   "@muteChat": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@invite": {},
   "@enableMultiAccounts": {},
   "anyoneCanJoin": "Οποιοσδήποτε μπορεί να συμμετάσχει",
   "@anyoneCanJoin": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@emotePacks": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "@indexedDbErrorTitle": {},
   "@endedTheCall": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "senderName": {
-        "type": "String"
-      }
+      "senderName": {}
     }
   }
 }

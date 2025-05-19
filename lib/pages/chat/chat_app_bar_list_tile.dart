@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_linkify/flutter_linkify.dart';
 
-import 'package:fluffychat/utils/url_launcher.dart';
+import 'package:pingmechat/utils/url_launcher.dart';
 
 class ChatAppBarListTile extends StatelessWidget {
   final Widget? leading;
@@ -37,7 +37,6 @@ class ChatAppBarListTile extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 4.0),
                 child: Linkify(
                   text: title,
-                  textScaleFactor: MediaQuery.textScalerOf(context).scale(1),
                   options: const LinkifyOptions(humanize: false),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,

@@ -9,9 +9,10 @@ import 'package:path_provider/path_provider.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:universal_html/html.dart' as html;
 
-import 'package:fluffychat/config/app_config.dart';
-import 'package:fluffychat/utils/client_manager.dart';
-import 'package:fluffychat/utils/platform_infos.dart';
+import 'package:pingmechat/config/app_config.dart';
+import 'package:pingmechat/utils/client_manager.dart';
+import 'package:pingmechat/utils/matrix_sdk_extensions/flutter_hive_collections_database.dart';
+import 'package:pingmechat/utils/platform_infos.dart';
 import 'cipher.dart';
 
 import 'sqlcipher_stub.dart'
@@ -54,7 +55,7 @@ Future<DatabaseApi> flutterMatrixSdkDatabaseBuilder(Client client) async {
       Logs().e('Unable to send error notification', e, s);
     }
 
-    rethrow;
+    return FlutterHiveCollectionsDatabase.databaseBuilder(client);
   }
 }
 
@@ -114,7 +115,7 @@ Future<MatrixSdkDatabase> _constructDatabase(Client client) async {
   return MatrixSdkDatabase(
     client.clientName,
     database: database,
-    maxFileSize: 1000 * 1000 * 10,
+    maxFileSize: 1024 * 1024 * 10,
     fileStorageLocation: fileStorageLocation?.uri,
     deleteFilesAfterDuration: const Duration(days: 30),
   );

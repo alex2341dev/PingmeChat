@@ -2,17 +2,17 @@ import 'package:flutter/material.dart';
 
 import 'package:matrix/matrix.dart';
 
-import 'package:fluffychat/config/app_config.dart';
-import 'package:fluffychat/config/themes.dart';
-import 'package:fluffychat/utils/stream_extension.dart';
-import 'package:fluffychat/widgets/avatar.dart';
-import 'package:fluffychat/widgets/hover_builder.dart';
-import 'package:fluffychat/widgets/matrix.dart';
-import '../../widgets/adaptive_dialogs/user_dialog.dart';
+import 'package:pingmechat/config/app_config.dart';
+import 'package:pingmechat/config/themes.dart';
+import 'package:pingmechat/pages/user_bottom_sheet/user_bottom_sheet.dart';
+import 'package:pingmechat/utils/adaptive_bottom_sheet.dart';
+import 'package:pingmechat/utils/stream_extension.dart';
+import 'package:pingmechat/widgets/avatar.dart';
+import 'package:pingmechat/widgets/hover_builder.dart';
+import 'package:pingmechat/widgets/matrix.dart';
 
 class StatusMessageList extends StatelessWidget {
   final void Function() onStatusEdit;
-
   const StatusMessageList({
     required this.onStatusEdit,
     super.key,
@@ -24,9 +24,12 @@ class StatusMessageList extends StatelessWidget {
     final client = Matrix.of(context).client;
     if (profile.userId == client.userID) return onStatusEdit();
 
-    UserDialog.show(
+    showAdaptiveBottomSheet(
       context: context,
-      profile: profile,
+      builder: (c) => UserBottomSheet(
+        profile: profile,
+        outerContext: context,
+      ),
     );
     return;
   }
@@ -40,7 +43,7 @@ class StatusMessageList extends StatelessWidget {
       stream: client.onSync.stream.rateLimit(const Duration(seconds: 3)),
       builder: (context, snapshot) {
         return AnimatedSize(
-          duration: FluffyThemes.animationDuration,
+          duration: PingmeThemes.animationDuration,
           curve: Curves.easeInOut,
           child: FutureBuilder(
             initialData: interestingPresences
@@ -123,7 +126,7 @@ class PresenceAvatar extends StatelessWidget {
 
         const statusMsgBubbleElevation = 6.0;
         final statusMsgBubbleShadowColor = theme.colorScheme.surface;
-        final statusMsgBubbleColor = Colors.white.withAlpha(230);
+        final statusMsgBubbleColor = Colors.white.withOpacity(0.9);
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8.0),
           child: SizedBox(
@@ -134,8 +137,8 @@ class PresenceAvatar extends StatelessWidget {
                   builder: (context, hovered) {
                     return AnimatedScale(
                       scale: hovered ? 1.15 : 1.0,
-                      duration: FluffyThemes.animationDuration,
-                      curve: FluffyThemes.animationCurve,
+                      duration: PingmeThemes.animationDuration,
+                      curve: PingmeThemes.animationCurve,
                       child: InkWell(
                         borderRadius: BorderRadius.circular(avatarSize),
                         onTap: profile == null ? null : () => onTap(profile),
@@ -287,7 +290,6 @@ extension on CachedPresence {
       (currentlyActive == true
           ? DateTime.now()
           : DateTime.fromMillisecondsSinceEpoch(0));
-
   LinearGradient get gradient => presence.isOnline == true
       ? LinearGradient(
           colors: [

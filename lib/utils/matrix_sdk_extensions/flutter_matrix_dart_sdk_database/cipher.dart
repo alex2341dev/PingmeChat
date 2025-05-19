@@ -9,8 +9,8 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:matrix/matrix.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:fluffychat/config/setting_keys.dart';
-import 'package:fluffychat/utils/client_manager.dart';
+import 'package:pingmechat/config/setting_keys.dart';
+import 'package:pingmechat/utils/client_manager.dart';
 
 const _passwordStorageKey = 'database_password';
 
@@ -53,7 +53,7 @@ Future<String?> getDatabaseCipher() async {
 
 void _sendNoEncryptionWarning(Object exception) async {
   final store = await SharedPreferences.getInstance();
-  final isStored = AppSettings.noEncryptionWarningShown.getItem(store);
+  final isStored = store.getBool(SettingKeys.noEncryptionWarningShown);
 
   if (isStored == true) return;
 
@@ -63,5 +63,5 @@ void _sendNoEncryptionWarning(Object exception) async {
     exception.toString(),
   );
 
-  await AppSettings.noEncryptionWarningShown.setItem(store, true);
+  await store.setBool(SettingKeys.noEncryptionWarningShown, true);
 }

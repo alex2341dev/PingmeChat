@@ -3,19 +3,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
 import 'package:matrix/matrix.dart';
 
-import 'package:fluffychat/utils/matrix_sdk_extensions/matrix_locals.dart';
+import 'package:pingmechat/utils/matrix_sdk_extensions/matrix_locals.dart';
 import '../../../config/app_config.dart';
 
 class ReplyContent extends StatelessWidget {
   final Event replyEvent;
   final bool ownMessage;
   final Timeline? timeline;
+  final Color? backgroundColor;
 
   const ReplyContent(
     this.replyEvent, {
     this.ownMessage = false,
     super.key,
     this.timeline,
+    this.backgroundColor,
   });
 
   static const BorderRadius borderRadius = BorderRadius.only(
@@ -31,25 +33,21 @@ class ReplyContent extends StatelessWidget {
     final displayEvent =
         timeline != null ? replyEvent.getDisplayEvent(timeline) : replyEvent;
     final fontSize = AppConfig.messageFontSize * AppConfig.fontSizeFactor;
-    final color = theme.brightness == Brightness.dark
-        ? theme.colorScheme.onTertiaryContainer
-        : ownMessage
-            ? theme.colorScheme.tertiaryContainer
-            : theme.colorScheme.tertiary;
+    final color = ownMessage
+        ? theme.colorScheme.tertiaryContainer
+        : theme.colorScheme.tertiary;
 
     return Material(
-      color: Colors.transparent,
+      color: backgroundColor ??
+          theme.colorScheme.surface.withOpacity(ownMessage ? 0.2 : 0.33),
       borderRadius: borderRadius,
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           Container(
-            width: 5,
+            width: 3,
             height: fontSize * 2 + 16,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(AppConfig.borderRadius),
-              color: color,
-            ),
+            color: color,
           ),
           const SizedBox(width: 6),
           Flexible(
@@ -82,11 +80,9 @@ class ReplyContent extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   maxLines: 1,
                   style: TextStyle(
-                    color: theme.brightness == Brightness.dark
-                        ? theme.colorScheme.onSurface
-                        : ownMessage
-                            ? theme.colorScheme.onTertiary
-                            : theme.colorScheme.onSurface,
+                    color: ownMessage
+                        ? theme.colorScheme.onTertiary
+                        : theme.colorScheme.onSurface,
                     fontSize: fontSize,
                   ),
                 ),

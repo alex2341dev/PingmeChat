@@ -1,27 +1,59 @@
 import 'dart:io';
 
+import 'package:pingmechat/utils/highlights_rooms_and_threads.dart';
+import 'package:pingmechat/widgets/pingme_chat_app.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-
 import 'package:desktop_notifications/desktop_notifications.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
 import 'package:go_router/go_router.dart';
 import 'package:matrix/matrix.dart';
 import 'package:universal_html/html.dart' as html;
 
-import 'package:fluffychat/config/app_config.dart';
-import 'package:fluffychat/utils/client_download_content_extension.dart';
-import 'package:fluffychat/utils/matrix_sdk_extensions/matrix_locals.dart';
-import 'package:fluffychat/utils/platform_infos.dart';
-import 'package:fluffychat/widgets/matrix.dart';
+import 'package:pingmechat/config/app_config.dart';
+import 'package:pingmechat/utils/client_download_content_extension.dart';
+import 'package:pingmechat/utils/matrix_sdk_extensions/matrix_locals.dart';
+import 'package:pingmechat/utils/platform_infos.dart';
+import 'package:pingmechat/widgets/matrix.dart';
+import 'package:local_notifier/local_notifier.dart';
+import 'package:window_manager/window_manager.dart';
 
 extension LocalNotificationsExtension on MatrixState {
   static final html.AudioElement _audioPlayer = html.AudioElement()
     ..src = 'assets/assets/sounds/notification.ogg'
     ..load();
 
-  void showLocalNotification(Event event) async {
-    final roomId = event.room.id;
+  void showLocalNotification(EventUpdate eventUpdate) async {
+    final roomId = eventUpdate.roomID;
+
+    final room = client.getRoomById(roomId);
+    if (room == null) {
+      Logs().w('Can not display notification for unknown room $roomId');
+      return;
+    }
+
+    final event = Event.fromJson(eventUpdate.content, room);
+
+    if (eventUpdate.content["content"]?["m.relates_to"]?["rel_type"] ==
+        RelationshipTypes.thread) {
+      threadUnreadData.setUnreadThread(
+        roomId,
+        eventUpdate.content["content"]["m.relates_to"]["event_id"],
+        client.userID!,
+      );
+
+      if (await HighlightsRoomsAndThreads()
+          .isHighlightThreadFromEvent(event: event, roomId: roomId)) {
+        HighlightsRoomsAndThreads()
+            .setHighlightThread(roomId, event.relationshipEventId!);
+      }
+    } else {
+      if (await HighlightsRoomsAndThreads()
+          .isHighlightRoomFromEvent(event: event, roomId: roomId)) {
+        HighlightsRoomsAndThreads().setHighlightRoom(roomId);
+      }
+    }
+
     if (activeRoomId == roomId) {
       if (kIsWeb && webHasFocus) return;
       if (PlatformInfos.isDesktop &&
@@ -30,12 +62,13 @@ extension LocalNotificationsExtension on MatrixState {
       }
     }
 
-    final title =
-        event.room.getLocalizedDisplayname(MatrixLocals(L10n.of(context)));
+    if (room.notificationCount == 0) return;
+
+    final title = room.getLocalizedDisplayname(MatrixLocals(L10n.of(context)));
     final body = await event.calcLocalizedBody(
       MatrixLocals(L10n.of(context)),
-      withSenderNamePrefix: !event.room.isDirectChat ||
-          event.room.lastEvent?.senderId == client.userID,
+      withSenderNamePrefix:
+          !room.isDirectChat || room.lastEvent?.senderId == client.userID,
       plaintextBody: true,
       hideReply: true,
       hideEdit: true,
@@ -81,7 +114,7 @@ extension LocalNotificationsExtension on MatrixState {
         body: body,
         replacesId: linuxNotificationIds[roomId] ?? 0,
         appName: AppConfig.applicationName,
-        appIcon: 'fluffychat',
+        appIcon: 'pingmechat',
         actions: [
           NotificationAction(
             DesktopNotificationActions.openChat.name,
@@ -101,18 +134,55 @@ extension LocalNotificationsExtension on MatrixState {
             .singleWhere((a) => a.name == actionStr);
         switch (action) {
           case DesktopNotificationActions.seen:
-            event.room.setReadMarker(
+            room.setReadMarker(
               event.eventId,
               mRead: event.eventId,
               public: AppConfig.sendPublicReadReceipts,
             );
             break;
           case DesktopNotificationActions.openChat:
-            context.go('/rooms/${event.room.id}');
+            context.go('/rooms/${room.id}');
             break;
         }
       });
       linuxNotificationIds[roomId] = notification.id;
+    } else if (Platform.isWindows) {
+      final notification = LocalNotification(
+        title: title,
+        body: body,
+      );
+
+      final relationshipType =
+          event.relationshipType == RelationshipTypes.thread;
+      final relationshipEventId = event.relationshipEventId;
+      final eventId = event.eventId;
+      notification.onClick = () async {
+        await windowManager.show();
+        await windowManager.restore();
+        await windowManager.focus();
+
+        if (relationshipType) {
+          navigatorKey.currentContext!.go(
+            '/${Uri(
+              pathSegments: ['rooms', room.id],
+              queryParameters: {
+                'threadEvent': eventId,
+                'event': event.relationshipEventId,
+                'thread': relationshipEventId,
+              },
+            )}',
+          );
+        } else {
+          navigatorKey.currentContext!.go(
+            '/${Uri(
+              pathSegments: ['rooms', room.id],
+              queryParameters: {'event': eventId},
+            )}',
+          );
+        }
+      };
+
+      notification.show();
     }
   }
 }

@@ -6,10 +6,10 @@ import 'package:flutter/material.dart';
 
 import 'package:matrix/matrix.dart';
 
-import 'package:fluffychat/config/themes.dart';
-import 'package:fluffychat/utils/client_download_content_extension.dart';
-import 'package:fluffychat/utils/matrix_sdk_extensions/matrix_file_extension.dart';
-import 'package:fluffychat/widgets/matrix.dart';
+import 'package:pingmechat/config/themes.dart';
+import 'package:pingmechat/utils/client_download_content_extension.dart';
+import 'package:pingmechat/utils/matrix_sdk_extensions/matrix_file_extension.dart';
+import 'package:pingmechat/widgets/matrix.dart';
 
 class MxcImage extends StatefulWidget {
   final Uri? uri;
@@ -36,9 +36,9 @@ class MxcImage extends StatefulWidget {
     this.placeholder,
     this.isThumbnail = true,
     this.animated = false,
-    this.animationDuration = FluffyThemes.animationDuration,
+    this.animationDuration = PingmeThemes.animationDuration,
     this.retryDuration = const Duration(seconds: 2),
-    this.animationCurve = FluffyThemes.animationCurve,
+    this.animationCurve = PingmeThemes.animationCurve,
     this.thumbnailMethod = ThumbnailMethod.scale,
     this.cacheKey,
     this.client,
@@ -96,7 +96,7 @@ class _MxcImageState extends State<MxcImage> {
       final data = await event.downloadAndDecryptAttachment(
         getThumbnail: widget.isThumbnail,
       );
-      if (data.detectFileType is MatrixImageFile || widget.isThumbnail) {
+      if (data.detectFileType is MatrixImageFile) {
         if (!mounted) return;
         setState(() {
           _imageData = data.bytes;

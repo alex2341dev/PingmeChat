@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:pingmechat/widgets/matrix.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -10,11 +11,10 @@ import 'package:path_provider/path_provider.dart';
 import 'package:record/record.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
 
-import 'package:fluffychat/config/app_config.dart';
-import 'package:fluffychat/config/setting_keys.dart';
-import 'package:fluffychat/utils/platform_infos.dart';
-import 'package:fluffychat/widgets/matrix.dart';
+import 'package:pingmechat/config/app_config.dart';
+import 'package:pingmechat/utils/platform_infos.dart';
 import 'events/audio_player.dart';
+import 'package:matrix/matrix.dart';
 
 class RecordingDialog extends StatefulWidget {
   const RecordingDialog({
@@ -36,10 +36,12 @@ class RecordingDialogState extends State<RecordingDialog> {
 
   String? fileName;
 
+  static const int bitRate = 64000;
+  static const int samplingRate = 44100;
+
   Future<void> startRecording() async {
-    final store = Matrix.of(context).store;
     try {
-      final codec = kIsWeb
+      final codec = kIsWeb || PlatformInfos.isDesktop
           // Web seems to create webm instead of ogg when using opus encoder
           // which does not play on iOS right now. So we use wav for now:
           ? AudioEncoder.wav
@@ -62,15 +64,24 @@ class RecordingDialogState extends State<RecordingDialog> {
       }
       await WakelockPlus.enable();
 
+      final devices = await _audioRecorder.listInputDevices();
+      InputDevice? device;
+
+      final recordDeviceId = Matrix.of(context).store.getString("recordDevice");
+      if (devices.any((d) => d.id == recordDeviceId)) {
+        device = devices.firstWhere((device) => device.id == recordDeviceId);
+      }
+
       await _audioRecorder.start(
         RecordConfig(
-          bitRate: AppSettings.audioRecordingBitRate.getItem(store),
-          sampleRate: AppSettings.audioRecordingSamplingRate.getItem(store),
-          numChannels: AppSettings.audioRecordingNumChannels.getItem(store),
-          autoGain: AppSettings.audioRecordingAutoGain.getItem(store),
-          echoCancel: AppSettings.audioRecordingEchoCancel.getItem(store),
-          noiseSuppress: AppSettings.audioRecordingNoiseSuppress.getItem(store),
+          bitRate: bitRate,
+          sampleRate: samplingRate,
+          numChannels: 1,
+          autoGain: true,
+          echoCancel: true,
+          noiseSuppress: true,
           encoder: codec,
+          device: device,
         ),
         path: path ?? '',
       );
@@ -86,7 +97,9 @@ class RecordingDialogState extends State<RecordingDialog> {
           _duration += const Duration(milliseconds: 100);
         });
       });
-    } catch (_) {
+    } catch (e) {
+      Logs().i("[startRecording] Ex: $e");
+
       setState(() => error = true);
       rethrow;
     }
@@ -185,7 +198,7 @@ class RecordingDialogState extends State<RecordingDialog> {
           CupertinoDialogAction(
             onPressed: () => Navigator.of(context, rootNavigator: false).pop(),
             child: Text(
-              L10n.of(context).cancel,
+              L10n.of(context).cancel.toUpperCase(),
               style: TextStyle(
                 color: theme.textTheme.bodyMedium?.color?.withAlpha(150),
               ),
@@ -194,7 +207,7 @@ class RecordingDialogState extends State<RecordingDialog> {
           if (error != true)
             CupertinoDialogAction(
               onPressed: _stopAndSend,
-              child: Text(L10n.of(context).send),
+              child: Text(L10n.of(context).send.toUpperCase()),
             ),
         ],
       );
@@ -205,16 +218,23 @@ class RecordingDialogState extends State<RecordingDialog> {
         TextButton(
           onPressed: () => Navigator.of(context, rootNavigator: false).pop(),
           child: Text(
-            L10n.of(context).cancel,
+            L10n.of(context).cancel.toUpperCase(),
             style: TextStyle(
-              color: theme.colorScheme.error,
+              color: theme.textTheme.bodyMedium?.color?.withAlpha(150),
             ),
           ),
         ),
         if (error != true)
           TextButton(
             onPressed: _stopAndSend,
-            child: Text(L10n.of(context).send),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Text(L10n.of(context).send.toUpperCase()),
+                const SizedBox(width: 4),
+                const Icon(Icons.send_outlined, size: 15),
+              ],
+            ),
           ),
       ],
     );

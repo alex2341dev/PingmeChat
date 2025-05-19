@@ -2,495 +2,431 @@
   "@@last_modified": "2021-08-14 12:41:09.781172",
   "about": "Giới thiệu",
   "@about": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "accept": "Đồng ý",
   "@accept": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "acceptedTheInvitation": "{username} đã đồng ý lời mời",
   "@acceptedTheInvitation": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "username": {
-        "type": "String"
-      }
+      "username": {}
     }
   },
   "account": "Tài khoản",
   "@account": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "activatedEndToEndEncryption": "{username} đã kích hoạt mã hóa đầu cuối 2 chiều",
   "@activatedEndToEndEncryption": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "username": {
-        "type": "String"
-      }
+      "username": {}
     }
   },
   "admin": "Quản trị viên",
   "@admin": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "alias": "bí danh",
   "@alias": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "answeredTheCall": "{senderName} đã trả lời cuộc gọi",
   "@answeredTheCall": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "senderName": {
-        "type": "String"
-      }
+      "senderName": {}
     }
   },
   "anyoneCanJoin": "Mọi người đều có thể gia nhập",
   "@anyoneCanJoin": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "archive": "Lưu trữ",
   "@archive": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "areGuestsAllowedToJoin": "Khách vãng lai có được tham gia không",
   "@areGuestsAllowedToJoin": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "areYouSure": "Bạn chắc chứ?",
   "@areYouSure": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "blockDevice": "Thiết bị bị chặn",
   "@blockDevice": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "verified": "Đã xác thực",
   "@verified": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "transferFromAnotherDevice": "Chuyển từ thiết bị khác",
   "@transferFromAnotherDevice": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "showPassword": "Hiển thị mật khẩu",
   "@showPassword": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "pleaseFollowInstructionsOnWeb": "Vui lòng làm theo hướng dẫn trên trang web và bấm tiếp",
   "@pleaseFollowInstructionsOnWeb": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "noEncryptionForPublicRooms": "Bạn chỉ có thể kích hoạt mã hoá khi phòng này không mở",
   "@noEncryptionForPublicRooms": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "next": "Tiếp",
   "@next": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "everythingReady": "Mọi thứ đã sẵn sàng!",
   "@everythingReady": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "emoteSettings": "Cài đặt biểu tượng cảm xúc",
   "@emoteSettings": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "editDisplayname": "Sửa tên hiển thị",
   "@editDisplayname": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "downloadFile": "Tải ảnh xuống",
   "@downloadFile": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "displaynameHasBeenChanged": "Tên hiển thị đã được thay đổi",
   "@displaynameHasBeenChanged": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "devices": "Các thiết bị",
   "@devices": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "deviceId": "Mã xác định thiết bị",
   "@deviceId": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "device": "Thiết bị",
   "@device": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "deleteMessage": "Xoá tin nhắn",
   "@deleteMessage": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "deleteAccount": "Xoá tài khoản",
   "@deleteAccount": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "delete": "Xoá",
   "@delete": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "deactivateAccountWarning": "Việc này sẽ vô hiệu hoá tài khoản của bạn. Điều này không thể đảo ngược được! Bạn chắc là vẫn muốn tiếp tục chứ?",
   "@deactivateAccountWarning": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "dateWithYear": "{day}/{month}/{year}",
   "@dateWithYear": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "year": {
-        "type": "String"
-      },
-      "month": {
-        "type": "String"
-      },
-      "day": {
-        "type": "String"
-      }
+      "year": {},
+      "month": {},
+      "day": {}
     }
   },
   "dateWithoutYear": "{day}/{month}",
   "@dateWithoutYear": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "month": {
-        "type": "String"
-      },
-      "day": {
-        "type": "String"
-      }
+      "month": {},
+      "day": {}
     }
   },
   "dateAndTimeOfDay": "{date}, {timeOfDay}",
   "@dateAndTimeOfDay": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "date": {
-        "type": "String"
-      },
-      "timeOfDay": {
-        "type": "String"
-      }
+      "date": {},
+      "timeOfDay": {}
     }
   },
   "currentlyActive": "Đang hoạt động",
   "@currentlyActive": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "createdTheChat": "{username} đã tạo cuộc trò chuyện",
   "@createdTheChat": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "username": {
-        "type": "String"
-      }
+      "username": {}
     }
   },
   "create": "Tạo",
   "@create": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "countParticipants": "{count} thành viên",
   "@countParticipants": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "count": {
-        "type": "int"
-      }
+      "count": {}
     }
   },
   "couldNotDecryptMessage": "Không thể giải mã tin nhắn: {error}",
   "@couldNotDecryptMessage": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "error": {
-        "type": "String"
-      }
+      "error": {}
     }
   },
   "copy": "Sao chép",
   "@copy": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "contactHasBeenInvitedToTheGroup": "Liên hệ đã được mời vào nhóm",
   "@contactHasBeenInvitedToTheGroup": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "connect": "Kết nối",
   "@connect": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "confirm": "Xác nhận",
   "@confirm": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "compareNumbersMatch": "So sánh và đảm bảo các số sau đây giống trên máy còn lại",
   "@compareNumbersMatch": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "compareEmojiMatch": "So sánh và đảm bảo các biểu tượng cảm xúc sau đây giống với các biểu tượng trên máy còn lại",
   "@compareEmojiMatch": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "close": "Đóng",
   "@close": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "chooseAStrongPassword": "Chọn một mật khẩu mạnh",
   "@chooseAStrongPassword": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "chatDetails": "Chi tiết cuộc trò chuyện",
   "@chatDetails": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "chatBackupDescription": "Bản sao lưu cuộc trò chuyện của bạn được bảo mật bằng một khoá bảo mật. Bạn đừng làm mất nó.",
   "@chatBackupDescription": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "chatBackup": "Sao lưu cuộc trò chuyện",
   "@chatBackup": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "chat": "Chat",
   "@chat": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "changeTheNameOfTheGroup": "Thay đổi tên nhóm",
   "@changeTheNameOfTheGroup": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "changeTheHomeserver": "Thay đổi máy chủ nhà",
   "@changeTheHomeserver": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "changePassword": "Thay đổi mật khẩu",
   "@changePassword": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "changedTheRoomInvitationLink": "{username} đã thay đổi đường dẫn mời",
   "@changedTheRoomInvitationLink": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "username": {
-        "type": "String"
-      }
+      "username": {}
     }
   },
   "changedTheRoomAliases": "{username} đã đổi địa chỉ phòng chat",
   "@changedTheRoomAliases": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "username": {
-        "type": "String"
-      }
+      "username": {}
     }
   },
   "changedTheProfileAvatar": "{username} đã thay đổi ảnh đại diện của mình",
   "@changedTheProfileAvatar": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "username": {
-        "type": "String"
-      }
+      "username": {}
     }
   },
   "changedTheGuestAccessRulesTo": "{username} đã thay đổi quy tắc truy cập đối với khách thành: {rules}",
   "@changedTheGuestAccessRulesTo": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "username": {
-        "type": "String"
-      },
-      "rules": {
-        "type": "String"
-      }
+      "username": {},
+      "rules": {}
     }
   },
   "changedTheGuestAccessRules": "{username} đã thay đổi quy tắc truy cập đối với khách",
   "@changedTheGuestAccessRules": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "username": {
-        "type": "String"
-      }
+      "username": {}
     }
   },
   "changedTheChatPermissions": "{username} đã thay đổi quyền trong phòng chat",
   "@changedTheChatPermissions": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "username": {
-        "type": "String"
-      }
+      "username": {}
     }
   },
   "changedTheChatNameTo": "{username} đã thay đổi tên phòng chat thành: '{chatname}'",
   "@changedTheChatNameTo": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "username": {
-        "type": "String"
-      },
-      "chatname": {
-        "type": "String"
-      }
+      "username": {},
+      "chatname": {}
     }
   },
   "changedTheChatDescriptionTo": "{username} đã thay đổi mô tả phòng chat thành: '{description}'",
   "@changedTheChatDescriptionTo": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "username": {
-        "type": "String"
-      },
-      "description": {
-        "type": "String"
-      }
+      "username": {},
+      "description": {}
     }
   },
   "changedTheChatAvatar": "{username} đã thay đổi ảnh phòng chat",
   "@changedTheChatAvatar": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "username": {
-        "type": "String"
-      }
+      "username": {}
     }
   },
   "changeDeviceName": "Thay đổi tên thiết bị",
   "@changeDeviceName": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "cancel": "Hủy",
   "@cancel": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "blocked": "Đã chặn",
   "@blocked": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "bannedUser": "{username} đã cấm {targetName}",
   "@bannedUser": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "username": {
-        "type": "String"
-      },
-      "targetName": {
-        "type": "String"
-      }
+      "username": {},
+      "targetName": {}
     }
   },
   "banned": "Đã bị cấm",
   "@banned": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "banFromChat": "Cấm khỏi cuộc trò chuyện",
   "@banFromChat": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "badServerVersionsException": "Máy chủ nhà hỗ trợ Spec phiên bản:\n{serverVerions}\nNhưng ứng dụng này chỉ hỗ trợ {supportedVersions}",
   "@badServerVersionsException": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "serverVersions": {
-        "type": "String"
-      },
-      "supportedVersions": {
-        "type": "String"
-      }
+      "serverVersions": {},
+      "supportedVersions": {}
     }
   },
   "badServerLoginTypesException": "Máy chủ nhà hỗ trợ kiểu đăng nhập:\n{serverVersions}\nNhưng ứng dụng này chỉ hỗ trợ:\n{supportedVersions}",
   "@badServerLoginTypesException": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "serverVersions": {
-        "type": "String"
-      },
-      "supportedVersions": {
-        "type": "String"
-      }
+      "serverVersions": {},
+      "supportedVersions": {}
     }
   },
   "askVerificationRequest": "Bạn có đồng ý yêu cầu chứng thực từ {username} không?",
   "@askVerificationRequest": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "username": {
-        "type": "String"
-      }
+      "username": {}
     }
   },
   "areYouSureYouWantToLogout": "Bạn có chắc bạn muốn đăng xuất không?",
   "@areYouSureYouWantToLogout": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "addEmail": "Thêm email",
   "@addEmail": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "notifications": "Thông báo",
   "@notifications": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "newGroup": "Nhóm mới",
@@ -533,7 +469,7 @@
   "@report": {},
   "remove": "Loại bỏ",
   "@remove": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "restricted": "Bị hạn chế",
@@ -546,17 +482,17 @@
   "@signInWithPassword": {},
   "all": "Tất cả",
   "@all": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "appLock": "Khoá ứng dụng",
   "@appLock": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "allChats": "Tất cả hội thoại",
   "@allChats": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "repeatPassword": "Nhập lại mật khẩu",
@@ -565,11 +501,9 @@
   "@confirmMatrixId": {},
   "supposedMxid": "Đây nên là {mxid}",
   "@supposedMxid": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "mxid": {
-        "type": "String"
-      }
+      "mxid": {}
     }
   },
   "noBackupWarning": "Cẩn thận! Nếu không bật sao lưu trò chuyện, bạn sẽ mất quyền truy cập vào tin nhắn được mã hóa của mình. Chúng tôi khuyên bạn nên bật sao lưu trò chuyện trước khi đăng xuất.",
@@ -578,11 +512,9 @@
   "@doNotShowAgain": {},
   "wasDirectChatDisplayName": "Hội thoại trống (từng là {oldDisplayName})",
   "@wasDirectChatDisplayName": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "oldDisplayName": {
-        "type": "String"
-      }
+      "oldDisplayName": {}
     }
   },
   "reportErrorDescription": "😭 Ôi. Có lỗi xảy ra. Bạn có thể báo cáo lỗi tới nhà phát triển nếu muốn.",
@@ -603,11 +535,9 @@
   "@fileIsTooBigForServer": {},
   "signInWith": "Đăng nhập với {provider}",
   "@signInWith": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "provider": {
-        "type": "String"
-      }
+      "provider": {}
     }
   },
   "notAnImage": "Không phải tệp ảnh.",
@@ -630,21 +560,19 @@
   "@notifyMeFor": {},
   "settings": "Cài đặt",
   "@settings": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "sendSticker": "Gửi nhãn dán",
   "@sendSticker": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "fileHasBeenSavedAt": "Tệp đã được lưu tại {path}",
   "@fileHasBeenSavedAt": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "path": {
-        "type": "String"
-      }
+      "path": {}
     }
   },
   "readUpToHere": "Đọc tới đây",
@@ -657,9 +585,7 @@
   "@numChats": {
     "type": "number",
     "placeholders": {
-      "number": {
-        "type": "String"
-      }
+      "number": {}
     }
   },
   "hidePresences": "Ẩn danh sách trạng thái?",
@@ -670,11 +596,9 @@
   "@reopenChat": {},
   "wrongPinEntered": "Nhập sai mã pin! Thử lại sau {seconds} giây...",
   "@wrongPinEntered": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "seconds": {
-        "type": "int"
-      }
+      "seconds": {}
     }
   },
   "archiveRoomDescription": "Cuộc trò chuyện sẽ được chuyển tới mục lưu trữ. Người dùng khác sẽ thấy được bạn đã rời khỏi cuộc trò chuyện.",
@@ -693,11 +617,9 @@
   "@removeDevicesDescription": {},
   "noUsersFoundWithQuery": "Không tìm thấy người dùng nào với \"{query}\". Hãy kiểm tra xem bạn có nhập nhầm không.",
   "@noUsersFoundWithQuery": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "query": {
-        "type": "String"
-      }
+      "query": {}
     }
   },
   "commandHint_unignore": "Bỏ phớt lờ matrix ID này",
@@ -707,29 +629,5 @@
   "stickers": "Nhãn dán",
   "@stickers": {},
   "roomUpgradeDescription": "Cuộc trò chuyện sẽ được tạo lại với phiên bản phòng mới. Tất cả những người tham gia sẽ được thông báo rằng họ cần chuyển sang cuộc trò chuyện mới. Bạn có thể tìm hiểu thêm về các phiên bản phòng tại https://spec.matrix.org/latest/rooms/",
-  "@roomUpgradeDescription": {},
-  "commandHint_hug": "Gửi một cái ôm",
-  "@commandHint_hug": {},
-  "aboutHomeserver": "Về {homeserver}",
-  "@aboutHomeserver": {
-    "type": "String",
-    "placeholders": {
-      "homeserver": {
-        "type": "String"
-      }
-    }
-  },
-  "alwaysUse24HourFormat": "Không",
-  "@alwaysUse24HourFormat": {
-    "description": "Set to true to always display time of day in 24 hour format."
-  },
-  "hugContent": "{senderName} ôm bạn",
-  "@hugContent": {
-    "type": "String",
-    "placeholders": {
-      "senderName": {
-        "type": "String"
-      }
-    }
-  }
+  "@roomUpgradeDescription": {}
 }

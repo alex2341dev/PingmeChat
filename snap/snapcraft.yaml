@@ -1,11 +1,11 @@
-name: fluffychat
-title: FluffyChat
+name: pingmechat
+title: PingmeChat
 base: core24
 version: git
 license: AGPL-3.0
 summary: The cutest messenger in the Matrix network
 description: |
-  FluffyChat is an open source, nonprofit and cute matrix messenger app. The app is easy to use but secure and decentralized.
+  PingmeChat is an open source, nonprofit and cute matrix messenger app. The app is easy to use but secure and decentralized.
 
 
   ## Features
@@ -29,17 +29,16 @@ description: |
   - And much more...
 
 
-  ## FluffyChat comes with a dream
+  ## PingmeChat comes with a dream
 
   Imagine a world where everyone can choose the messenger they like and is still able to chat with all of their friends.
 
   A world where there are no companies spying on you when you send selfies to friends and lovers.
 
-  And a world where apps are made for fluffyness and not for profit. ♥
+  And a world where apps are made for pingmeness and not for profit. ♥
 
-  Join the community: https://matrix.to/#/#fluffychat:matrix.org
-  Website: http://fluffychat.im
-  Microblog: https://mastodon.art/@krille
+  Join the community: https://matrix.to/#/#pingmechat:matrix.org
+  Website: http://pingmechat.im
 
 grade: stable
 confinement: strict
@@ -61,7 +60,7 @@ parts:
     build-packages:
       - g++
 
-  fluffychat:
+  pingmechat:
     plugin: flutter
     source: .
     override-build: |
@@ -69,25 +68,23 @@ parts:
       rm -rf build
       craftctl default
     build-packages:
+      - libjsoncpp-dev
+      - curl
+    stage-packages:
       - libsecret-1-dev
       - libjsoncpp-dev
       - libssl-dev
-      - curl
-      - libpciaccess-dev
-    stage-packages:
-      - libsecret-1-0
-      - libjsoncpp25
-      - libpciaccess0
+      #- libwebkit2gtk-4.1-dev
 
 slots:
   dbus-svc:
     interface: dbus
     bus: session
-    name: chat.fluffy.fluffychat
+    name: chat.pingme.pingmechat
 
 apps:
-  fluffychat:
-    command: fluffychat
+  pingmechat:
+    command: pingmechat
     extensions: [ gnome ]
     plugs:
       - audio-playback

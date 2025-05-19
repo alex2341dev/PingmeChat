@@ -1,6 +1,6 @@
-# FluffyChat AppImage
+# PingmeChat AppImage
 
-FluffyChat is provided as AppImage too. To Download, visit fluffychat.im.
+PingmeChat is provided as AppImage too. To Download, visit pingmechat.im.
 
 ## Building
 
@@ -10,15 +10,15 @@ FluffyChat is provided as AppImage too. To Download, visit fluffychat.im.
 flutter build linux
 
 # copy binaries to appimage dir
-cp -r build/linux/{x64,arm64}/release/bundle appimage/FluffyChat.AppDir
+cp -r build/linux/{x64,arm64}/release/bundle appimage/PingmeChat.AppDir
 cd appimage
 
 # prepare AppImage files
-cp FluffyChat.desktop FluffyChat.AppDir/
-mkdir -p FluffyChat.AppDir/usr/share/icons
-cp ../assets/logo.svg FluffyChat.AppDir/fluffychat.svg
-cp AppRun FluffyChat.AppDir
+cp PingmeChat.desktop PingmeChat.AppDir/
+mkdir -p PingmeChat.AppDir/usr/share/icons
+cp ../assets/logo.svg PingmeChat.AppDir/pingmechat.svg
+cp AppRun PingmeChat.AppDir
 
 # build the AppImage
-appimagetool FluffyChat.AppDir
+appimagetool PingmeChat.AppDir
 ```

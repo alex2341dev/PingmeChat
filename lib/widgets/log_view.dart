@@ -78,6 +78,7 @@ extension on LogEvent {
       case Level.debug:
         return Colors.white;
       case Level.verbose:
+      default:
         return Colors.grey;
     }
   }

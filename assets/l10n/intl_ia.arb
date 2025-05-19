@@ -5,7 +5,7 @@
   "@notAnImage": {},
   "remove": "Remover",
   "@remove": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "importEmojis": "Importar emojis",
@@ -20,40 +20,36 @@
   "@replace": {},
   "about": "A proposito de",
   "@about": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "accept": "Acceptar",
   "@accept": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "acceptedTheInvitation": "👍 {username} acceptava tu invitation",
   "@acceptedTheInvitation": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "username": {
-        "type": "String"
-      }
+      "username": {}
     }
   },
   "account": "Conto",
   "@account": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "addEmail": "Adder email",
   "@addEmail": {
-    "type": "String",
+    "type": "text",
     "placeholders": {}
   },
   "supposedMxid": "Isto deberea esser {mxid}",
   "@supposedMxid": {
-    "type": "String",
+    "type": "text",
     "placeholders": {
-      "mxid": {
-        "type": "String"
-      }
+      "mxid": {}
     }
   },
   "@custom": {}

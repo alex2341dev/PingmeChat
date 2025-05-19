@@ -1,5 +1,5 @@
 diff --git a/android/app/build.gradle b/android/app/build.gradle
-index bb8e015cd..3ff4a7579 100644
+index f92f73f3..6d389efb 100644
 --- a/android/app/build.gradle
 +++ b/android/app/build.gradle
 @@ -2,7 +2,7 @@ plugins {
@@ -11,15 +11,13 @@ index bb8e015cd..3ff4a7579 100644
  }
  
  def localProperties = new Properties()
-@@ -97,11 +97,12 @@ flutter {
+@@ -83,10 +83,10 @@ flutter {
  }
  
  dependencies {
 -    //implementation 'com.google.firebase:firebase-messaging:19.0.1' // Workaround for https://github.com/microg/android_packages_apps_GmsCore/issues/313#issuecomment-617651698
-+    implementation 'com.google.firebase:firebase-messaging:19.0.1'
-+    // Workaround for https://github.com/microg/android_packages_apps_GmsCore/issues/313#issuecomment-617651698
++    implementation 'com.google.firebase:firebase-messaging:19.0.1' // Workaround for https://github.com/microg/android_packages_apps_GmsCore/issues/313#issuecomment-617651698
      implementation 'androidx.multidex:multidex:2.0.1'
-     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.4")
  }
  
  configurations.all {
@@ -77,13 +75,13 @@ index d0e0fbc9..0a546da0 100644
 +
 +##---------------End: proguard configuration for Gson (Needed for flutter_local_notifications)  ----------
 \ No newline at end of file
-diff --git a/android/app/src/main/kotlin/chat/fluffy/fluffychat/FcmPushService.kt b/android/app/src/main/kotlin/chat/fluffy/fluffychat/FcmPushService.kt
+diff --git a/android/app/src/main/kotlin/chat/pingme/pingmechat/FcmPushService.kt b/android/app/src/main/kotlin/chat/pingme/pingmechat/FcmPushService.kt
 index d9930f55..510e9845 100644
---- a/android/app/src/main/kotlin/chat/fluffy/fluffychat/FcmPushService.kt
-+++ b/android/app/src/main/kotlin/chat/fluffy/fluffychat/FcmPushService.kt
+--- a/android/app/src/main/kotlin/chat/pingme/pingmechat/FcmPushService.kt
++++ b/android/app/src/main/kotlin/chat/pingme/pingmechat/FcmPushService.kt
 @@ -1,4 +1,4 @@
--/*package chat.fluffy.fluffychat
-+package chat.fluffy.fluffychat
+-/*package chat.pingme.pingmechat
++package chat.pingme.pingmechat
  
  import com.famedly.fcm_shared_isolate.FcmSharedIsolateService
  
@@ -99,8 +97,8 @@ index b2fd960a..fdb01a4d 100644
 +++ b/android/settings.gradle
 @@ -20,7 +20,7 @@ plugins {
      id "dev.flutter.flutter-plugin-loader" version "1.0.0"
-     id "com.android.application" version "8.7.3" apply false
-     id "org.jetbrains.kotlin.android" version "2.1.10" apply false
+     id "com.android.application" version "7.1.2" apply false
+     id "org.jetbrains.kotlin.android" version "1.8.0" apply false
 -    // id "com.google.gms.google-services" version "4.3.8" apply false
 +    id "com.google.gms.google-services" version "4.3.8" apply false
  }
@@ -137,8 +135,8 @@ index fb3e3ca4..039b2ccc 100644
    dynamic_color: ^1.7.0
    emoji_picker_flutter: ^3.1.0
    emojis: ^0.9.9
--  #fcm_shared_isolate: ^0.2.0
-+  fcm_shared_isolate: ^0.2.0
+-  #fcm_shared_isolate: ^0.1.0
++  fcm_shared_isolate: ^0.1.0
    file_picker: ^8.1.2
    file_selector: ^1.0.3
    flutter:

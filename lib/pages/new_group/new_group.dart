@@ -2,14 +2,13 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 
-import 'package:flutter_gen/gen_l10n/l10n.dart';
 import 'package:go_router/go_router.dart';
 import 'package:matrix/matrix.dart' as sdk;
 import 'package:matrix/matrix.dart';
 
-import 'package:fluffychat/pages/new_group/new_group_view.dart';
-import 'package:fluffychat/utils/file_selector.dart';
-import 'package:fluffychat/widgets/matrix.dart';
+import 'package:pingmechat/pages/new_group/new_group_view.dart';
+import 'package:pingmechat/utils/file_selector.dart';
+import 'package:pingmechat/widgets/matrix.dart';
 
 class NewGroup extends StatefulWidget {
   final CreateGroupType createGroupType;
@@ -24,9 +23,9 @@ class NewGroup extends StatefulWidget {
 
 class NewGroupController extends State<NewGroup> {
   TextEditingController nameController = TextEditingController();
-
+  bool isButtonActive = false;
   bool publicGroup = false;
-  bool groupCanBeFound = false;
+  bool groupCanBeFound = true;
 
   Uint8List? avatar;
 
@@ -44,10 +43,19 @@ class NewGroupController extends State<NewGroup> {
   void setCreateGroupType(Set<CreateGroupType> b) =>
       setState(() => _createGroupType = b.single);
 
-  void setPublicGroup(bool b) =>
-      setState(() => publicGroup = groupCanBeFound = b);
+  void setPublicGroup(bool b) => setState(() => publicGroup = b);
 
   void setGroupCanBeFound(bool b) => setState(() => groupCanBeFound = b);
+
+  @override
+  void initState() {
+    super.initState();
+    nameController.addListener(() {
+      setState(() {
+        isButtonActive = nameController.text.trim() != "";
+      });
+    });
+  }
 
   void selectPhoto() async {
     final photo = await selectFiles(
@@ -113,12 +121,6 @@ class NewGroupController extends State<NewGroup> {
     final client = Matrix.of(context).client;
 
     try {
-      if (nameController.text.trim().isEmpty &&
-          createGroupType == CreateGroupType.space) {
-        setState(() => error = L10n.of(context).pleaseFillOut);
-        return;
-      }
-
       setState(() {
         loading = true;
         error = null;

@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
-import 'package:fluffychat/utils/error_reporter.dart';
+import 'package:pingmechat/utils/error_reporter.dart';
 
-class FluffyChatErrorWidget extends StatefulWidget {
+class PingmeChatErrorWidget extends StatefulWidget {
   final FlutterErrorDetails details;
-  const FluffyChatErrorWidget(this.details, {super.key});
+  const PingmeChatErrorWidget(this.details, {super.key});
 
   @override
-  State<FluffyChatErrorWidget> createState() => _FluffyChatErrorWidgetState();
+  State<PingmeChatErrorWidget> createState() => _PingmeChatErrorWidgetState();
 }
 
-class _FluffyChatErrorWidgetState extends State<FluffyChatErrorWidget> {
+class _PingmeChatErrorWidgetState extends State<PingmeChatErrorWidget> {
   static final Set<String> knownExceptions = {};
   @override
   void initState() {
@@ -35,7 +35,7 @@ class _FluffyChatErrorWidgetState extends State<FluffyChatErrorWidget> {
       child: Placeholder(
         child: Center(
           child: Material(
-            color: Colors.white.withAlpha(230),
+            color: Colors.white.withOpacity(0.9),
             borderRadius: BorderRadius.circular(8),
           ),
         ),
