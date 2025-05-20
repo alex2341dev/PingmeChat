@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 git apply ./scripts/enable-android-google-services.patch
-PINGMECHAT_ORIG_GROUP="im.pingmechat"
+PINGMECHAT_ORIG_GROUP="chat.pingme.pingmechat"
 PINGMECHAT_ORIG_TEAM="4NXF6Z997G"
 #PINGMECHAT_NEW_GROUP="com.example.pingmechat"
 #PINGMECHAT_NEW_TEAM="ABCDE12345"

@@ -424,6 +424,10 @@ class InputBar extends StatelessWidget {
                 LogicalKeyboardKey.controlLeft,
                 LogicalKeyboardKey.keyV,
               ): PasteLineIntent(),
+              LogicalKeySet(
+                LogicalKeyboardKey.controlLeft,
+                LogicalKeyboardKey.keyV,
+              ): PasteLineIntent(),
             },
       child: Actions(
         actions: !useShortCuts

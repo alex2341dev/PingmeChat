@@ -1,18 +1,10 @@
-/*package chat.pingme.pingmechat
+package chat.pingme.pingmechat
 
 import com.famedly.fcm_shared_isolate.FcmSharedIsolateService
 
-import chat.pingme.pingmechat.MainActivity
-
-import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
-import io.flutter.view.FlutterMain
 import io.flutter.embedding.engine.dart.DartExecutor.DartEntrypoint
-
 import android.content.Context
-import android.os.Bundle
-import android.util.Log
-import android.view.WindowManager
 
 class FcmPushService : FcmSharedIsolateService() {
     override fun getEngine(): FlutterEngine {
@@ -32,4 +24,4 @@ class FcmPushService : FcmSharedIsolateService() {
             return engine
         }
     }
-}*/
+}

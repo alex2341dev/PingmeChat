@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pingmechat/widgets/matrix.dart';
 
 import 'package:matrix/matrix.dart';
 
@@ -21,8 +22,12 @@ class MessageDownloadContent extends StatelessWidget {
                 ?.toUpperCase() ??
             'UNKNOWN');
     final sizeString = event.sizeString;
+    final isDownloaded = Matrix.of(context).store.getString(filename);
+
     return InkWell(
-      onTap: () => event.saveFile(context),
+      onTap: () => isDownloaded != null
+          ? event.openFile(context)
+          : event.saveFile(context),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
@@ -32,7 +37,9 @@ class MessageDownloadContent extends StatelessWidget {
             child: Row(
               children: [
                 Icon(
-                  Icons.file_download_outlined,
+                  isDownloaded != null
+                      ? Icons.folder_open_outlined
+                      : Icons.file_download_outlined,
                   color: textColor,
                 ),
                 const SizedBox(width: 16),

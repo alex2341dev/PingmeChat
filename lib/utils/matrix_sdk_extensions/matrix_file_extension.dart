@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:file_selector/file_selector.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
+import 'package:pingmechat/widgets/matrix.dart';
 import 'package:matrix/matrix.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:universal_html/html.dart' as html;
@@ -24,6 +25,12 @@ extension MatrixFileExtension on MatrixFile {
         ? (await getSaveLocation(
             suggestedName: name,
             confirmButtonText: L10n.of(context).saveFile,
+            acceptedTypeGroups: [
+              XTypeGroup(
+                  label: name.split('.').last,
+                  extensions: [name.split('.').last]),
+              const XTypeGroup(label: '*.*', extensions: ['*']),
+            ],
           ))
             ?.path
         : await FilePicker.platform.saveFile(
@@ -49,6 +56,8 @@ extension MatrixFileExtension on MatrixFile {
         ),
       ),
     );
+
+    await Matrix.of(context).store.setString(name, downloadPath);
   }
 
   FileType get filePickerFileType {

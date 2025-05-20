@@ -21,7 +21,7 @@ import 'package:pingmechat/utils/platform_infos.dart';
 import 'matrix_sdk_extensions/flutter_matrix_dart_sdk_database/builder.dart';
 
 abstract class ClientManager {
-  static const String clientNamespace = 'im.pingmechat.store.clients';
+  static const String clientNamespace = 'chat.pingme.pingmechat.store.clients';
   static Future<List<Client>> getClients({
     bool initialize = true,
     required SharedPreferences store,

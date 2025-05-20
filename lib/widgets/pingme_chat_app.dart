@@ -1,7 +1,7 @@
 import 'package:pingmechat/pages/chat_updater/update_banner_controller.dart';
 import 'package:pingmechat/pages/chat_updater/update_banner_wrapper.dart';
-import 'package:pingmechat/pages/dialer/call_banner_controller.dart';
-import 'package:pingmechat/pages/dialer/wrapper_banner_wrapper.dart';
+import 'package:pingmechat/widgets/call_banner_controller.dart';
+import 'package:pingmechat/widgets/wrapper_banner_wrapper.dart';
 import 'package:pingmechat/utils/locale_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
@@ -25,8 +25,12 @@ class PingmeChatApp extends StatelessWidget {
   final List<Client> clients;
   final SharedPreferences store;
 
-  const PingmeChatApp(
-      {super.key, this.testWidget, required this.clients, required this.store,});
+  const PingmeChatApp({
+    super.key,
+    this.testWidget,
+    required this.clients,
+    required this.store,
+  });
 
   static bool gotInitialLink = false;
 

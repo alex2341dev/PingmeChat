@@ -1,4 +1,3 @@
-import 'package:pingmechat/widgets/matrix.dart';
 
 class ThreadUnreadData {
   static final ThreadUnreadData _instance = ThreadUnreadData._internal();

@@ -28,8 +28,8 @@ abstract class AppConfig {
       'https://github.com/exemple/pingmechat/wiki/How-to-use-end-to-end-encryption-in-PingmeChat';
   static const String startChatTutorial =
       'https://github.com/exemple/pingmechat/wiki/How-to-Find-Users-in-PingmeChat';
-  static const String appId = 'im.pingmechat.PingmeChat';
-  static const String appOpenUrlScheme = 'im.pingmechat';
+  static const String appId = 'ichat.pingme.pingmechat.PingmeChat';
+  static const String appOpenUrlScheme = 'chat.pingme.pingmechat';
   static String _webBaseUrl = 'https://pingmechat.im/web';
   static String get webBaseUrl => _webBaseUrl;
   static const String sourceCodeUrl = 'https://github.com/exemple/pingmechat';
@@ -58,7 +58,7 @@ abstract class AppConfig {
   static const bool hideTypingUsernames = false;
   static const bool hideAllStateEvents = false;
   static const String inviteLinkPrefix = 'https://matrix.to/#/';
-  static const String deepLinkPrefix = 'im.pingmechat://chat/';
+  static const String deepLinkPrefix = 'chat.pingme.pingmechat://chat/';
   static const String schemePrefix = 'matrix:';
   static const String pushNotificationsChannelId = 'pingmechat_push';
   static const String pushNotificationsAppId = 'chat.pingme.pingmechat';

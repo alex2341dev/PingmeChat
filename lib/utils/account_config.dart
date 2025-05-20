@@ -1,7 +1,7 @@
 import 'package:matrix/matrix.dart';
 
 extension ApplicationAccountConfigExtension on Client {
-  static const String accountDataKey = 'im.pingmechat.account_config';
+  static const String accountDataKey = 'chat.pingme.pingmechat.account_config';
 
   ApplicationAccountConfig get applicationAccountConfig =>
       ApplicationAccountConfig.fromJson(

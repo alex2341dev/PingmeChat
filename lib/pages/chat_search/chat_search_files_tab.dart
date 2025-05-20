@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_gen/gen_l10n/l10n.dart';
+import 'package:go_router/go_router.dart';
+import 'package:pingmechat/widgets/matrix.dart';
 import 'package:matrix/matrix.dart';
 
 import 'package:pingmechat/config/app_config.dart';
@@ -115,6 +117,9 @@ class ChatSearchFilesTab extends StatelessWidget {
                   ? false
                   : prevEvent.originServerTs
                       .sameEnvironment(event.originServerTs);
+
+              final isDownloaded = Matrix.of(context).store.getString(filename);
+
               return Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
@@ -153,14 +158,40 @@ class ChatSearchFilesTab extends StatelessWidget {
                       color: theme.colorScheme.onInverseSurface,
                       clipBehavior: Clip.antiAliasWithSaveLayer,
                       child: ListTile(
-                        leading: const Icon(Icons.file_present_outlined),
+                        leading: Icon(
+                          isDownloaded != null
+                              ? Icons.folder_open_outlined
+                              : Icons.file_download_outlined,
+                        ),
                         title: Text(
                           filename,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),
                         subtitle: Text('$sizeString | $filetype'),
-                        onTap: () => event.saveFile(context),
+                        onTap: () => isDownloaded != null
+                            ? event.openFile(context)
+                            : event.saveFile(context),
+                        trailing: IconButton(
+                          icon: const Icon(Icons.remove_red_eye),
+                          onPressed: () {
+                            context.go(
+                              '/${Uri(
+                                pathSegments: ['rooms', event.roomId!],
+                                queryParameters: {
+                                  'event': event.eventId,
+                                },
+                              )}',
+                              extra: {
+                                'from': GoRouter.of(context)
+                                    .routeInformationProvider
+                                    .value
+                                    .uri
+                                    .toString(),
+                              },
+                            );
+                          },
+                        ),
                       ),
                     ),
                   ],

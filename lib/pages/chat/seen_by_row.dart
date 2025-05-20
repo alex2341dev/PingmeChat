@@ -13,17 +13,24 @@ import '../user_bottom_sheet/user_bottom_sheet.dart';
 
 class SeenByRow extends StatelessWidget {
   final ChatController controller;
-  const SeenByRow(this.controller, {super.key});
+  final String eventId;
+  const SeenByRow(this.controller, this.eventId, {super.key});
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    final seenByUsers = controller.room.getSeenByUsers(controller.timeline!);
+    final seenByUsers = controller.room
+        .getSeenByUsers(controller.timeline!, eventId: eventId)
+        .where((u) =>
+            controller.room.receiptState.global.otherUsers[u.id]?.eventId ==
+            eventId)
+        .toList();
     const maxAvatars = 7;
     return Container(
       width: double.infinity,
       alignment: Alignment.center,
+      padding: const EdgeInsets.only(top: 4),
       child: AnimatedContainer(
         constraints:
             const BoxConstraints(maxWidth: PingmeThemes.columnWidth * 2.5),

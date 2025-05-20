@@ -190,15 +190,10 @@ class ChatListView extends StatelessWidget {
                                 ),
                               ),
                             ),
-                          FloatingActionButton.extended(
-                            onPressed: () =>
-                                context.go('/rooms/newprivatechat'),
-                            icon: const Icon(Icons.add_outlined),
-                            label: Text(
-                              L10n.of(context).chat,
-                              overflow: TextOverflow.fade,
-                            ),
-                          ),
+                            FloatingActionButton(
+                                onPressed: () => context.go('/rooms/newprivatechat'),
+                                child: const Icon(Icons.add_outlined),
+                              ),
                         ],
                       )
                     : const SizedBox.shrink(),

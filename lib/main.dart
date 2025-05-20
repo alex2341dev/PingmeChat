@@ -38,10 +38,15 @@ void main(List<String> arguments) async {
   // widget bindings are initialized already.
 
   WidgetsFlutterBinding.ensureInitialized();
+  if (WidgetsBinding.instance.lifecycleState != AppLifecycleState.detached) {
+    await SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+    ]);
 
-  await SystemChrome.setPreferredOrientations([
-    DeviceOrientation.portraitUp,
-  ]);
+    await SystemChrome.setEnabledSystemUIMode(
+      SystemUiMode.immersiveSticky,
+    );
+  }
 
   if (PlatformInfos.isWindows ||
       PlatformInfos.isMacOS ||
@@ -77,7 +82,7 @@ void main(List<String> arguments) async {
   if (PlatformInfos.isWindows ||
       PlatformInfos.isLinux ||
       PlatformInfos.isMacOS) {
-    var windowOptions = const WindowOptions(
+    final windowOptions = const WindowOptions(
       minimumSize: Size(1000, 800),
       size: Size(1000, 700),
       center: true,
@@ -122,8 +127,11 @@ void main(List<String> arguments) async {
 }
 
 /// Fetch the pincode for the applock and start the flutter engine.
-Future<void> startGui(List<Client> clients, SharedPreferences store,
-    List<String> arguments,) async {
+Future<void> startGui(
+  List<Client> clients,
+  SharedPreferences store,
+  List<String> arguments,
+) async {
   // Preload first client
   final firstClient = clients.firstOrNull;
   await firstClient?.roomsLoading;

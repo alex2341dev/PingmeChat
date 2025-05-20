@@ -2357,7 +2357,7 @@
   "@invalidServerName": {},
   "optionalRedactReason": "(Необов'язково) Причина редагування цього повідомлення...",
   "@optionalRedactReason": {},
-  "redactedBy": "Відредаговано {username}",
+  "redactedBy": "Видалив {username}",
   "@redactedBy": {
     "type": "text",
     "placeholders": {
@@ -2366,7 +2366,7 @@
   },
   "directChat": "Особисте повідомлення",
   "@directChat": {},
-  "redactedByBecause": "Відредаговано {username}, тому що: \"{reason}\"",
+  "redactedByBecause": "Видалив {username}, тому що: \"{reason}\"",
   "@redactedByBecause": {
     "type": "text",
     "placeholders": {
@@ -2913,7 +2913,8 @@
     }
   },
   "joinToMeeting": "Приєднатися до зустрічі",
-  "recordDevice": "Пристрій запису",
+  "inputDevice": "Пристрій введення",
+  "outputDevice": "Пристрій виведення",
   "pinned": "Закріплені",
   "newChatVersionAvailable": "Доступна нова версія чату, натисніть щоб встановити",
   "email": "Пошта",
@@ -2977,6 +2978,6 @@
   "copySuccessfully": "Посилання скопійовано успішно",
   "openTextEditor": "Відкрити текстовий редактор",
   "inviteAllUsersToGroup": "Запросити всіх користувачів до групи",
-  "tryDecipherMessages": "Спробувати розшифрувати повідомлення"
-
+  "tryDecipherMessages": "Спробувати розшифрувати повідомлення",
+  "createGroupOrpace": "Створіть групу або простір"
 }

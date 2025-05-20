@@ -1,3 +1,5 @@
+import 'package:pingmechat/pages/chat/chat.dart';
+import 'package:pingmechat/pages/chat/seen_by_row.dart';
 import 'package:pingmechat/utils/thread_unread_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -61,6 +63,8 @@ class Message extends StatelessWidget {
   final Event? Function(String) getReplyEventFromThread;
   final ThreadUnreadData? threadUnreadData;
   final bool Function(Event) isMentionEvent;
+  final ChatController controller;
+  final Event? lastThreadEvent;
 
   const Message(
     this.event, {
@@ -68,6 +72,7 @@ class Message extends StatelessWidget {
     this.previousEvent,
     this.displayReadMarker = false,
     this.longPressSelect = false,
+    this.lastThreadEvent,
     required this.onSelect,
     required this.onHover,
     required this.onInfoTab,
@@ -103,6 +108,7 @@ class Message extends StatelessWidget {
     required this.onForward,
     required this.onReply,
     required this.onCreateLink,
+    required this.controller,
     super.key,
   });
 
@@ -116,7 +122,7 @@ class Message extends StatelessWidget {
     );
 
     if ({EventTypes.Reaction, EventTypes.Redaction}.contains(event.type)) {
-      return SizedBox.shrink();
+      return const SizedBox.shrink();
     }
 
     if (!{
@@ -646,6 +652,33 @@ class Message extends StatelessWidget {
                                                   ),
                                                 ),
                                               ),
+                                              FutureBuilder<User?>(
+                                                future: event.fetchSenderUser(),
+                                                builder: (context, snapshot) {
+                                                  final user = snapshot.data ??
+                                                      event
+                                                          .senderFromMemoryOrFallback;
+                                                  return Chip(
+                                                    avatar: Avatar(
+                                                      mxContent: user.avatarUrl,
+                                                      name: user
+                                                          .calcDisplayname(),
+                                                      presenceUserId:
+                                                          user.stateKey,
+                                                      presenceBackgroundColor:
+                                                          wallpaperMode
+                                                              ? Colors
+                                                                  .transparent
+                                                              : null,
+                                                    ),
+                                                    label: Text(
+                                                        "${user.displayName}: ${lastThreadEvent!.body.length <= 10 ? lastThreadEvent!.body : lastThreadEvent!.body.substring(0, 10) + '…'}"),
+                                                  );
+                                                },
+                                              ),
+                                              const SizedBox(
+                                                width: 8,
+                                              ),
                                               Stack(
                                                 children: [
                                                   IconButton(
@@ -686,6 +719,7 @@ class Message extends StatelessWidget {
                                         ),
                                       ),
                                     ),
+                                  SeenByRow(controller, event.eventId),
                                 ],
                               ),
                             ],

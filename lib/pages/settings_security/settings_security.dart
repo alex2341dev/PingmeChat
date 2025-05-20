@@ -101,13 +101,13 @@ class _LockDialogState extends State<LockDialog> {
           ),
         ],
       ),
+      actionsAlignment: MainAxisAlignment.spaceBetween,
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context, ''),
           style: TextButton.styleFrom(foregroundColor: Colors.red),
           child: Text(L10n.of(context).removePassword),
         ),
-        const Spacer(),
         TextButton(
           onPressed: () => Navigator.pop(context),
           child: Text(L10n.of(context).cancel),
@@ -253,12 +253,12 @@ class SettingsSecurityController extends State<SettingsSecurity> {
     );
 
     if (newLock != null) {
-      await AppLocker.setLockMethod(lockMethod, newLock!);
+      await AppLocker.setLockMethod(lockMethod, newLock);
       setState(() {});
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
-            newLock!.isNotEmpty
+            newLock.isNotEmpty
                 ? (lockMethod == LockMethod.pin
                     ? L10n.of(context).pinSetSuccessfully
                     : L10n.of(context).passwordSetSuccessfully)

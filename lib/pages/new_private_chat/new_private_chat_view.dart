@@ -142,7 +142,7 @@ class NewPrivateChatView extends StatelessWidget {
                         foregroundColor: theme.colorScheme.onTertiaryContainer,
                         child: const Icon(Icons.group_add_outlined),
                       ),
-                      title: Text(L10n.of(context).createGroup),
+                      title: Text(L10n.of(context).createGroupOrpace),
                       onTap: () => context.go('/rooms/newgroup'),
                     ),
                     if (PlatformInfos.isMobile)

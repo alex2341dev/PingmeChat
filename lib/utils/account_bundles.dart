@@ -44,7 +44,7 @@ class AccountBundle {
       };
 }
 
-const accountBundlesType = 'im.pingmechat.account_bundles';
+const accountBundlesType = 'chat.pingme.pingmechat.account_bundles';
 
 extension AccountBundlesExtension on Client {
   List<AccountBundle> get accountBundles {

@@ -158,7 +158,7 @@ class ChatInputRow extends StatelessWidget {
                           contentPadding: const EdgeInsets.all(0),
                         ),
                       ),
-                    if (PlatformInfos.isMobile)
+                    /*if (PlatformInfos.isMobile)
                       PopupMenuItem<String>(
                         value: 'location',
                         child: ListTile(
@@ -170,7 +170,7 @@ class ChatInputRow extends StatelessWidget {
                           title: Text(L10n.of(context).shareLocation),
                           contentPadding: const EdgeInsets.all(0),
                         ),
-                      ),
+                      ),*/
                   ],
                 ),
               ),

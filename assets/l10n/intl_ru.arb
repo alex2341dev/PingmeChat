@@ -2355,7 +2355,7 @@
   "@messagesStyle": {},
   "shareInviteLink": "Поделиться приглашением",
   "@shareInviteLink": {},
-  "redactedBy": "{username} отредактировал это событие",
+  "redactedBy": "{username} удалил это сообщение",
   "@redactedBy": {
     "type": "text",
     "placeholders": {
@@ -2368,7 +2368,7 @@
   "@profileNotFound": {},
   "setTheme": "Тема:",
   "@setTheme": {},
-  "redactedByBecause": "{username} отредактировал это событие. Причина: \"{reason}\"",
+  "redactedByBecause": "{username} удалил это сообщение. Причина: \"{reason}\"",
   "@redactedByBecause": {
     "type": "text",
     "placeholders": {
@@ -2923,7 +2923,8 @@
     }
   },
   "joinToMeeting": "Присоединиться к встрече",
-  "recordDevice": "Устройство записи",
+    "inputDevice": "Устройство ввода",
+  "outputDevice": "Устройство вывода",
   "pinned": "Закрепленные",
   "newChatVersionAvailable": "Доступна новая версия чата, нажите что бы устанавить",
   "email": "Почта",
@@ -2987,5 +2988,6 @@
   "copySuccessfully": "Ссылка скопирована успешно",
   "openTextEditor": "Открыть текстовый редактор",
   "inviteAllUsersToGroup": "Пригласить всех пользователей в группу",
-  "tryDecipherMessages": "Попробовать расшифровать сообщение"
+  "tryDecipherMessages": "Попробовать расшифровать сообщение",
+  "createGroupOrSpace": "Создать группу или пространство"
 }

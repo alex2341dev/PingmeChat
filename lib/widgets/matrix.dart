@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:pingmechat/utils/voip/voip_sturtup.dart';
 import 'package:pingmechat/utils/highlights_rooms_and_threads.dart';
 import 'package:pingmechat/utils/thread_unread_data.dart';
 import 'package:flutter/foundation.dart';
@@ -14,6 +15,9 @@ import 'package:flutter_gen/gen_l10n/l10n.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:pingmechat/utils/voip/call_manager.dart';
+import 'package:pingmechat/utils/voip/sound_service.dart';
+import 'package:pingmechat/utils/voip/voip_service.dart';
 import 'package:matrix/encryption.dart';
 import 'package:matrix/matrix.dart';
 import 'package:provider/provider.dart';
@@ -27,7 +31,6 @@ import 'package:pingmechat/utils/init_with_restore.dart';
 import 'package:pingmechat/utils/matrix_sdk_extensions/matrix_file_extension.dart';
 import 'package:pingmechat/utils/platform_infos.dart';
 import 'package:pingmechat/utils/uia_request_manager.dart';
-import 'package:pingmechat/utils/voip_plugin.dart';
 import 'package:pingmechat/widgets/pingme_chat_app.dart';
 import 'package:pingmechat/widgets/future_loading_dialog.dart';
 import 'package:window_manager/window_manager.dart';
@@ -100,7 +103,9 @@ class MatrixState extends State<Matrix>
     return widget.clients[_activeClient];
   }
 
-  VoipPlugin? voipPlugin;
+  CallManager? callManager;
+  VoIPService? voIPService;
+  SoundService? soundService;
 
   bool get isMultiAccount => widget.clients.length > 1;
 
@@ -111,6 +116,8 @@ class MatrixState extends State<Matrix>
   RequestTokenResponse? currentThreepidCreds;
 
   void setMarker() async {
+    if (PlatformInfos.isMobile) return;
+
     final unreadCount = client.rooms
         .where((r) => (r.isUnread || r.membership == Membership.invite))
         .length;
@@ -185,7 +192,7 @@ class MatrixState extends State<Matrix>
       store.setInt("lastClient", i);
 
       // TODO: Multi-client VoiP support
-      createVoipPlugin();
+      createVoipService();
       setUnreadCount();
 
       HighlightsRoomsAndThreads().init(this);
@@ -305,8 +312,10 @@ class MatrixState extends State<Matrix>
   @override
   void initState() {
     super.initState();
-    trayManager.addListener(this);
-    _initializeTray();
+    if (PlatformInfos.isDesktop) {
+      trayManager.addListener(this);
+      _initializeTray();
+    }
     WidgetsBinding.instance.addObserver(this);
     initMatrix();
     if (PlatformInfos.isWeb) {
@@ -526,15 +535,23 @@ class MatrixState extends State<Matrix>
       );
     }
 
-    createVoipPlugin();
+    createVoipService();
   }
 
-  void createVoipPlugin() async {
-    if (store.getBool(SettingKeys.experimentalVoip) == false) {
-      voipPlugin = null;
+  void createVoipService() async {
+    if (backgroundPush?.voIPService != null) {
+      voIPService = backgroundPush?.voIPService;
+      backgroundPush?.soundService?.setStore(store);
+      soundService = backgroundPush?.soundService;
+      callManager = backgroundPush?.callManager;
       return;
     }
-    voipPlugin = VoipPlugin(this);
+
+    voIPService = VoIPService(client);
+    soundService = SoundService(store);
+    callManager = CallManager(voIPService!, soundService!);
+
+    VoIPStartup.start(voIPService!, callManager!);
   }
 
   @override

@@ -44,6 +44,7 @@
             android:showOnLockScreen="false"
             android:turnScreenOn="true"
             android:windowSoftInputMode="adjustResize"
+            android:screenOrientation="portrait"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -64,19 +65,19 @@
                <data android:scheme="matrix" />
             </intent-filter>
 
-            <!-- App can open im.pingmechat:// uris -->
+            <!-- App can open chat.pingme.pingmechat:// uris -->
             <intent-filter>
                <action android:name="android.intent.action.VIEW" />
                <category android:name="android.intent.category.DEFAULT" />
                <category android:name="android.intent.category.BROWSABLE" />
-               <data android:scheme="im.pingmechat" android:host="chat" />
+               <data android:scheme="chat.pingme.pingmechat" android:host="chat" />
             </intent-filter>
 
             <intent-filter>
                <action android:name="android.intent.action.VIEW" />
                <category android:name="android.intent.category.DEFAULT" />
                <category android:name="android.intent.category.BROWSABLE" />
-               <data android:scheme="im.pingmechat" android:host="open" />
+               <data android:scheme="chat.pingme.pingmechat" android:host="open" />
             </intent-filter>
 
             <!-- App can receive shared text -->
@@ -106,12 +107,12 @@
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="im.pingmechat" android:host="login"/>
+                <data android:scheme="chat.pingme.pingmechat" android:host="login"/>
             </intent-filter>
         </activity>
 
         <service android:name=".FcmPushService"
-          android:exported="false">
+          android:exported="false" android:stopWithTask="false">
           <intent-filter>
             <action android:name="com.google.firebase.MESSAGING_EVENT"/>
           </intent-filter>

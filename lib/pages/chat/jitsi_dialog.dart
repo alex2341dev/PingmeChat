@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:pingmechat/pages/chat/chat.dart';
 import 'package:pingmechat/pages/chat_details/participant_list_item.dart';
-import 'package:pingmechat/widgets/adaptive_dialog_action.dart';
 import 'package:pingmechat/widgets/matrix.dart';
 import 'package:flutter/material.dart';
 import 'package:matrix/matrix.dart';

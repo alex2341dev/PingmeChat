@@ -122,10 +122,14 @@ Future<void> _tryPushHelper(
     client.backgroundSync = true;
   }
 
-  if (event.type == EventTypes.CallInvite) {
-    final store = await SharedPreferences.getInstance();
-    await store.setString('CallInvite', jsonEncode(event.toJson()));
+  if (event.type == EventTypes.CallInvite ||
+      event.type == EventTypes.CallCandidates) {
+    FlutterForegroundTask.setOnLockScreenVisibility(true);
+    FlutterForegroundTask.wakeUpScreen();
+    FlutterForegroundTask.launchApp();
+  }
 
+  if (event.type == EventTypes.CallInvite) {
     Vibration.vibrate(
       pattern: [
         500,
@@ -135,10 +139,6 @@ Future<void> _tryPushHelper(
       ],
       repeat: 0,
     );
-
-    FlutterForegroundTask.setOnLockScreenVisibility(true);
-    FlutterForegroundTask.wakeUpScreen();
-    FlutterForegroundTask.launchApp();
   }
 
   if (event.type == EventTypes.CallHangup ||

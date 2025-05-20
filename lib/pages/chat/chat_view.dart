@@ -125,7 +125,7 @@ class ChatView extends StatelessWidget {
       ];
     } else if (!controller.room.isArchived && !controller.isThread()) {
       return [
-        if (Matrix.of(context).voipPlugin != null)
+        if (Matrix.of(context).voIPService != null)
           IconButton(
             onPressed: controller.onPhoneButtonTap,
             icon: const Icon(Icons.call_outlined),

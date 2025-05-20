@@ -36,7 +36,7 @@ abstract class PingmeShare {
     await PingmeShare.share(
       L10n.of(context).inviteText(
         ownProfile.displayName ?? client.userID!,
-        'https://matrix.to/#/${client.userID}?client=im.pingmechat',
+        'https://matrix.to/#/${client.userID}?client=chat.pingme.pingmechat',
       ),
       context,
     );

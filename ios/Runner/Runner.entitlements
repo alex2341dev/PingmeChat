@@ -10,7 +10,7 @@
 	</array>
 	<key>com.apple.security.application-groups</key>
 	<array>
-		<string>group.im.pingmechat.app</string>
+		<string>group.chat.pingme.pingmechat</string>
 	</array>
 </dict>
 </plist>

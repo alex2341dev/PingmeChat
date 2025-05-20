@@ -39,15 +39,22 @@ class ChatEventList extends StatelessWidget {
         .filterByVisibleInGui(exceptionRelationshipEventId: controller.thread);
     final animateInEventIndex = controller.animateInEventIndex;
     final thisEventsThreadEventCount = <String, int>{};
+    final thisEventsThreadEventLastEvents = <String, Event>{};
     for (var i = 0; i < events.length; i++) {
-      thisEventsThreadEventCount[events[i].eventId] = events
+      final _events = events
           .where(
             (event) =>
                 event.eventId != events[i].eventId &&
                 event.relationshipEventId == events[i].eventId &&
                 event.relationshipType == RelationshipTypes.thread,
           )
-          .length;
+          .toList();
+
+      thisEventsThreadEventCount[events[i].eventId] = _events.length;
+
+      if (_events.length != 0) {
+        thisEventsThreadEventLastEvents[events[i].eventId] = _events[0];
+      }
     }
 
     if (controller.isThread()) {
@@ -143,7 +150,6 @@ class ChatEventList extends StatelessWidget {
               return Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  SeenByRow(controller),
                   if (controller.isThread()) TypingIndicators(controller),
                 ],
               );
@@ -181,7 +187,7 @@ class ChatEventList extends StatelessWidget {
 
             // The message at this index:
             final event = events[i];
-            var animateIn = animateInEventIndex != null &&
+            final animateIn = animateInEventIndex != null &&
                 events.length > animateInEventIndex &&
                 event == events[animateInEventIndex];
 
@@ -259,6 +265,8 @@ class ChatEventList extends StatelessWidget {
                 canReply: controller.canReply(event),
                 canCreateLink: controller.canCreateLink(event),
                 onCreateLink: controller.onCreateLink,
+                controller: controller,
+                lastThreadEvent: thisEventsThreadEventLastEvents[event.eventId],
               ),
             );
           },

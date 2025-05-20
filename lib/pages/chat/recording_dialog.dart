@@ -41,16 +41,8 @@ class RecordingDialogState extends State<RecordingDialog> {
 
   Future<void> startRecording() async {
     try {
-      final codec = kIsWeb || PlatformInfos.isDesktop
-          // Web seems to create webm instead of ogg when using opus encoder
-          // which does not play on iOS right now. So we use wav for now:
-          ? AudioEncoder.wav
-          // Everywhere else we use opus if supported by the platform:
-          : await _audioRecorder.isEncoderSupported(AudioEncoder.opus)
-              ? AudioEncoder.opus
-              : AudioEncoder.aacLc;
       fileName =
-          'recording${DateTime.now().microsecondsSinceEpoch}.${codec.fileExtension}';
+          'recording${DateTime.now().microsecondsSinceEpoch}.${AudioEncoder.wav.fileExtension}';
       String? path;
       if (!kIsWeb) {
         final tempDir = await getTemporaryDirectory();
@@ -67,7 +59,7 @@ class RecordingDialogState extends State<RecordingDialog> {
       final devices = await _audioRecorder.listInputDevices();
       InputDevice? device;
 
-      final recordDeviceId = Matrix.of(context).store.getString("recordDevice");
+      final recordDeviceId = Matrix.of(context).store.getString("inputDevice");
       if (devices.any((d) => d.id == recordDeviceId)) {
         device = devices.firstWhere((device) => device.id == recordDeviceId);
       }
@@ -80,7 +72,7 @@ class RecordingDialogState extends State<RecordingDialog> {
           autoGain: true,
           echoCancel: true,
           noiseSuppress: true,
-          encoder: codec,
+          encoder: AudioEncoder.wav,
           device: device,
         ),
         path: path ?? '',

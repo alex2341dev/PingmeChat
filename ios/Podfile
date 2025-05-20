@@ -26,6 +26,7 @@ end
 require File.expand_path(File.join('packages', 'flutter_tools', 'bin', 'podhelper'), flutter_root)
 
 flutter_ios_podfile_setup
+use_frameworks!
 
 target 'Runner' do
   use_frameworks!
@@ -53,13 +54,14 @@ post_install do |installer|
 
       # see https://github.com/flutter-webrtc/flutter-webrtc/issues/1054
       config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '11.0'
-      config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = 'arm64 i386'
 
       config.build_settings['GCC_PREPROCESSOR_DEFINITIONS'] ||= [
         '$(inherited)',
         # dart: PermissionGroup.microphone
         'PERMISSION_MICROPHONE=1',
       ]
+
+      config.build_settings['SWIFT_VERSION'] = '5.0'
     end
   end
   flutter_post_install(installer) if defined?(flutter_post_install)

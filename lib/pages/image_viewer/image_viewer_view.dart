@@ -38,6 +38,14 @@ class ImageViewerView extends StatelessWidget {
             color: Colors.white,
             tooltip: L10n.of(context).share,
           ),
+          IconButton(
+            style: IconButton.styleFrom(
+              backgroundColor: Colors.black.withOpacity(0.5),
+            ),
+            icon: const Icon(Icons.remove_red_eye),
+            onPressed: controller.goToMessage,
+            color: Colors.white,
+          ),
           const SizedBox(width: 8),
           IconButton(
             style: IconButton.styleFrom(

@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_gen/gen_l10n/l10n.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
-import 'package:matrix/encryption.dart';
 import 'package:matrix/matrix.dart';
 
 import 'package:pingmechat/pages/chat/events/video_player.dart';
@@ -184,7 +183,6 @@ class MessageContent extends StatelessWidget {
             return EventVideoPlayer(event);
           case MessageTypes.File:
             return MessageDownloadContent(event, textColor);
-
           case MessageTypes.Text:
           case MessageTypes.Notice:
           case MessageTypes.Emote:

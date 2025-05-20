@@ -15,7 +15,6 @@ import 'package:matrix/matrix.dart' as sdk;
 import 'package:matrix/matrix.dart';
 import 'package:receive_sharing_intent/receive_sharing_intent.dart';
 import 'package:app_links/app_links.dart';
-import 'package:matrix/matrix_api_lite/generated/fixed_model.dart';
 import 'package:pingmechat/config/app_config.dart';
 import 'package:pingmechat/pages/chat_list/chat_list_view.dart';
 import 'package:pingmechat/utils/localized_exception_extension.dart';
@@ -29,7 +28,6 @@ import 'package:pingmechat/widgets/share_scaffold_dialog.dart';
 import '../../../utils/account_bundles.dart';
 import '../../config/setting_keys.dart';
 import '../../utils/url_launcher.dart';
-import '../../widgets/pingme_chat_app.dart';
 import '../../widgets/matrix.dart';
 import '../bootstrap/bootstrap_dialog.dart';
 
@@ -232,7 +230,8 @@ class ChatListController extends State<ChatList>
   QueryPublicRoomsResponse? roomSearchResult;
 
   bool isSearching = false;
-  static const String _serverStoreNamespace = 'im.pingmechat.search.server';
+  static const String _serverStoreNamespace =
+      'chat.pingme.pingmechat.search.server';
 
   void setServer() async {
     final newServer = await showTextInputDialog(
@@ -241,6 +240,7 @@ class ChatListController extends State<ChatList>
       context: context,
       okLabel: L10n.of(context).ok,
       cancelLabel: L10n.of(context).cancel,
+      style: AdaptiveStyle.material,
       textFields: [
         DialogTextField(
           prefixText: 'https://',

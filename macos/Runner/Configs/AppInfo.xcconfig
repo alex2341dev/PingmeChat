@@ -8,7 +8,7 @@
 PRODUCT_NAME = PingmeChat
 
 // The application's bundle identifier
-PRODUCT_BUNDLE_IDENTIFIER = im.pingmechat.pingmechat
+PRODUCT_BUNDLE_IDENTIFIER = chat.pingme.pingmechat
 
 // The copyright displayed in application information
 PRODUCT_COPYRIGHT = Copyright © 2023 PingmeChat authors. All rights reserved.

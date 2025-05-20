@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import 'package:matrix/matrix.dart';
 
@@ -26,6 +27,23 @@ class ImageViewerController extends State<ImageViewer> {
           items: [ContentShareItem(widget.event.content)],
         ),
       );
+
+  void goToMessage() {
+    Navigator.of(context).pop();
+
+    context.go(
+      '/${Uri(
+        pathSegments: ['rooms', widget.event.roomId!],
+        queryParameters: {
+          'event': widget.event.eventId,
+        },
+      )}',
+      extra: {
+        'from':
+            GoRouter.of(context).routeInformationProvider.value.uri.toString(),
+      },
+    );
+  }
 
   /// Save this file with a system call.
   void saveFileAction(BuildContext context) => widget.event.saveFile(context);

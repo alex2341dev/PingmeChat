@@ -27,7 +27,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_new_badger/flutter_new_badger.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:go_router/go_router.dart';
 import 'package:http/http.dart' as http;
+import 'package:pingmechat/utils/voip/call_manager.dart';
+import 'package:pingmechat/utils/voip/sound_service.dart';
+import 'package:pingmechat/utils/voip/voip_service.dart';
+import 'package:pingmechat/utils/voip/voip_sturtup.dart';
 import 'package:matrix/matrix.dart';
 import 'package:unifiedpush/unifiedpush.dart';
 import 'package:unifiedpush_ui/unifiedpush_ui.dart';
@@ -55,6 +60,10 @@ class BackgroundPush {
   void Function(String errorMsg, {Uri? link})? onFcmError;
   L10n? l10n;
 
+  CallManager? callManager;
+  VoIPService? voIPService;
+  SoundService? soundService;
+
   Future<void> loadLocale() async {
     final context = matrix?.context;
     // inspired by _lookupL10n in .dart_tool/flutter_gen/gen_l10n/l10n.dart
@@ -70,8 +79,17 @@ class BackgroundPush {
 
   bool upAction = false;
 
+  void createVoipService() async {
+    voIPService = VoIPService(client);
+    soundService = SoundService(matrix?.store);
+    callManager = CallManager(voIPService!, soundService!);
+
+    VoIPStartup.start(voIPService!, callManager!);
+  }
+
   void _init() async {
     try {
+      createVoipService();
       await _flutterLocalNotificationsPlugin.initialize(
         const InitializationSettings(
           android: AndroidInitializationSettings('notifications_icon'),
@@ -146,9 +164,8 @@ class BackgroundPush {
     Set<String?>? oldTokens,
     bool useDeviceSpecificAppId = false,
   }) async {
-    var gatewayUrl = "${(matrix!.client.homeserver!.origin.split('.')
-              ..[0] += '-push')
-            .join('.')}/_matrix/push/v1/notify";
+    var gatewayUrl =
+        "${(matrix!.client.homeserver!.origin.split('.')..[0] += '-push').join('.')}/_matrix/push/v1/notify";
 
     if (gatewayUrl.contains("https")) {
       gatewayUrl = gatewayUrl.replaceFirst("https", "http");
@@ -339,7 +356,7 @@ class BackgroundPush {
       await client.roomsLoading;
       await client.accountDataLoading;
 
-      Room? room = client.getRoomById(payload.roomId);
+      var room = client.getRoomById(payload.roomId);
 
       if (room == null) {
         await client
@@ -352,7 +369,7 @@ class BackgroundPush {
       final event = await room!.getEventById(payload.eventId);
 
       if (event != null && event.relationshipEventId != null) {
-        PingmeChatApp.router.go('/${Uri(
+        GoRouter.of(navigatorKey.currentContext!).go('/${Uri(
           pathSegments: ['rooms', room.id],
           queryParameters: {
             'thread': event.eventId,
@@ -362,7 +379,7 @@ class BackgroundPush {
         return;
       }
 
-      PingmeChatApp.router.go(
+      GoRouter.of(navigatorKey.currentContext!).go(
         client.getRoomById(payload.roomId)?.membership == Membership.invite
             ? '/rooms'
             : '/rooms/${payload.roomId}',

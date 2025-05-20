@@ -55,13 +55,14 @@ abstract class AppRoutes {
 
   static final List<RouteBase> routes = [
     GoRoute(
-        path: '/',
-        redirect: (context, state) {
-          if (Matrix.of(context).isAutoLoginAccountDetect()) {
-            return Matrix.of(context).autoLoginAccountRedirect();
-          }
-          return Matrix.of(context).client.isLogged() ? '/rooms' : '/home';
-        },),
+      path: '/',
+      redirect: (context, state) {
+        if (Matrix.of(context).isAutoLoginAccountDetect()) {
+          return Matrix.of(context).autoLoginAccountRedirect();
+        }
+        return Matrix.of(context).client.isLogged() ? '/rooms' : '/home';
+      },
+    ),
     GoRoute(
       path: '/home',
       pageBuilder: (context, state) => defaultPageBuilder(
@@ -191,8 +192,9 @@ abstract class AppRoutes {
                 context,
                 state,
                 ChatSearchPage(
-                    isGlobal: true,
-                    searchQuery: state.uri.queryParameters['search'],),
+                  isGlobal: true,
+                  searchQuery: state.uri.queryParameters['search'],
+                ),
               ),
               redirect: loggedOutRedirect,
             ),
@@ -357,7 +359,12 @@ abstract class AppRoutes {
                   shareItems.add(TextShareItem(body));
                 }
 
-                final from = (state.extra as Map?)?['from'];
+                String? from = null;
+
+                if (shareItems == null) {
+                  from = (state.extra as Map?)?['from'];
+                }
+
 
                 return defaultPageBuilder(
                   context,

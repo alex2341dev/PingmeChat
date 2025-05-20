@@ -12,8 +12,8 @@ class LocaleProvider extends ChangeNotifier {
 
   Future<void> _loadLocale() async {
     final prefs = await SharedPreferences.getInstance();
-    var languageCode = prefs.getString('language_code');
-    var countryCode = prefs.getString('country_code');
+    final languageCode = prefs.getString('language_code');
+    final countryCode = prefs.getString('country_code');
 
     if (languageCode != null && countryCode != null) {
       _locale = Locale(languageCode, countryCode);

@@ -62,7 +62,7 @@ class HighlightsRoomsAndThreads {
   }
 
   Future<bool> isHighlightThreadFromEvent(
-      {String? eventId, Event? event, String? roomId}) async {
+      {String? eventId, Event? event, String? roomId,}) async {
     try {
       if ((eventId == null && roomId == null) && event == null) {
         return false;
@@ -92,7 +92,7 @@ class HighlightsRoomsAndThreads {
   }
 
   Future<bool> isHighlightRoomFromEvent(
-      {String? eventId, Event? event, String? roomId}) async {
+      {String? eventId, Event? event, String? roomId,}) async {
     try {
       if ((eventId == null && roomId == null) && event == null) {
         return false;
@@ -143,7 +143,7 @@ class HighlightsRoomsAndThreads {
           final room = matrix.client.getRoomById(roomId);
 
           if (room != null) {
-            List<Event> events = [];
+            var events = <Event>[];
 
             for (final notification in notifications) {
               final event = await room.getEventById(notification.event.eventId);
@@ -156,15 +156,15 @@ class HighlightsRoomsAndThreads {
             for (final event in events) {
               if (event.relationshipType == "m.thread") {
                 ThreadUnreadData().setUnreadThread(
-                    roomId, event.relationshipEventId!, matrix.client.userID!);
+                    roomId, event.relationshipEventId!, matrix.client.userID!,);
               }
 
               if (event.relationshipType == "m.thread" &&
                   await isHighlightThreadFromEvent(
-                      event: event, roomId: roomId)) {
+                      event: event, roomId: roomId,)) {
                 setHighlightThread(roomId, event.relationshipEventId!);
               } else if (await isHighlightRoomFromEvent(
-                  event: event, roomId: roomId)) {
+                  event: event, roomId: roomId,)) {
                 setHighlightRoom(roomId);
               }
             }

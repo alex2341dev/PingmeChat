@@ -5,6 +5,7 @@ import 'package:pingmechat/pages/chat/jitsi_dialog.dart';
 import 'package:pingmechat/utils/thread_favorite.dart';
 import 'package:pingmechat/utils/highlights_rooms_and_threads.dart';
 import 'package:pingmechat/utils/thread_unread_data.dart';
+import 'package:pingmechat/utils/voip/voip_service.dart';
 import 'package:pingmechat/widgets/resizable_widget.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -101,7 +102,7 @@ class ChatPage extends StatelessWidget {
                   room: room,
                   shareItems: shareItems,
                   eventId: eventId,
-                  isOpenThread: true,
+                  isOpenThread: thread != null,
                   from: from,
                 ),
               ),
@@ -594,11 +595,11 @@ class ChatController extends State<ChatPageWithRoom>
   }
 
   void _tryLoadTimeline() async {
-    if (widget.eventId != null && !isThread()) {
+    if (widget.eventId != null && !isThread() && isOpenThread != true) {
       final event = await room.getEventById(widget.eventId!);
       if (event != null && event.relationshipType == RelationshipTypes.thread) {
         context.go(
-          '/rooms/${room.id}/?thread=${event.relationshipEventId}&event=${event.relationshipEventId}&threadEvent=${event.eventId}',
+          '/rooms/${room.id}?thread=${event.relationshipEventId}&event=${event.relationshipEventId}&threadEvent=${event.eventId}',
         );
       }
     }
@@ -716,7 +717,7 @@ class ChatController extends State<ChatPageWithRoom>
     if (eventContextId != null) {
       final event = await timeline!.getEventById(eventContextId);
 
-      if (event != null && event.relationshipType == RelationshipTypes.thread) {
+      /*if (event != null && event.relationshipType == RelationshipTypes.thread) {
         context.go(
           '/${Uri(
             pathSegments: ['rooms', room.id],
@@ -726,7 +727,7 @@ class ChatController extends State<ChatPageWithRoom>
             },
           )}',
         );
-      }
+      }*/
     }
 
     return;
@@ -775,7 +776,9 @@ class ChatController extends State<ChatPageWithRoom>
         final event = await room.getEventById(eventId);
 
         if (event == null &&
-            event?.relationshipType == RelationshipTypes.thread) return;
+            event?.relationshipType == RelationshipTypes.thread) {
+          return;
+        }
       }
     }
 
@@ -875,6 +878,7 @@ class ChatController extends State<ChatPageWithRoom>
       replyEvent = null;
       editEvent = null;
       pendingText = '';
+      isMDEditor = false;
     });
   }
 
@@ -1095,10 +1099,12 @@ class ChatController extends State<ChatPageWithRoom>
   }
 
   void sendLocationAction() async {
+    /*
     await showAdaptiveDialog(
       context: context,
       builder: (c) => SendLocationDialog(room: room),
     );
+    */
   }
 
   String _getSelectedEventString() {
@@ -1774,9 +1780,9 @@ class ChatController extends State<ChatPageWithRoom>
     if (choice == 'camera-video') {
       openVideoCameraAction();
     }
-    if (choice == 'location') {
+    /*if (choice == 'location') {
       sendLocationAction();
-    }
+    }*/
   }
 
   unpinEvent(String eventId) async {
@@ -1938,9 +1944,9 @@ class ChatController extends State<ChatPageWithRoom>
       return;
     }
 
-    final voipPlugin = Matrix.of(context).voipPlugin;
+    final voIPService = Matrix.of(context).voIPService;
     try {
-      await voipPlugin!.voip.inviteToCall(room, callType as CallType);
+      await voIPService!.startCall(room);
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(e.toLocalizedString(context))),

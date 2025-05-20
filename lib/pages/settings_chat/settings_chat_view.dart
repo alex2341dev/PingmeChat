@@ -1,5 +1,5 @@
 import 'package:launch_at_startup/launch_at_startup.dart';
-import 'package:pingmechat/widgets/settings_select_record_device_list_tile.dart';
+import 'package:pingmechat/widgets/settings_select_input_device_list_tile.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_gen/gen_l10n/l10n.dart';
@@ -10,6 +10,7 @@ import 'package:pingmechat/config/setting_keys.dart';
 import 'package:pingmechat/utils/platform_infos.dart';
 import 'package:pingmechat/widgets/layouts/max_width_body.dart';
 import 'package:pingmechat/widgets/matrix.dart';
+import 'package:pingmechat/widgets/settings_select_output_device_list_tile.dart';
 import 'package:pingmechat/widgets/settings_switch_list_tile.dart';
 import 'settings_chat.dart';
 
@@ -121,7 +122,9 @@ class SettingsChatView extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SettingsSelectRecordDeviceListTile(),
+                const SettingsSelectInputDeviceListTile(),
+                Divider(color: theme.dividerColor),
+                const SettingsSelectOutputDeviceListTile(),
                 Divider(color: theme.dividerColor),
               ],
               ListTile(
@@ -137,7 +140,7 @@ class SettingsChatView extends StatelessWidget {
                 title: L10n.of(context).experimentalVideoCalls,
                 onChanged: (b) {
                   AppConfig.experimentalVoip = b;
-                  Matrix.of(context).createVoipPlugin();
+                  Matrix.of(context).createVoipService();
                   return;
                 },
                 storeKey: SettingKeys.experimentalVoip,

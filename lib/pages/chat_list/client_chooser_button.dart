@@ -228,7 +228,7 @@ class ClientChooserButton extends StatelessWidget {
           PingmeShare.shareInviteLink(context);
           break;
         case SettingsAction.settings:
-          await Future.delayed(const Duration(milliseconds: 300));
+          await Future.delayed(const Duration(milliseconds: 700));
           context.go('/rooms/settings');
           break;
         case SettingsAction.archive:

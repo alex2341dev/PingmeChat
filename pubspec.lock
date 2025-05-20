@@ -118,6 +118,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.1.21"
+  audio_streamer:
+    dependency: transitive
+    description:
+      name: audio_streamer
+      sha256: "790bca4b4befd6353075371a3e7eb1874dd131b01ebf5df57a0679991bcfe91b"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.2.0"
   audioplayers:
     dependency: "direct main"
     description:
@@ -346,18 +354,18 @@ packages:
     dependency: transitive
     description:
       name: dart_webrtc
-      sha256: a23c7d21ccb3693214f7f77dcf6f1c479c23337ad0f42e7a0ec143c250f5b541
+      sha256: "5b76fd85ac95d6f5dee3e7d7de8d4b51bfbec1dc73804647c6aebb52d6297116"
       url: "https://pub.dev"
     source: hosted
-    version: "1.5.4"
+    version: "1.5.3+hotfix.2"
   dbus:
     dependency: transitive
     description:
       name: dbus
-      sha256: "365c771ac3b0e58845f39ec6deebc76e3276aa9922b0cc60840712094d9047ac"
+      sha256: "79e0c23480ff85dc68de79e2cd6334add97e48f7f4865d17686dd6ea81a47e8c"
       url: "https://pub.dev"
     source: hosted
-    version: "0.7.10"
+    version: "0.7.11"
   desktop_drop:
     dependency: "direct main"
     description:
@@ -923,12 +931,11 @@ packages:
   flutter_webrtc:
     dependency: "direct main"
     description:
-      path: "."
-      ref: "v0.13.2+hotfix.1"
-      resolved-ref: "05371ec3e308c03cd6670e9de2c321d709333c70"
-      url: "https://github.com/flutter-webrtc/flutter-webrtc.git"
-    source: git
-    version: "0.13.2+hotfix.1"
+      name: flutter_webrtc
+      sha256: e84ca404ef4b0d07a0fcd676b15814fabd5bc08e8d4b8dd8b634f76beab1bb50
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.14.0"
   font_awesome_flutter:
     dependency: transitive
     description:
@@ -958,54 +965,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  geolocator:
-    dependency: "direct main"
-    description:
-      name: geolocator
-      sha256: "0ec58b731776bc43097fcf751f79681b6a8f6d3bc737c94779fe9f1ad73c1a81"
-      url: "https://pub.dev"
-    source: hosted
-    version: "13.0.1"
-  geolocator_android:
-    dependency: transitive
-    description:
-      name: geolocator_android
-      sha256: "7aefc530db47d90d0580b552df3242440a10fe60814496a979aa67aa98b1fd47"
-      url: "https://pub.dev"
-    source: hosted
-    version: "4.6.1"
-  geolocator_apple:
-    dependency: transitive
-    description:
-      name: geolocator_apple
-      sha256: bc2aca02423ad429cb0556121f56e60360a2b7d694c8570301d06ea0c00732fd
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.3.7"
-  geolocator_platform_interface:
-    dependency: transitive
-    description:
-      name: geolocator_platform_interface
-      sha256: "386ce3d9cce47838355000070b1d0b13efb5bc430f8ecda7e9238c8409ace012"
-      url: "https://pub.dev"
-    source: hosted
-    version: "4.2.4"
-  geolocator_web:
-    dependency: transitive
-    description:
-      name: geolocator_web
-      sha256: "2ed69328e05cd94e7eb48bb0535f5fc0c0c44d1c4fa1e9737267484d05c29b5e"
-      url: "https://pub.dev"
-    source: hosted
-    version: "4.1.1"
-  geolocator_windows:
-    dependency: transitive
-    description:
-      name: geolocator_windows
-      sha256: "53da08937d07c24b0d9952eb57a3b474e29aae2abf9dd717f7e1230995f13f0e"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.2.3"
   get_it:
     dependency: transitive
     description:
@@ -1014,6 +973,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "7.7.0"
+  glass:
+    dependency: "direct main"
+    description:
+      name: glass
+      sha256: "444684d73df51782d3d9e0dec7cb37fbe1f4a1456e1dc591663966ab37c4cd0e"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.0+2"
   glob:
     dependency: transitive
     description:
@@ -1547,6 +1514,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.2"
+  noise_meter:
+    dependency: "direct main"
+    description:
+      name: noise_meter
+      sha256: "1eab67e5023c24c43757fa2b6b1b8bc43277e9cc6a7b0fb1c6f6537cc0e3116c"
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.0.2"
   olm:
     dependency: transitive
     description:
@@ -1555,6 +1530,70 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.1.0"
+  open_file:
+    dependency: "direct main"
+    description:
+      name: open_file
+      sha256: d17e2bddf5b278cb2ae18393d0496aa4f162142ba97d1a9e0c30d476adf99c0e
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.5.10"
+  open_file_android:
+    dependency: transitive
+    description:
+      name: open_file_android
+      sha256: "58141fcaece2f453a9684509a7275f231ac0e3d6ceb9a5e6de310a7dff9084aa"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.6"
+  open_file_ios:
+    dependency: transitive
+    description:
+      name: open_file_ios
+      sha256: "02996f01e5f6863832068e97f8f3a5ef9b613516db6897f373b43b79849e4d07"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.3"
+  open_file_linux:
+    dependency: transitive
+    description:
+      name: open_file_linux
+      sha256: d189f799eecbb139c97f8bc7d303f9e720954fa4e0fa1b0b7294767e5f2d7550
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.5"
+  open_file_mac:
+    dependency: transitive
+    description:
+      name: open_file_mac
+      sha256: "1440b1e37ceb0642208cfeb2c659c6cda27b25187a90635c9d1acb7d0584d324"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.3"
+  open_file_platform_interface:
+    dependency: transitive
+    description:
+      name: open_file_platform_interface
+      sha256: "101b424ca359632699a7e1213e83d025722ab668b9fd1412338221bf9b0e5757"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.3"
+  open_file_web:
+    dependency: transitive
+    description:
+      name: open_file_web
+      sha256: e3dbc9584856283dcb30aef5720558b90f88036360bd078e494ab80a80130c4f
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.4"
+  open_file_windows:
+    dependency: transitive
+    description:
+      name: open_file_windows
+      sha256: d26c31ddf935a94a1a3aa43a23f4fff8a5ff4eea395fe7a8cb819cf55431c875
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.3"
   opus_caf_converter_dart:
     dependency: "direct main"
     description:
@@ -2636,10 +2675,10 @@ packages:
     dependency: "direct main"
     description:
       name: wakelock_plus
-      sha256: "775c50f226ab43ff859b479acc73f11c0744bf345a782e83355c4d25df758803"
+      sha256: a474e314c3e8fb5adef1f9ae2d247e57467ad557fa7483a2b895bc1b421c5678
       url: "https://pub.dev"
     source: hosted
-    version: "1.3.0"
+    version: "1.3.2"
   wakelock_plus_platform_interface:
     dependency: transitive
     description:
@@ -2700,10 +2739,10 @@ packages:
     dependency: "direct main"
     description:
       name: webrtc_interface
-      sha256: "0919bad24dad33ba45d64eadf8a8428dc91b7e29d4760f809c01711a4c63f275"
+      sha256: "86fe3afc81a08481dfb25cf14a5a94e27062ecef25544783f352c914e0bbc1ca"
       url: "https://pub.dev"
     source: hosted
-    version: "1.2.3"
+    version: "1.2.2+hotfix.2"
   win32:
     dependency: "direct overridden"
     description:

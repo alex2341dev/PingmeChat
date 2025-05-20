@@ -3,6 +3,7 @@ import 'package:markdown_editor_plus/widgets/markdown_toolbar.dart';
 import 'package:pingmechat/pages/chat/chat.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
 import 'package:markdown_editor_plus/src/toolbar.dart';
+import 'package:pingmechat/utils/platform_infos.dart';
 
 class MDEditor extends StatelessWidget {
   final ChatController controller;
@@ -14,10 +15,10 @@ class MDEditor extends StatelessWidget {
     if (!controller.isMDEditor) {
       return const SizedBox.shrink();
     }
-    final theme = Theme.of(context);
 
     return SizedBox(
-      height: MediaQuery.of(context).size.height * 0.5,
+      height: MediaQuery.of(context).size.height *
+          (PlatformInfos.isMobile ? 0.3 : 0.5),
       child: Column(
         children: [
           const Divider(
@@ -38,7 +39,7 @@ class MDEditor extends StatelessWidget {
                 contentPadding: const EdgeInsets.only(
                   left: 6.0,
                   right: 6.0,
-                  bottom: 6.0,
+                  bottom: 0,
                   top: 3.0,
                 ),
                 hintText: L10n.of(context).writeAMessage,

@@ -1533,7 +1533,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "redactedBy": "Redacted by {username}",
+  "redactedBy": "Deleted by {username}",
   "@redactedBy": {
     "type": "text",
     "placeholders": {
@@ -1542,7 +1542,7 @@
   },
   "directChat": "Direct chat",
   "@directChat": {},
-  "redactedByBecause": "Redacted by {username} because: \"{reason}\"",
+  "redactedByBecause": "Deleted by {username} because: \"{reason}\"",
   "@redactedByBecause": {
     "type": "text",
     "placeholders": {
@@ -2860,7 +2860,8 @@
     }
   },
   "joinToMeeting": "Join to meeting",
-  "recordDevice": "Record device",
+  "inputDevice": "Input device",
+  "outputDevice": "Output device",
   "pinned": "Pinned",
   "newChatVersionAvailable": "A new version of chat is available, click to install",
   "email": "Email",
@@ -2924,5 +2925,6 @@
   "copySuccessfully": "Link copied successfully",
   "openTextEditor": "Open text editor",
   "inviteAllUsersToGroup": "Invite all users to the group",
-  "tryDecipherMessages": "Try to decipher the message"
+  "tryDecipherMessages": "Try to decipher the message",
+  "createGroupOrpace": "Create group or space"
 }

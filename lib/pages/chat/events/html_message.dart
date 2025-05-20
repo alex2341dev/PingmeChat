@@ -83,6 +83,7 @@ class HtmlMessage extends StatelessWidget {
           color: textColor,
           margin: Margins.all(0),
           fontSize: FontSize(fontSize),
+          whiteSpace: WhiteSpace.pre,
         ),
         'a': Style(color: linkColor, textDecorationColor: linkColor),
         'h1': Style(
